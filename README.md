@@ -13,7 +13,7 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
 1. **Herencia**: Las clases `Empleado` y `Visitante` se extenderán de la clase padre `Persona`.
 2. **Relaciones One-To-Many**: Relación entre `Empleado` y `Visitante`, y la relación entren `Empleado` y `Visita`.
 3. **Método personalizado**: Cálculo del tiempo medio real de las visitas clasificado por el tipo de `Actividad`.
-4. **Listado**: Se mostrarán los materiales necesarios para construir una ortodoncia
+4. **Listado**: Se mostrará la lista de visitas filtrada por el día.
 5. **CRUD**: Se podrán añadir, consultar, modificar y quitar visitantes, actividades y visitas. 
       + Crear -> 
       + Read  -> 
