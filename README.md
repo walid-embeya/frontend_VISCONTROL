@@ -7,14 +7,14 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
 + Hacer consultas sobre las visitas pendientes y las ya realizadas.
 
 ## Diagrama de Clases de Diseño
-![Diagrama_de_clases](https://git.institutomilitar.com/Camope/viscontrol/-/wikis/uploads/a4386cd88a7ab9351e4a35d4f8534d58/viscontrolClases.png)
+![Diagrama_de_clases](https://git.institutomilitar.com/Camope/viscontrol/-/wikis/uploads/d6346701bdbcf9ddc5ddbb5bf432c957/diagramaClases.png)
     
   **Cumplimiento de requisitos**
-1. **Herencia**: Las clases `Empleado` y `Visitante` se extenderán de la clase padre `Persona`.
-2. **Relaciones One-To-Many**: Relación entre `Empleado` y `Visitante`, y la relación entren `Empleado` y `Visita`.
-3. **Método personalizado**: Cálculo del tiempo medio real de las visitas clasificado por el tipo de `Actividad`.
-4. **Listado**: Se mostrará la lista de visitas filtrada por el día.
-5. **CRUD**: Se podrán añadir, consultar, modificar y quitar visitantes, actividades y visitas. 
+1. **Herencia**: Las clases `Anfitrion` y `Invitado` se extenderán de la clase padre `Persona`.
+2. **Relación One-To-Many**: Relación entre `Invitado` y `Visita`, un invitado podrá formar parte de varias visitas.
+3. **Método personalizado**: Cálculo del tiempo de las visitas clasificado por el tipo de `Actividad`.
+4. **Listado**: Se mostrará la lista de visitas en las que ha participado un invitado.
+5. **CRUD**: Se podrán añadir, consultar, modificar y quitar visitas. 
       + Crear -> 
       + Read  -> 
       + Update ->
