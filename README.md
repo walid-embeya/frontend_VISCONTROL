@@ -7,7 +7,7 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
 + Hacer consultas sobre las visitas pendientes y las ya realizadas.
 
 ## Diagrama de Clases de Diseño
-![Diagrama_de_clases](https://git.institutomilitar.com/Camope/viscontrol/-/wikis/uploads/d6346701bdbcf9ddc5ddbb5bf432c957/diagramaClases.png)
+![Diagrama_de_clases](https://git.institutomilitar.com/Camope/viscontrol/-/wikis/uploads/732b3edb435ddf8c4cce8fb298391fac/diagramaClases.png)
     
   **Cumplimiento de requisitos**
 1. **Herencia**: Las clases `Anfitrion` y `Invitado` se extenderán de la clase padre `Persona`.
