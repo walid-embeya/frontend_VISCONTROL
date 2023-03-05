@@ -1,13 +1,13 @@
 ## **VISCONTROL**
 
-VISCONTROL es una aplicación web que permite llevar la gestión y control sobre el acceso físico que, por parte de personal externo o visitantes, se realiza a las distintas dependencias de una organización. A través de la aplicación se podrá:
+VISCONTROL es una aplicación web que permite llevar la gestión y control sobre el acceso físico del personal a aquellas instalaciones o áreas que, por cuestiones de seguridad u otros condicionantes, lo requieran. A través de esta aplicación se puede:
 
 + Llevar un registro de visitantes (altas, bajas y modificación de sus datos).
 + Programar visitas y llevar un control de las mismas.
 + Hacer consultas sobre las visitas pendientes y las ya realizadas.
 
 ## Diagrama de Clases de Diseño
-![Diagrama_de_clases](https://git.institutomilitar.com/Camope/viscontrol/-/wikis/uploads/732b3edb435ddf8c4cce8fb298391fac/diagramaClases.png)
+![Diagrama_de_clases](https://git.institutomilitar.com/Camope/viscontrol/-/wikis/images/diagramaClases.png)
     
   **Cumplimiento de requisitos**
 1. **Herencia**: Las clases `Anfitrion` y `Invitado` se extenderán de la clase padre `Persona`.
@@ -15,7 +15,7 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
 3. **Método personalizado**: Cálculo del tiempo de las visitas clasificado por el tipo de `Actividad`.
 4. **Listado**: Se mostrará la lista de visitas en las que ha participado un invitado.
 5. **CRUD**: Se podrán añadir, consultar, modificar y quitar visitas. 
-      + Crear -> 
+      + Create -> 
       + Read  -> 
       + Update ->
       + Delete ->
