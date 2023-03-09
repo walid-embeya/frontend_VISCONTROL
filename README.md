@@ -11,9 +11,9 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
     
   **Cumplimiento de requisitos**
 1. **Herencia**: Las clases `Anfitrion` y `Invitado` se extenderán de la clase padre `Persona`.
-2. **Relación One-To-Many**: Relación entre `Invitado` y `Visita`, un invitado podrá formar parte de varias visitas.
-3. **Método personalizado**: Cálculo del tiempo de las visitas clasificado por el tipo de `Actividad`.
-4. **Listado**: Se mostrará la lista de visitas en las que ha participado un invitado.
+2. **Relación One-To-Many**: Relación entre `Anfitrion` y `Visita`, un Anfitrión podrá planificar varias visitas.
+3. **Método personalizado**: Cálculo del tiempo acumulado de las visitas clasificado por el tipo de `Actividad`.
+4. **Listado**: Se mostrará la lista de visitas de una misma actividad.
 5. **CRUD**: Se podrán añadir, consultar, modificar y quitar visitas. 
       + Create -> 
       + Read  -> 
