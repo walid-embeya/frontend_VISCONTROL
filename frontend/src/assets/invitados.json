@@ -1,0 +1,88 @@
+{
+  "_embedded" : {
+    "invitados" : [ {
+      "dni" : "2304756T",
+      "nombre" : "Walid",
+      "apellido" : "Embeya",
+      "empresa" : "DGTI",
+      "autorizacion" : {
+         "fechaInicio" : "2023/03/01",
+      	 "fechaFin" : "2023/04/30",
+         "tipo" : "proyecto"
+         },
+      "_links" : {
+        "self" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/1"
+        },
+        "invitado" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/1"
+        }
+      }
+    }, {
+      "dni" : "2304711F",
+      "nombre" : "Ali",
+      "apellido" : "Amri",
+      "empresa" : "MDN",
+      "autorizacion" : {},
+      "_links" : {
+        "self" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/2"
+        },
+        "invitado" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/2"
+        }
+      }
+    }, {
+      "dni" : "9904722C",
+      "nombre" : "Rami",
+      "apellido" : "Jridi",
+      "empresa" : "EST",
+      "autorizacion" : undefined,
+      "_links" : {
+        "self" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/3"
+        },
+        "invitado" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/3"
+        }
+      }
+    }, {
+      "dni" : "22768939G",
+      "nombre" : "Carlos",
+      "apellido" : "Moreno",
+      "empresa" : "GC",
+      "autorizacion" : {
+         "fechaInicio" : "2023/03/01",
+      	 "fechaFin" : "2023/04/30",
+         "tipo" : "proyecto"
+         },
+      "_links" : {
+        "self" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/4"
+        },
+        "invitado" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/4"
+        }
+      }
+    }, {
+      "dni" : "2304756T",
+      "nombre" : "Camillo",
+      "apellido" : "Sesma",
+      "empresa" : "ACING",
+      "autorizacion" : {
+         "fechaInicio" : "2023/03/01",
+      	 "fechaFin" : "2023/04/30",
+         "tipo" : "proyecto"
+         },
+      "_links" : {
+        "self" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/5"
+        },
+        "invitado" : {
+          "href" : "http://pruebaapi-lonchezas.b4a.run/api/invitados/5"
+        }
+      }
+    } ]
+  }
+}
+
