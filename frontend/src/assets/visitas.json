@@ -1,71 +1,160 @@
 {
-  "_embedded" : {
-    "visitas" : [ {
-      "fechaInicio" : "2023/03/20",
-      "fechaFin" : "2023/03/20",
-      "actividad" : "actividad 1",
-      "actuacion" : "descripcion de la actividad 1", 
-      "_links" : {
-        "self" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/1"
-        },
-        "visita" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/1"
+  "_embedded": {
+    "visitas": [
+      {
+        "id": "1",
+        "fechaInicio": "20/03/2023",
+        "horaInicio": "7:09",
+	"fechaFin": "20/03/2023",
+	"horaFin": "11:25",
+        "actividad": "vista al sala de reuniones",
+        "actuacion": "vista del departamento de rh",
+        "invitados": [
+             {
+             	"matricula":"772593",
+	    	"nombre":"Brenda",
+	     	"apellidos":"Fernao",
+	     	"empresa":"Babbleblab"
+             },
+             {
+             	"matricula":"332142",
+		"nombre":"Nickola",
+		"apellidos":"Netting",
+		"empresa":"Flashset"
+             }
+        ],
+        "_links": {
+          "self": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/1"
+          },
+          "invitados": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/1/invitados"
+          }
         }
-      }
-    }, {
-      "fechaInicio" : "2023/03/23",
-      "fechaFin" : "2023/03/23",
-      "actividad" : "actividad 2",
-      "actuacion" : "descripcion de la actividad 2", 
-      "_links" : {
-        "self" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/2"
-        },
-        "visita" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/2"
+      },
+      {
+      	"id": "2",
+        "fechaInicio": "21/03/2023",
+        "horaInicio": "9:30",
+	"fechaFin": "21/03/2023",
+	"horaFin": "12:25",
+        "actividad": "visita a la planta de producción",
+        "actuacion": "reunión con el equipo de producción",
+        "invitados": [
+             {
+             	"matricula":"662817",
+             	"nombre":"Norine",
+		"apellidos":"Acheson",
+		"empresa":"Tambee"
+             },
+             {
+             	"matricula":"564758",
+             	"nombre":"Jenifer",
+		"apellidos":"Assante",	
+		"empresa":"Topiczoom"
+             }
+        ],       
+        "_links": {
+          "self": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/2"
+          },
+          "invitados": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/2/invitados"
+          }
         }
-      }
-    }, {
-      "fechaInicio" : "2023/04/03",
-      "fechaFin" : "2023/04/03",
-      "actividad" : "actividad 3",
-      "actuacion" : "descripcion de la actividad 3", 
-      "_links" : {
-        "self" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/3"
-        },
-        "visita" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/3"
+      },
+      {
+      	"id": "3",
+        "fechaInicio": "22/03/2023",
+        "horaInicio": "8:40",
+	"fechaFin": "22/03/2023",
+	"horaFin": "11:50",
+        "actividad": "reunión con el departamento de ventas",
+        "actuacion": "presentación de nuevos productos",
+        "invitados": [
+             {
+             	"matricula":"101569",
+             	"nombre":"Anatollo",
+		"apellidos":"Geillier",		
+		"empresa":"Aimbu"
+             },
+             {
+           	"matricula":"961972",
+             	"nombre":"Armando",
+		"apellidos":"Fearnsides",
+		"empresa":"Yoveo"
+             }
+        ],       
+        "_links": {
+          "self": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/3"
+          },
+          "invitados": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/3/invitados"
+          }
         }
-      }
-    }, {
-      "fechaInicio" : "2023/04/10",
-      "fechaFin" : "2023/04/10",
-      "actividad" : "actividad 4",
-      "actuacion" : "descripcion de la actividad 4", 
-      "_links" : {
-        "self" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/4"
-        },
-        "visita" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/4"
+      },
+      {
+        "id": "4",   
+        "fechaInicio": "23/03/2023",
+        "horaInicio": "7:09",
+	"fechaFin": "23/03/2023",
+	"horaFin": "11:25",
+        "actividad": "visita a la tienda principal",
+        "actuacion": "reunión con el gerente de la tienda",
+        "invitados": [
+             {
+             	"matricula":"978211",
+             	"nombre":"Annabella",
+		"apellidos":"Westby",
+		"empresa":"Kare"
+             },
+             {
+             	"matricula":"152896",
+             	"nombre":"Mirabelle",
+		"apellidos":"Gaber",	
+		"empresa":"Thoughtsphere"
+             }
+        ],
+        "_links": {
+          "self": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/4"
+          },
+          "invitados": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/4/invitados"
+          }
         }
-      }
-    }, {
-      "fechaInicio" : "2023/04/17",
-      "fechaFin" : "2023/04/17",
-      "actividad" : "actividad 5",
-      "actuacion" : "descripcion de la actividad 5", 
-      "_links" : {
-        "self" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/5"
-        },
-        "visita" : {
-          "href" : "http://pruebaapi-lonchezas.b4a.run/api/visitas/5"
+      },
+      {
+        "id": "5",
+        "fechaInicio": "24/03/2023",
+        "horaInicio": "7:09",
+	"fechaFin": "24/03/2023",
+	"horaFin": "11:25",
+        "actividad": "visita al centro de distribución",
+        "actuacion": "reunión con el jefe de logística",
+        "invitados": [
+             {
+             	"matricula":"772593",
+	    	"nombre":"Brenda",
+	     	"apellidos":"Fernao",
+	     	"empresa":"Babbleblab"
+             },
+             {
+             	"matricula":"564758",
+             	"nombre":"Jenifer",
+		"apellidos":"Assante",	
+		"empresa":"Topiczoom"
+             }
+        ],
+        "_links": {
+          "self": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/5"
+          },
+          "invitados": {
+            "href": "http://pruebaapi-lonchezas.b4a.run/api/visitas/5/invitados"
+          }
         }
-      }
-    } ]
-  }
-}
-
+       } ]
+    }
+ }
