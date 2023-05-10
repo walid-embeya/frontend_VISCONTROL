@@ -11,9 +11,7 @@
 	"empresa":"Babbleblab",
 	"autorizacion": {
 		"fechaInicio":"23/11/2022",
-		"horaInicio":"9:30",
-		"fechafin":"17/04/2022",
-		"horaFin":"10:12",
+		"fechaFin":"17/04/2022",
 		"tipo":"mantenimiento"
 	},
 	"_links": {
@@ -35,9 +33,7 @@
 	"empresa":"Flashset",
 	"autorizacion": {
 		"fechaInicio":"03/03/2023",
-		"horaInicio":"7:09",
-		"fechafin":"17/07/2022",
-		"horaFin":"11:25",
+		"fechaFin":"17/07/2022",
 		"tipo":"mantenimiento"
 	},
 	"_links": {
@@ -77,9 +73,7 @@
 	"empresa":"Topiczoom",
 	"autorizacion": {
 		"fechaInicio":"18/01/2023",
-		"horaInicio":"11:36",
-		"fechafin":"07/07/2022",
-		"horaFin":"9:58",
+		"fechaFin":"07/07/2022",
 		"tipo":"mantenimiento"
 	},
 	"_links": {
@@ -101,9 +95,7 @@
 	"empresa":"Kare",
 	"autorizacion": {
 		"fechaInicio":"31/05/2022",
-		"horaInicio":"11:06",
-		"fechafin":"13/04/2022",
-		"horaFin":"11:40",
+		"fechaFin":"13/04/2022",
 		"tipo":"mantenimiento"
 	},
 	"_links": {
@@ -161,9 +153,7 @@
 	"empresa":"Shufflebeat",
 	"autorizacion": {
 		"fechaInicio":"23/01/2023",
-		"horaInicio":"8:48",
-		"fechafin":"14/01/2023",
-		"horaFin":"11:52",
+		"fechaFin":"14/01/2023",
 		"tipo":"mantenimiento"
 	},
 	"_links": {
@@ -203,9 +193,7 @@
 	"empresa":"Aimbu",
 	"autorizacion": { 
 		"fechaInicio":"29/04/2022",
-		"horaInicio":"7:50",
-		"fechafin":"02/01/2023",
-		"horaFin":"9:46",
+		"fechaFin":"02/01/2023",
 		"tipo":"mantenimiento"
 	},
 	"_links": {
