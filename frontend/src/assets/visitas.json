@@ -3,24 +3,22 @@
     "visitas": [
       {
         "id": "1",
-        "fechaInicio": "20/03/2023",
-        "horaInicio": "7:09",
-	"fechaFin": "20/03/2023",
-	"horaFin": "11:25",
+        "fechaInicio": 1684825812000,
+        "fechaFin": 1684839912000,
         "actividad": "vista al sala de reuniones",
         "actuacion": "vista del departamento de rh",
         "invitados": [
              {
              	"matricula":"772593",
-	    	"nombre":"Brenda",
-	     	"apellidos":"Fernao",
-	     	"empresa":"Babbleblab"
+              "nombre":"Brenda",
+              "apellidos":"Fernao",
+              "empresa":"Babbleblab"
              },
              {
              	"matricula":"332142",
-		"nombre":"Nickola",
-		"apellidos":"Netting",
-		"empresa":"Flashset"
+              "nombre":"Nickola",
+              "apellidos":"Netting",
+              "empresa":"Flashset"
              }
         ],
         "_links": {
@@ -34,24 +32,22 @@
       },
       {
       	"id": "2",
-        "fechaInicio": "21/03/2023",
-        "horaInicio": "9:30",
-	"fechaFin": "21/03/2023",
-	"horaFin": "12:25",
+        "fechaInicio": 1679391012000,
+        "fechaFin": 1679401522000,       
         "actividad": "visita a la planta de producción",
         "actuacion": "reunión con el equipo de producción",
         "invitados": [
              {
              	"matricula":"662817",
              	"nombre":"Norine",
-		"apellidos":"Acheson",
-		"empresa":"Tambee"
+              "apellidos":"Acheson",
+              "empresa":"Tambee"
              },
              {
              	"matricula":"564758",
              	"nombre":"Jenifer",
-		"apellidos":"Assante",	
-		"empresa":"Topiczoom"
+              "apellidos":"Assante",	
+              "empresa":"Topiczoom"
              }
         ],       
         "_links": {
@@ -65,24 +61,22 @@
       },
       {
       	"id": "3",
-        "fechaInicio": "22/03/2023",
-        "horaInicio": "8:40",
-	"fechaFin": "22/03/2023",
-	"horaFin": "11:50",
+        "fechaInicio": 1687423241000,
+        "fechaFin": 1687434657000,
         "actividad": "reunión con el departamento de ventas",
         "actuacion": "presentación de nuevos productos",
         "invitados": [
              {
              	"matricula":"101569",
              	"nombre":"Anatollo",
-		"apellidos":"Geillier",		
-		"empresa":"Aimbu"
+              "apellidos":"Geillier",		
+              "empresa":"Aimbu"
              },
              {
-           	"matricula":"961972",
+           	  "matricula":"961972",
              	"nombre":"Armando",
-		"apellidos":"Fearnsides",
-		"empresa":"Yoveo"
+              "apellidos":"Fearnsides",
+              "empresa":"Yoveo"
              }
         ],       
         "_links": {
@@ -96,24 +90,22 @@
       },
       {
         "id": "4",   
-        "fechaInicio": "23/03/2023",
-        "horaInicio": "7:09",
-	"fechaFin": "23/03/2023",
-	"horaFin": "11:25",
+        "fechaInicio": 1683994392000,
+        "fechaFin": 1683994392000,
         "actividad": "visita a la tienda principal",
         "actuacion": "reunión con el gerente de la tienda",
         "invitados": [
              {
              	"matricula":"978211",
              	"nombre":"Annabella",
-		"apellidos":"Westby",
-		"empresa":"Kare"
+              "apellidos":"Westby",
+              "empresa":"Kare"
              },
              {
              	"matricula":"152896",
              	"nombre":"Mirabelle",
-		"apellidos":"Gaber",	
-		"empresa":"Thoughtsphere"
+              "apellidos":"Gaber",	
+              "empresa":"Thoughtsphere"
              }
         ],
         "_links": {
@@ -127,24 +119,22 @@
       },
       {
         "id": "5",
-        "fechaInicio": "24/03/2023",
-        "horaInicio": "7:09",
-	"fechaFin": "24/03/2023",
-	"horaFin": "11:25",
+        "fechaInicio": 1679641857000,
+        "fechaFin": 1679670057000,
         "actividad": "visita al centro de distribución",
         "actuacion": "reunión con el jefe de logística",
         "invitados": [
              {
              	"matricula":"772593",
-	    	"nombre":"Brenda",
-	     	"apellidos":"Fernao",
-	     	"empresa":"Babbleblab"
+              "nombre":"Brenda",
+              "apellidos":"Fernao",
+              "empresa":"Babbleblab"
              },
              {
              	"matricula":"564758",
              	"nombre":"Jenifer",
-		"apellidos":"Assante",	
-		"empresa":"Topiczoom"
+              "apellidos":"Assante",	
+              "empresa":"Topiczoom"
              }
         ],
         "_links": {
