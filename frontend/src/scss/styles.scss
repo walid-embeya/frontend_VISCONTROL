@@ -1,0 +1,24 @@
+// Import all of Bootstrap's CSS
+@import "~bootstrap/scss/bootstrap";
+
+/* font-familiy personalizadas */
+@import url('https://fonts.googleapis.com/css?family=Akaya Kanadaka');
+
+@import url('https://fonts.googleapis.com/css?family=Akaya Telivigala');
+
+@import url('https://fonts.googleapis.com/css?family=Alexandria');
+
+
+
+
+.titulo {
+    margin: 2rem;  
+    //font-family: 'Akaya Telivigala';
+    font-family: 'Alexandria';
+    font-weight: bold;
+    font-size:35px;
+    text-align: center;
+    color: royalblue;
+  }
+  
+
