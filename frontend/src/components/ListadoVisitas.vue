@@ -11,8 +11,6 @@ export default {
     return {
       visitas: [],
       visitasPendientes: [],
-      opcion: 0,
-
       ordenAscendente: true, 
       ordenarPor: 'fechaInicio' 
     }
@@ -44,8 +42,8 @@ export default {
           return 0;
         })
 
-        this.empresas.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      return this.empresas;
+      //   this.empresas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      // return this.empresas;
     }
   },
 
@@ -54,8 +52,6 @@ export default {
 
     let dateSysteme = Date.now();
     this.visitasPendientes = this.visitas.filter(v => new Date(v.fechaInicio) >= dateSysteme )
-  
-    console.log('pendientes componente = ', this.visitasPendientes)
   }
 }
 </script>
@@ -63,7 +59,7 @@ export default {
 
 <template>
   <div>
-      <Modelo titulo="LISTADO VISITAS">
+     <Modelo titulo="LISTADO VISITAS">
         <div v-if="visitas" class="container mt-5 mb-1">
 
           <div class="row">
@@ -87,7 +83,7 @@ export default {
               </div>
              
               <div class="col-md-3 text-center">
-                    <router-link :to="{ name: 'nuevavisita' }" class="btn btn-secondary btn-lg  my-1" style="background-color: royalblue;">
+                    <router-link :to="{ name: 'nuevavisita' }" class="btn btn-secondary btn-lg my-1" style="background-color: rgb(102, 102, 105);">
                           <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2"/>Nueva Visita</router-link>             
               </div>
           </div>   
@@ -95,12 +91,7 @@ export default {
         <div v-else>No hay visitas</div>
       
         <Visita v-for="vis of visitas" :visita="vis" class="py-2 px-2 mb-1"></Visita>
-
-
-        <!-- <div v-if="visitas" v-for="vis of visitas">          
-          <Visita :visita="vis" class="py-2 px-3 mb-1" />          
-        </div> -->
-      </Modelo>
+     </Modelo>
   </div> 
 </template>
 

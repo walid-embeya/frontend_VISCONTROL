@@ -28,7 +28,7 @@ export default {
     ...mapActions(invitadosStore, ['getInvitadoPorMatricula']),
 
     autorizacion(matricula) {
-      return this.getInvitadoPorMatricula(matricula).autorizacion.fechaInicio == null ? false : true;
+        return this.getInvitadoPorMatricula(matricula).autorizacion.fechaInicio == null ? false : true;
     },
   },
 }
@@ -46,55 +46,53 @@ export default {
 
               <div class="d-inline me-5 fs-5 fw-bold">Actuación</div><span class="fs-5"> {{ visita.actuacion }}</span> 
             -->
-
-          <div class="row">
-              <div class="col-md-2">
-                <div class="fs-5 fw-bold">Fecha inicio</div>
-              </div>
-              <div class="col-md-3">
-                <span class="fs-5">{{ fechaInicio }}</span>
-              </div>
-              <div class="col-md-2">
-                <div class="fs-5 fw-bold">Hora Inicio</div>
-              </div>
-              <div class="col-md-2">
-                <span class="fs-5">{{ horaInicio }}</span>
-              </div>              
+      <div class="row">
+          <div class="col-md-2">
+            <div class="fs-5 fw-bold">Fecha inicio</div>
           </div>
-
-          <div class="row">              
-              <div class="col-md-2">
-                <div class="fs-5 fw-bold">Fecha fin</div>
-              </div>
-              <div class="col-md-3">
-                <span class="fs-5"> {{ fechaFin }}</span> 
-              </div>
-              <div class="col-md-2">
-                <div class="fs-5 fw-bold">Hora fin</div>
-              </div>
-              <div class="col-md-2">
-                <span class="fs-5"> {{ horaFin }}</span> 
-              </div>
+          <div class="col-md-3">
+            <span class="fs-5">{{ fechaInicio }}</span>
           </div>
+          <div class="col-md-2">
+            <div class="fs-5 fw-bold">Hora Inicio</div>
+          </div>
+          <div class="col-md-2">
+            <span class="fs-5">{{ horaInicio }}</span>
+          </div>              
+      </div>
 
-          <div class="row">
-              <div class="col-md-2">
-                <div class="fs-5 fw-bold">Actividad</div>
-              </div>
-              <div class="col-md-3">
-                <span class="fs-5">{{ visita.actividad }}</span>
-              </div> 
-              
-              <div class="col-md-2">
-                <div class="fs-5 fw-bold">Actuación</div>
-              </div>
-              <div class="col-md-5">
-                <span class="fs-5"> {{ visita.actuacion }}</span> 
-              </div>
-          </div>         
+      <div class="row">              
+          <div class="col-md-2">
+            <div class="fs-5 fw-bold">Fecha fin</div>
+          </div>
+          <div class="col-md-3">
+            <span class="fs-5"> {{ fechaFin }}</span> 
+          </div>
+          <div class="col-md-2">
+            <div class="fs-5 fw-bold">Hora fin</div>
+          </div>
+          <div class="col-md-2">
+            <span class="fs-5"> {{ horaFin }}</span> 
+          </div>
+      </div>
 
-          <div class="accordion accordion-flush alert alert-secondary mt-2 mb-1" id="detallesVisita">
-            <div class="accordion-item">
+      <div class="row">
+          <div class="col-md-2">
+            <div class="fs-5 fw-bold">Actividad</div>
+          </div>
+          <div class="col-md-3">
+            <span class="fs-5">{{ visita.actividad }}</span>
+          </div>               
+          <div class="col-md-2">
+            <div class="fs-5 fw-bold">Actuación</div>
+          </div>
+          <div class="col-md-5">
+            <span class="fs-5"> {{ visita.actuacion }}</span> 
+          </div>
+      </div>         
+
+      <div class="accordion accordion-flush alert alert-secondary mt-2 mb-1" id="detallesVisita">
+          <div class="accordion-item">
               <!-- <h2 class="accordion-header"> -->
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 :data-bs-target="`#flush-collapse${visita.id}`" aria-expanded="false"
@@ -116,9 +114,6 @@ export default {
                       </tr>
                     </thead>
                     <tbody>
-
-                      <!-- <Invitado v-for="invitado of visita.invitados" :invitado="invitado" />  -->
-
                       <tr v-for="invit in visita.invitados">
                         <th scope="row">{{ invit.matricula }}</th>
                         <td>{{ invit.nombre }}</td>
@@ -138,23 +133,13 @@ export default {
                                       size="lg" style="color: #77767b;" /></router-link>
                         </td> -->
 
-
                       </tr>
                     </tbody>
-                  </table>
-
-                            <!-- <ul>
-                              <li v-for="invit in visita.invitados" >                            
-                                  <span class="me-3">{{ invit.dni }}</span> 
-                                  <span class="me-3">{{ invit.nombre }}</span> 
-                                  <span class="me-3">{{ invit.apellidos }}</span>
-                              </li>
-                            </ul> -->
-
+                  </table>                        
                 </div>
               </div>
             </div>
-          </div>
+        </div>
   </div>
 </template>
 

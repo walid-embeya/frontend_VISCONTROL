@@ -2,7 +2,7 @@
   "_embedded": {
     "visitas": [
       {
-        "id": "1",
+        "id": 1,
         "fechaInicio": 1684825812000,
         "fechaFin": 1684839912000,
         "actividad": "vista al sala de reuniones",
@@ -31,10 +31,10 @@
         }
       },
       {
-      	"id": "2",
+      	"id": 8,
         "fechaInicio": 1679391012000,
         "fechaFin": 1679401522000,       
-        "actividad": "visita a la planta de producción",
+        "actividad": "vista al sala de reuniones",
         "actuacion": "reunión con el equipo de producción",
         "invitados": [
              {
@@ -60,7 +60,7 @@
         }
       },
       {
-      	"id": "3",
+      	"id": 3,
         "fechaInicio": 1687423241000,
         "fechaFin": 1687434657000,
         "actividad": "reunión con el departamento de ventas",
@@ -89,7 +89,7 @@
         }
       },
       {
-        "id": "4",   
+        "id": 4,   
         "fechaInicio": 1683994392000,
         "fechaFin": 1683994392000,
         "actividad": "visita a la tienda principal",
@@ -118,7 +118,7 @@
         }
       },
       {
-        "id": "5",
+        "id": 5,
         "fechaInicio": 1679641857000,
         "fechaFin": 1679670057000,
         "actividad": "visita al centro de distribución",
