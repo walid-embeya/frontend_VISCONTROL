@@ -31,7 +31,7 @@ export default {
             </div>
 
             <div class="col-md-4 text-center">
-              <p><b>VISCONTRIL V1.0 Mayo 2023</b></p>
+              <p><b>VISCONTROL V1.0 Mayo 2023</b></p>
               <p>© Copyright. Todos los derechos reservados.</p>
             </div>
 

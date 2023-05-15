@@ -49,7 +49,7 @@ export default {
 
   
         },        
-        anadirInvitado() {generarIdVisita
+        anadirInvitado() {
 
             // invitadosElegidos.push()
 
@@ -82,9 +82,15 @@ export default {
             }  
         })
 
-        this.actividades = tab1.map((valeur, index) => {
-            return { id: index + 1, actividad: valeur };
-        })
+        ///// Metodo 1
+
+        // this.actividades = tab1.map((valeur, index) => {
+        //     return { id: index + 1, actividad: valeur };
+        // })
+
+        ///// Metodo 2
+        tab1.forEach((v, i) => this.actividades.push({id: i+1, actividad: v}))
+
     }
 }
 </script>
@@ -100,10 +106,10 @@ export default {
            
                     <div class="row">
                         <div class="col-md-3">
-                            <div class="fs-5 fw-bold">Fecha inicio</div>
+                            <div class="fs-5 fw-bold">Fecha/Hora Inicio</div>
                         </div>
                         <div class="col-md-3">
-                            <div class="fs-5 fw-bold">Hora Fin</div>
+                            <div class="fs-5 fw-bold">Fecha/Hora Fin</div>
                         </div>                             
                         <div class="col-md-5">
                             <div class="fs-5 fw-bold">Actividad</div>
@@ -144,8 +150,8 @@ export default {
                 <div class="container alert alert-dark border rounded mb-1">
               
                     <div class="row form-group mb-3">                    
-                        <div class="col-md-2">
-                            <label for="nombreinvitado" class="col-form-label">Nombre del invitado</label>
+                        <div class="col-md-3">
+                            <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Nombre del invitado</label>
                         </div>
                         <div class="col-md-4">                            
                             <select class="form-select" aria-label=".form-select-sm example" v-model="nuevoInvitado.matricula">                            
@@ -184,18 +190,17 @@ export default {
                 </div>
             
                     
-                <div class="container border rounded mb-0 p-2" style="background-color:  rgb(5, 5, 107); align-items: center; justify-content: center; display:flex">
+                <div class="container border rounded mb-0 p-2 btn btn-secondary" style="align-items: center; justify-content: center; display:flex">
                     
-                    <div class="d-inline me-4"><button type="submit" class="btn btn-light" @click.prevent="crearVisita">Crear visita</button></div>
-                    <button type="submit" class="btn btn-light" @click.prevent="crearVisita">Cancelar</button>
-           </div>
+                    <div class="d-inline me-1"><button type="submit" class="btn btn-warning" @click.prevent="crearVisita">Guardar Visita</button></div>
+                    <button type="submit" class="btn btn-warning" @click="$router.go(-1)">Cancelar</button>
+                </div>
 
                 
             </form>
         </Modelo>
     </div>
 </template>
-
 
 
 
