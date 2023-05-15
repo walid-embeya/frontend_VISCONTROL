@@ -1,11 +1,13 @@
 <script setup>
   import Menu from './components/Menu.vue'
+  // import AltaVisita from '@/formularios/AltaVisita.vue'
 </script>
 
 <template>
-  <Menu />
+  <Menu></Menu>
   <div class="container">
     <router-view></router-view>
+    <!-- <AltaVisita /> -->
   </div> 
 
 </template>

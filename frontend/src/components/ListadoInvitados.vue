@@ -21,8 +21,8 @@ export default {
 <template>
     <div>  
         <Modelo titulo="LISTADO INVITADOS">
-          <router-link to="/nuevoinvitado" class="btn btn-secondary btn-lg my-2">
-              <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2"/>Nuevo Invitado</router-link>
+          <router-link :to="{ name: 'nuevoinvitado' }" class="btn btn-secondary btn-lg my-2">
+              <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2"/>Nuevo Invitado</router-link>    
 
           <table class="table table-striped table-hover">
               <thead class="alert alert-primary">
@@ -31,7 +31,7 @@ export default {
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellidos</th>
                   <th scope="col">Empresa</th>
-                  <th scope="col" class="th-aut">Autorizado</th>
+                  <th class="th-aut" scope="col">Autorizado</th>
                 </tr>
               </thead>
               <tbody>

@@ -5,10 +5,12 @@ import App from './App.vue'
 import PrimeVue from 'primevue/config';
 
 import Home from './components/PaginaPrincipal.vue'
-// import Visitas from '@/components/ListadoVisitas.vue'
-import Visitas from '@/components/ListaVisitasPV.vue'
+import Visitas from '@/components/ListadoVisitas.vue'
+import VisitasAnc from '@/components/ListaVisitasPV.vue'
 import Invitados from '@/components/ListadoInvitados.vue'
 import InvitadoInfo from '@/components/InvitadoInfo.vue'
+import AltaInvitado from '@/formularios/AltaInvitado.vue'
+import AltaVisita from '@/formularios/AltaVisita.vue'
 import About from '@/components/About.vue'
 import NotFound from '@/components/NotFound.vue'
 
@@ -27,15 +29,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 // /* import specific icons */
-import { fainstagram, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
+import { faCircleLeft, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram, faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
-import { faFacebook, faTwitter, fainstagram } from '@fortawesome/free-brands-svg-icons'
 // /* add icons to the library */
-
-
-library.add(faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
-
-
+library.add(faCircleLeft, faInstagram, faLinkedin, faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
 
 
 //theme PrimeVue
@@ -49,10 +47,13 @@ const pinia = createPinia()
 
 const routes = [
     { path: '/', component: Home, name: 'home' },
-    { path: '/visitas', component: Visitas },
-    { path: '/invitados', component: Invitados },
-    { path: '/ayuda', component: About },
-    { path: '/invitados/:matricula', component: InvitadoInfo },
+    { path: '/visitas', component: Visitas, name: 'visitas' },
+    { path: '/invitados', component: Invitados, name: 'invitados' },
+    { path: '/busqueda', component: VisitasAnc, name: 'busqueda' },    
+    { path: '/invitados/:identificador', component: InvitadoInfo, name: 'invitado' },
+    { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },
+    { path: '/nuevavisita', component: AltaVisita, name: 'nuevavisita' },
+    { path: '/ayuda', component: About, name: 'ayuda' },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]
 

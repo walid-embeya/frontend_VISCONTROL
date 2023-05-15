@@ -8,7 +8,7 @@ export const invitadosStore = defineStore('invitados', {
         invitados: listaInvitados
     }),
     //   getters: {         ////// getters: equiv a Computed
-    //     doubleCount: this.participantes.find(p => p.id == this.$route.params.id)
+  
     //   },
     actions: {              ////// actions: equiv a Methods
        getInvitadoPorMatricula(matricula) {
@@ -20,5 +20,5 @@ export const invitadosStore = defineStore('invitados', {
         getInvitadosPorEmpresa(empresa) {
             return this.invitados.find(i => i.empresa == empresa)
         }
-    },
+    }
   })
