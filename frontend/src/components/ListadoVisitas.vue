@@ -10,16 +10,18 @@ export default {
   data() {
     return {
       visitas: [],
-      visitasPendientes: [],
+      // visitasGlobales: [],
+      // visitasPendientes: [],
       ordenAscendente: true, 
       ordenarPor: 'fechaInicio' 
     }
   },
   computed:{
-    ...mapState(visitasStore, { visitasGlobales: 'visitas' }),
+    ...mapState(visitasStore, { globales: 'getVisitasGlobales', pendientes: 'getVisitasPendientes' }),
   },
 
   methods: {
+    // ...mapActions(visitasStore, { pendientes: 'getVisitasPendientes' }),
     sortByStartDate() {
         this.ordenarPor = 'fechaInicio';
         this.ordenAscendente = !this.ordenAscendente; // Cambiar el orden ascendente/descendente
@@ -42,16 +44,18 @@ export default {
           return 0;
         })
 
-      //   this.empresas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      // this.empresas.sort((a, b) => a.nombre.localeCompare(b.nombre));
       // return this.empresas;
     }
   },
-
+  
   created() {
-    this.visitas = this.visitasGlobales  
+ 
+    // console.log("glob", this.globales)
 
-    let dateSysteme = Date.now();
-    this.visitasPendientes = this.visitas.filter(v => new Date(v.fechaInicio) >= dateSysteme )
+    // console.log("pend", this.pendientes)
+        
+    this.visitas = this.pendientes
   }
 }
 </script>
@@ -64,12 +68,12 @@ export default {
 
           <div class="row">
               <div class="col-md-3">
-                    <label class="radio-inline me-4 fs-5 fw-bold">
-                      <input class="me-2" type="radio" name="optradio" checked @click="visitas = visitasGlobales">GLOBAL
-                    </label>
-                    <label class="radio-inline me-5 fs-5 fw-bold">
-                      <input class="me-2" type="radio" name="optradio" @click="visitas=visitasPendientes">PENDIENTES
-                    </label>   
+                  <label class="radio-inline me-5 fs-5 fw-bold">
+                      <input class="me-2" type="radio" name="optradio" checked @click="visitas=pendientes">PENDIENTES
+                  </label> 
+                  <label class="radio-inline me-4 fs-5 fw-bold">
+                      <input class="me-2" type="radio" name="optradio" @click="visitas=globales">GLOBAL
+                  </label>                  
               </div>
 
               <div class="col-md-6 text-center">

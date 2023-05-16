@@ -27,10 +27,11 @@ export default {
           <table class="table table-striped table-hover">
               <thead class="alert alert-primary">
                 <tr>
-                  <th scope="col">Matricula</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Apellidos</th>
-                  <th scope="col">Empresa</th>
+                  <th scope="col" style="text-align: center;">DNI</th>
+                  <th scope="col" style="text-align: center;">Nombre</th>
+                  <th scope="col" style="text-align: center;">Apellidos</th>
+                  <!-- <th scope="col">Empresa</th> -->
+                  <th scope="col" style="text-align: center;">Empresa</th>
                   <th class="th-aut" scope="col">Autorizado</th>
                 </tr>
               </thead>
@@ -45,9 +46,7 @@ export default {
 
 
 <style>
-  /* .th-aut {
-    text-align: left;
-    align-self: left;
-    vertical-align: middle; 
-  }  */
+  .th-aut {
+    text-align: center;   
+  } 
 </style>

@@ -118,10 +118,10 @@ export default {
 
                     <div class="row mb-1">                
                         <div class="col-md-3">
-                            <Calendar v-model="visita.fechaInicio" :show-time="true" :style="{'font-size': '14px', 'width': '200px', 'height': '35px'}" ></Calendar>
+                            <Calendar v-model="visita.fechaInicio" :show-time="true" dateFormat="dd/mm/yy" :style="{'font-size': '14px', 'width': '200px', 'height': '35px'}" ></Calendar>
                         </div>
                         <div class="col-md-3">
-                            <Calendar v-model="visita.fechaFin" :show-time="true" :style="{'font-size': '14px', 'width': '200px', 'height': '35px'}" ></Calendar>
+                            <Calendar v-model="visita.fechaFin" :show-time="true" dateFormat="dd/mm/yy" :style="{'font-size': '14px', 'width': '200px', 'height': '35px'}" ></Calendar>
                         </div> 
                         <div class="col-md-6">
                             <select class="form-select" v-model="visita.actividad">
@@ -156,7 +156,7 @@ export default {
                         <div class="col-md-4">                            
                             <select class="form-select" aria-label=".form-select-sm example" v-model="nuevoInvitado.matricula">                            
                                 <!-- <option value="0" selected="">Seleccione un invitado</option> -->
-                                <option v-for="invit of invitados" :value="invit.matricula">{{ invit.matricula }} - {{ invit.nombre }} {{ invit.apellidos }}</option>
+                                <option v-for="invit of invitados" :value="invit.matricula">{{ invit.nombre }} {{ invit.apellidos }}</option>
                             </select>
                         </div>                             
                         <div class="col-md-2">                                                                                                                                                                 
@@ -171,7 +171,7 @@ export default {
                        
                             <thead>
                                 <tr>
-                                    <th scope="col">Matricula</th>
+                                    <th scope="col">DNI</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Apellidos</th>
                                     <th scope="col">Empresa</th>                        
@@ -193,7 +193,7 @@ export default {
                 <div class="container border rounded mb-0 p-2 btn btn-secondary" style="align-items: center; justify-content: center; display:flex">
                     
                     <div class="d-inline me-1"><button type="submit" class="btn btn-warning" @click.prevent="crearVisita">Guardar Visita</button></div>
-                    <button type="submit" class="btn btn-warning" @click="$router.go(-1)">Cancelar</button>
+                    <button type="submit" class="btn btn-warning" @click="$router.push('/visitas')">Cancelar</button>
                 </div>
 
                 

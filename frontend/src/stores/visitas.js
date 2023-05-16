@@ -10,6 +10,15 @@ export const visitasStore = defineStore('visitas', {
 
     getters: {         ////// getters: equiv a Computed
 
+        getVisitasGlobales() {
+            return this.visitas.sort((a,b) => a.fechaInicio - b.fechaInicio)
+        },
+
+        getVisitasPendientes() {
+            let fechaSistema = Date.now();           
+            return this.getVisitasGlobales.filter(v => new Date(v.fechaInicio) >= fechaSistema)            
+        },
+        
         generarIdVisita() {
             // let max=this.visitas[0].id;
             // for(let i=1;i<this.visitas.length;i++) {
@@ -28,7 +37,9 @@ export const visitasStore = defineStore('visitas', {
         getVisitaPorId(id) {
            return this.visitas.find(v => v.id == id)
         },         
-       
+
+
+                       
     }
 
   })

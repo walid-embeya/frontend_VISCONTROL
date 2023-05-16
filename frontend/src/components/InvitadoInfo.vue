@@ -14,8 +14,7 @@ export default {
         // return this.invitados.find(i => i.matricula == this.$route.params.matricula)
         //return this.getInvitadoPorMatricula(this.$route.params.matricula)
 
-        return this.getInvitadoPorMatricula(this.$route.params.identificador)
-      
+        return this.getInvitadoPorId(this.$route.params.identificador)      
     }, 
 
     autorizacion() {
@@ -24,10 +23,10 @@ export default {
 
   },
   methods: {
-    ...mapActions(invitadosStore, ['getInvitadoPorMatricula'])
+    ...mapActions(invitadosStore, ['getInvitadoPorId'])
   },
   created() {
-
+    // console.log(this.$route.params.identificador)
   }
 
 }

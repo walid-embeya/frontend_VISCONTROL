@@ -7,6 +7,7 @@ export default {
   props: ['visita'],  ///// aqui, la opcion "props" es un array of atributes string
   data() {
     return {
+      invitado:null
     }
   },
   computed: {
@@ -24,12 +25,16 @@ export default {
       return timestampToHora(new Date(this.visita.fechaFin))
     },
   },
-  methods: {
-    ...mapActions(invitadosStore, ['getInvitadoPorMatricula']),
 
-    autorizacion(matricula) {
-        return this.getInvitadoPorMatricula(matricula).autorizacion.fechaInicio == null ? false : true;
+  methods: {
+    ...mapActions(invitadosStore, ['getInvitadoPorDNI']),
+
+    autorizacion(dni) {
+        return this.getInvitadoPorDNI(dni).autorizacion.fechaInicio == null ? false : true;
     },
+    getIdInvitado(dni) {
+        return this.getInvitadoPorDNI(dni).id
+    }
   },
 }
 
@@ -106,27 +111,25 @@ export default {
                   <table class="table table-striped table-hover">
                     <thead class="alert alert-dark">
                       <tr>
-                        <th scope="col">Matricula</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellidos</th>
-                        <th scope="col">Empresa</th>
+                        <th scope="col" style="text-align: center;">DNI</th>
+                        <th scope="col" style="text-align: center;">Nombre</th>
+                        <th scope="col" style="text-align: center;">Apellidos</th>
+                        <th scope="col" style="text-align: center;">Empresa</th>
                         <th scope="col" class="th-aut">Autorizado</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="invit in visita.invitados">
-                        <th scope="row">{{ invit.matricula }}</th>
+                        <th scope="row" style="text-align: center;">{{ invit.dni }}</th>
                         <td>{{ invit.nombre }}</td>
                         <td>{{ invit.apellidos }}</td>
                         <td>{{ invit.empresa }}</td>
-                        <td v-if="autorizacion(invit.matricula)"><input type="checkbox" id="autorizado" name="autorizado"
-                            checked></td>
-                        <td v-else><input type="checkbox" id="noAutorizado" name="noAutorizado"></td>
-
-                        <td>
-                          <router-link :to="{ name: 'invitado', params: { identificador: invit.matricula } }"><font-awesome-icon
+                        <td class="td-auth" v-if="autorizacion(invit.dni)"><input type="checkbox" id="autorizado" name="autorizado" checked><label for="disabled"></label></td>
+                        <td class="td-auth" v-else><input type="checkbox" id="noAutorizado" name="noAutorizado" disabled><label for="disabled"></label></td>                                           
+                        <td class="icon">
+                          <router-link :to="{ name: 'invitado', params: { identificador: getIdInvitado(invit.dni) } }"><font-awesome-icon
                               :icon="['fas', 'circle-info']" size="lg" style="color: #77767b;" /></router-link>
-                        </td>
+                        </td> 
 
                         <!-- <td>
                           <router-link :to="`/invitados/${invit.matricula}`"> <font-awesome-icon :icon="['fas', 'circle-info']"
@@ -144,7 +147,28 @@ export default {
 </template>
 
 <style>
-.th-aut {
-  text-align: left;
-  vertical-align: middle;
-}</style>
+    .th-aut, .td-auth, .icon {
+        text-align: center;
+    }
+
+/* .td-auth {
+  text-align: center;  
+}
+
+.icon {
+  text-align: center;
+} */
+
+    [type="checkbox"]{display:none;position:relative}
+
+    [type="checkbox"] + label:after{
+    content:"";
+    display:inline-block;
+    width:1em;height:1em;
+    outline:1px solid silver;  
+    }
+
+    [type="checkbox"]:checked + label:after{
+      background:rgb(69, 180, 36);
+    }
+</style>

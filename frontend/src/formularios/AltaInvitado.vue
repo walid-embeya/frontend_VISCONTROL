@@ -106,7 +106,7 @@
            <!-- botones de guardar y cancelar -->
           <div class="container border rounded mb-0 p-2 btn btn-secondary" style="align-items: center; justify-content: center; display:flex">                    
               <div class="d-inline me-1"><button type="submit" class="btn btn-warning" @click.prevent="crearInvitado">Guardar Invitado</button></div>
-              <button type="submit" class="btn btn-warning" @click="$router.go(-1)">Cancelar</button>
+              <button type="submit" class="btn btn-warning" @click="$router.push('/invitados')">Cancelar</button>
           </div> 
 
           <!-- table para listar todos los invitados -->

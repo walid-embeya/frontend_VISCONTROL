@@ -12,3 +12,4 @@ export function timestampToHora(fecha) {
     let options = { hour: "2-digit", minute: "2-digit" }
     return fecha.toLocaleTimeString('es-ES', options)
 }
+

@@ -7,6 +7,7 @@ import PrimeVue from 'primevue/config';
 import Home from './components/PaginaPrincipal.vue'
 import Visitas from '@/components/ListadoVisitas.vue'
 import VisitasAnc from '@/components/ListaVisitasPV.vue'
+import Busqueda from '@/components/Busqueda.vue'
 import Invitados from '@/components/ListadoInvitados.vue'
 import InvitadoInfo from '@/components/InvitadoInfo.vue'
 import AltaInvitado from '@/formularios/AltaInvitado.vue'
@@ -49,7 +50,7 @@ const routes = [
     { path: '/', component: Home, name: 'home' },
     { path: '/visitas', component: Visitas, name: 'visitas' },
     { path: '/invitados', component: Invitados, name: 'invitados' },
-    { path: '/busqueda', component: VisitasAnc, name: 'busqueda' },    
+    { path: '/busqueda', component: Busqueda, name: 'busqueda' },    
     { path: '/invitados/:identificador', component: InvitadoInfo, name: 'invitado' },
     { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },
     { path: '/nuevavisita', component: AltaVisita, name: 'nuevavisita' },

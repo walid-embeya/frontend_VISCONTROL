@@ -54,7 +54,7 @@
 		"email":"nacheson2@theatlantic.com",
 		"matricula":"662817",
 		"empresa":"Tambee",
-		"autorizacion": { },
+		"autorizacion": {},
 		"_links": {
 			"self": {
 				"href": "http://pruebaapi-lonchezas.b4a.run/api/invitados/3"

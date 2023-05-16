@@ -11,11 +11,12 @@ export const invitadosStore = defineStore('invitados', {
   
     //   },
     actions: {              ////// actions: equiv a Methods
-       getInvitadoPorMatricula(matricula) {
-           return this.invitados.find(i => i.matricula == matricula)
+        getInvitadoPorId(paramId) {
+           return this.invitados.find(i => i.id == paramId)
        },
-       getInvitadoPorDNI(dni) {
-            return this.invitados.find(i => i.dni == dni)
+       
+       getInvitadoPorDNI(paramDni) {
+            return this.invitados.find(i => i.dni == paramDni)
         },
         getInvitadosPorEmpresa(empresa) {
             return this.invitados.find(i => i.empresa == empresa)

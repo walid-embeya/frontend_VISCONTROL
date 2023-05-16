@@ -8,14 +8,14 @@
         "actividad": "vista al sala de reuniones",
         "actuacion": "vista del departamento de rh",
         "invitados": [
-             {
-             	"matricula":"772593",
+             {           
+             	"dni":"184501021",
               "nombre":"Brenda",
               "apellidos":"Fernao",
               "empresa":"Babbleblab"
              },
              {
-             	"matricula":"332142",
+             	"dni":"708779405",
               "nombre":"Nickola",
               "apellidos":"Netting",
               "empresa":"Flashset"
@@ -31,20 +31,20 @@
         }
       },
       {
-      	"id": 8,
+      	"id": 2,
         "fechaInicio": 1679391012000,
         "fechaFin": 1679401522000,       
         "actividad": "vista al sala de reuniones",
         "actuacion": "reunión con el equipo de producción",
         "invitados": [
              {
-             	"matricula":"662817",
+             	"dni":"905995337",
              	"nombre":"Norine",
               "apellidos":"Acheson",
               "empresa":"Tambee"
              },
              {
-             	"matricula":"564758",
+             	"dni":"051785957",
              	"nombre":"Jenifer",
               "apellidos":"Assante",	
               "empresa":"Topiczoom"
@@ -67,13 +67,13 @@
         "actuacion": "presentación de nuevos productos",
         "invitados": [
              {
-             	"matricula":"101569",
+             	"dni":"053890819",
              	"nombre":"Anatollo",
               "apellidos":"Geillier",		
               "empresa":"Aimbu"
              },
              {
-           	  "matricula":"961972",
+           	  "dni":"036507718",
              	"nombre":"Armando",
               "apellidos":"Fearnsides",
               "empresa":"Yoveo"
@@ -96,13 +96,13 @@
         "actuacion": "reunión con el gerente de la tienda",
         "invitados": [
              {
-             	"matricula":"978211",
+             	"dni":"693754510",
              	"nombre":"Annabella",
               "apellidos":"Westby",
               "empresa":"Kare"
              },
              {
-             	"matricula":"152896",
+             	"dni":"677956148",
              	"nombre":"Mirabelle",
               "apellidos":"Gaber",	
               "empresa":"Thoughtsphere"
@@ -125,13 +125,13 @@
         "actuacion": "reunión con el jefe de logística",
         "invitados": [
              {
-             	"matricula":"772593",
+             	"dni":"184501021",
               "nombre":"Brenda",
               "apellidos":"Fernao",
               "empresa":"Babbleblab"
              },
              {
-             	"matricula":"564758",
+             	"dni":"051785957",
              	"nombre":"Jenifer",
               "apellidos":"Assante",	
               "empresa":"Topiczoom"

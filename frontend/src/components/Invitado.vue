@@ -20,17 +20,17 @@ export default {
     <!-- Este componente no necesita una capa <div></div> -->
     
     <tr>
-      <th scope="row">{{ invitado.matricula }}</th>
+      <th style="text-align: center;" scope="row">{{ invitado.dni }}</th>
       <td>{{ invitado.nombre }}</td>
       <td>{{ invitado.apellidos }}</td> 
       <td>{{ invitado.empresa }}</td>
-      <td v-if="autorizacion"><input type="checkbox" id="autorizado" name="autorizado" checked></td>
-      <td v-else><input type="checkbox" id="noAutorizado" name="noAutorizado"></td>
-      <td><font-awesome-icon :icon="['fas', 'circle-check']" size="lg" class="option option1" /></td>
+      <td class="td-auth" v-if="autorizacion"><input type="checkbox" id="autorizado" name="autorizado" checked><label for="disabled"></label></td>
+      <td class="td-auth" v-else><input type="checkbox" id="noAutorizado" name="noAutorizado" disabled><label for="disabled"></label></td>
+      <!-- <td><font-awesome-icon :icon="['fas', 'circle-check']" size="lg" class="option option1" /></td> -->
       <td><font-awesome-icon :icon="['fas', 'pen-to-square']" size="lg" class="option" /></td>
       <td><font-awesome-icon :icon="['fas', 'trash-can']" size="lg" class="option option3"/></td> 
-      <td>
-        <router-link :to="{ name: 'invitado', params: { identificador: invitado.matricula }}"><font-awesome-icon :icon="['fas', 'circle-info']" size="lg" style="color: #77767b;" /></router-link>
+      <td class="icon">
+        <router-link :to="{ name: 'invitado', params: { identificador: invitado.id }}"><font-awesome-icon :icon="['fas', 'circle-info']" size="lg" style="color: #77767b;" /></router-link>
       </td>
       
       <!-- <td>      
@@ -40,7 +40,23 @@ export default {
 </template>
 
 <style>
- 
+  .th-aut, .td-auth, .icon, th, td {
+    text-align: center;
+  }
+
+  [type="checkbox"]{display:none;position:relative}
+
+  [type="checkbox"] + label:after{
+    content:"";
+    display:inline-block;
+    width:1em;height:1em;
+    outline:1px solid silver;  
+  }
+
+  [type="checkbox"]:checked + label:after{
+     background:rgb(69, 180, 36);
+  } 
+
   .option {
     cursor: pointer;
   }
