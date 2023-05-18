@@ -24,4 +24,4 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
    1. Librería:
 7. **Despliegue** en Internet: 
    1. API:
-   1. Web:
+   1. Web: https://viscontrol.netlify.app
