@@ -21,7 +21,7 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
       + Delete ->
 6. **URLs** del proyecto:
    1. Repositorio proyecto: https://git.institutomilitar.com/Camope/viscontrol
-   1. Librería:
+   1. Librería: https://github.com/walid-embeya/Proyecto_Libreria_VISCONTROL
 7. **Despliegue** en Internet: 
    1. API:
    1. Web: https://viscontrol.netlify.app
