@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd" 
+	version="1.0"> 
+    <mapped-superclass class="es.mdef.ViscontrolLib.VisitaImp" access="FIELD">
+        <attributes>            
+            <basic name="fechaInicio" optional="false">
+				<column name="fechaInicio"/>
+			</basic>
+			
+			<basic name="fechaFin" optional="false">
+				<column name="fechaFin"/>
+			</basic>
+						     
+            <basic name="actividad"/>
+            <basic name="actuaciones"/>
+            
+            <many-to-one name="anfitrion" fetch="LAZY" optional="false" target-entity="es.mdef.ViscontrolAPI.entidades.AnfitrionApiImp">
+				<join-column name="AnfitrionId" referenced-column-name="id"/>
+			</many-to-one>   	
+			                        
+			<many-to-many name="invitados" target-entity="es.mdef.ViscontrolAPI.entidades.InvitadoApiImp">
+                <join-table name="visita_invitado">
+                    <join-column name="visita_id"/>
+                    <inverse-join-column name="invitado_id"/>
+                </join-table>
+            </many-to-many>         
+			
+        </attributes>
+     </mapped-superclass>
+</entity-mappings>

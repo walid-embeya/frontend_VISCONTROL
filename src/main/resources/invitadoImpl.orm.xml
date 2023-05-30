@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd" 
+	version="1.0"> 
+    <mapped-superclass class="es.mdef.ViscontrolLib.InvitadoImp" access="FIELD">
+        <attributes> 
+            
+            <basic name="matricula"/>
+            <basic name="empresa"/>
+            <basic name="autorizado" optional="false">
+				<column name="autorizado"/>
+			</basic>
+            
+            <basic name="inicioAut" optional="true">
+				<column name="inicioAut"/>
+			</basic>
+						
+			 <basic name="finAut" optional="true">
+				<column name="finAut"/>
+			</basic>
+			
+            <many-to-many name="visitas" target-entity="es.mdef.ViscontrolAPI.entidades.VisitaApiImp">
+                <join-table name="visita_invitado">
+                    <join-column name="invitado_id"/>
+                    <inverse-join-column name="visita_id"/>
+                </join-table>
+             </many-to-many> 
+		
+        </attributes>
+     </mapped-superclass>
+</entity-mappings>
