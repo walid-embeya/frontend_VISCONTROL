@@ -5,7 +5,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +26,7 @@ import es.mdef.ViscontrolAPI.entidades.InvitadoApiImp;
 import es.mdef.ViscontrolAPI.entidades.PersonaApiImp;
 import es.mdef.ViscontrolAPI.repositorios.PersonaRepositorio;
 import es.mdef.ViscontrolAPI.repositorios.VisitaRepositorio;
+import es.mdef.ViscontrolLib.Persona;
 import es.mdef.ViscontrolLib.Visita;
 
 
@@ -56,18 +59,39 @@ public class PersonaController {
 		return assembler.toModel(persona);
 	}
 	
+//	@GetMapping
+//	public CollectionModel<PersonaListaModel> all() {
+//		
+//		CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(repositorio.findAll());
+//		
+//		collection.add(
+//				linkTo(methodOn(PersonaController.class).all()).withRel("Lista_Personas")
+//				);
+//		
+//		return collection;
+//	}
+
+	
 	@GetMapping
-	public CollectionModel<PersonaListaModel> all() {
+	public CollectionModel<PersonaListaModel> all(@Param("tipo") String tipo) {
 		
-		CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(repositorio.findAll());
+		List<PersonaApiImp> personas = repositorio.findAll();
+		
+		if (!tipo.equals("todos")) { 
+			personas = personas.stream().filter( p -> p.getTipo().toString().equals(tipo) ).collect(Collectors.toList());
+			
+		}
+		
+		CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(personas);
 		
 		collection.add(
-				linkTo(methodOn(PersonaController.class).all()).withRel("Lista_Personas")
+				linkTo(methodOn(PersonaController.class).all(tipo)).withRel("Lista_Personas")
 				);
 		
 		return collection;
 	}
-    
+	
+	
 	@PostMapping
 	public PersonaModel add(@RequestBody PersonaModel model) {
 		PersonaApiImp persona = repositorio.save(assembler.toEntity(model));

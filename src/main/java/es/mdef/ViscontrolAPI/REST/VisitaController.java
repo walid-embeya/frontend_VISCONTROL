@@ -3,6 +3,8 @@ package es.mdef.ViscontrolAPI.REST;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -90,15 +92,17 @@ public class VisitaController {
 	}
     
     
+    
     // Endpoint para modificar una visita
     @PutMapping("{id}")
-    public VisitaModel edit(@PathVariable Long id, @RequestBody VisitaModel model) {
+    public VisitaModel edit(@PathVariable Long id, @RequestBody VisitaPostModel model) {
 		VisitaApiImp visita = repositorio.findById(id).map(vis -> {
 			
 			vis.setFechaInicio(model.getFechaInicio());
 			vis.setFechaFin(model.getFechaFin());
 			vis.setActividad(model.getActividad());		
-			vis.setActuaciones(model.getActuaciones());				
+			vis.setActuaciones(model.getActuaciones());	
+			vis.setAnfitrion((AnfitrionApiImp) model.getAnfitrion());
 						
 			return repositorio.save(vis);
 		})
@@ -199,30 +203,30 @@ public class VisitaController {
     
     
     // Endpoint para delete un invitado de una visita  
-    @DeleteMapping("{id}/invitados/invId")
-	public void deleteInvitadoVisita(@PathVariable Long id, @PathVariable Long invId) {
-    	
-    	VisitaApiImp visita = repositorio.findById(id)
-        		.orElseThrow(() -> new RegisterNotFoundException(id, "visita")); 
-    	
-    	log.info("Borrado invitado de visita " + id);
-    	
-    	System.out.println(personarepositorio.findById(invId));
-    	
-    	int index = 0;
-    	for (int i = 0; i < visita.getInvitados().size(); i++) {
-    		if (visita.getInvitados().get(i).equals(personarepositorio.findById(invId))) {
-    			index = i;
-    			break;    			
-    		}			
-		}
-    	
-    	System.out.println(index);
-    	
-    	visita.getInvitados().remove(index);
-    	
-    	//int index = visita.getInvitados().indexOf(personarepositorio.findById(invId));    	    	
-	}
+//    @DeleteMapping("{id}/invitados/invId")
+//	public void deleteInvitadoVisita(@PathVariable Long id, @PathVariable Long invId) {
+//    	
+//    	VisitaApiImp visita = repositorio.findById(id)
+//        		.orElseThrow(() -> new RegisterNotFoundException(id, "visita")); 
+//    	
+//    	log.info("Borrado invitado de visita " + id);
+//    	
+//        System.out.println(personarepositorio.findById(invId));
+//    	
+//    	int index = 0;
+//    	
+//    	for (int i = 0; i < visita.getInvitados().size(); i++) {
+//    		if (visita.getInvitados().get(i).equals(personarepositorio.findById(invId)))  {
+//    			index = i;
+//    			break;    			
+//    		}			
+//		}
+//    	
+//    	System.out.println(index);
+//    	
+//    	visita.getInvitados().remove(index);
+//    	    	   
+//	}
     
 }
     
