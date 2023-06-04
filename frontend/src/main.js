@@ -38,11 +38,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 // /* import specific icons */
-import { faHouse, faCircleMinus, faCircleLeft, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faHouse, faCircleMinus, faCircleLeft, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 // /* add icons to the library */
-library.add(faHouse, faCircleMinus, faCircleLeft, faInstagram, faLinkedin, faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
+library.add(faCheck, faHouse, faCircleMinus, faCircleLeft, faInstagram, faLinkedin, faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
 
 
 //theme PrimeVue
@@ -66,7 +66,7 @@ const routes = [
     ///////////////////////////////////////
 
     { path: '/personas', component: Personas, name: 'personas' },
-    { path: '/personas/:identificador', component: PersonaInfo, name: 'persona' },
+    { path: '/personas/:identificador', component: PersonaInfo, name: 'personainfo' },
 
 
     { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },

@@ -35,9 +35,7 @@ export default {
     },
   },
   async created() {      
-       await  this.getPersonasApi()   
-  
-       //console.log("personas created: ", this.personasApi)      
+       await  this.getPersonasApi()      
       },
 }
 </script>
@@ -88,11 +86,11 @@ export default {
 
             <table class="table table-striped table-hover mt-2">
                 <thead class="alert alert-primary">
-                  <tr>
-                    <th scope="col" style="text-align: center;">DNI</th>
-                    <th scope="col" style="text-align: center;">Nombre</th>
-                    <th scope="col" style="text-align: center;">Apellidos</th>      
-                    <th scope="col" style="text-align: center;">Tipo</th>                   
+                  <tr class="header">
+                    <th scope="col">DNI</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>      
+                    <th scope="col">Tipo</th>                   
                   </tr>
                 </thead>
                 <tbody>                    
@@ -105,7 +103,8 @@ export default {
 
 
 <style>
-  .th-aut {
+
+  .header {
     text-align: center;   
   } 
 </style>

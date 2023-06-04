@@ -28,7 +28,6 @@ export default {
       return new Date()
     },
 
-   
   },
 
   methods: {
@@ -53,19 +52,18 @@ export default {
   },
 
  async mounted()  {
-  console.log("mounted id = ", this.$route.params.identificador)
-  //this.getPersonaPorId(this.$route.params.identificador)  
-  await this.getVisitasPersona(this.$route.params.identificador)
+    console.log("mounted id = ", this.$route.params.identificador)
+    
+    await this.getVisitasPersona(this.$route.params.identificador)
 },
 
  async created() {
-
-    // console.log("Created id = ", this.$route.params.identificador)
-
-    //this.getPersonaPorId(this.$route.params.identificador)   
-    //await this.getVisitasPersona(this.$route.params.identificador)
     
-    console.log("json", JSON.stringify(visitasPersona, null, " "))
+    this.getPersonaPorId(this.$route.params.identificador)   
+    
+    await this.getVisitasPersona(this.$route.params.identificador)
+
+    //console.log("json", JSON.stringify(visitasPersona, null, " "))
 }, 
 
 }
@@ -149,8 +147,11 @@ export default {
               </div> 
           </div>
           
+          
           <div v-if="visitasPersona" class="container border rounded mb-0 alert alert-light">   
-
+              <p v-if="esInvitado" class="fs-3 fw-bold text-center text-danger">Lista de visitas asistidas</p>
+              <p v-else class="fs-3 fw-bold text-center text-danger">Lista de visitas planificadas</p>
+              
               <table class="table table-striped table-hover">
                 <thead class="alert alert-primary" style="background-color:  rgb(4, 33, 117);">
                     <tr class="cabezera">
@@ -165,7 +166,6 @@ export default {
                       <th scope="row">{{ fecha(visita.fechaInicio) }} a las {{ hora(visita.fechaInicio) }}</th>
                       <td>{{ fecha(visita.fechaFin) }} a las {{ hora(visita.fechaFin) }}</td>
                       <td>{{ visita.actividad }}</td>
-
                       <td v-if="esPendiente(visita)">Pendiente</td>
                       <td v-else>Hecha</td>
 
