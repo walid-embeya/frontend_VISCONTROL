@@ -8,9 +8,17 @@ import Home from './components/PaginaPrincipal.vue'
 import Visitas from '@/components/ListadoVisitas.vue'
 import VisitasAnc from '@/components/ListaVisitasPV.vue'
 import Busqueda from '@/components/Busqueda.vue'
+
+// sprint 1 (solo gestion de invitados)
 import Invitados from '@/components/ListadoInvitados.vue'
 import InvitadoInfo from '@/components/InvitadoInfo.vue'
+///////////////////////////////////////
+
+import Personas from '@/components/ListadoPersonas.vue'
+import PersonaInfo from '@/components/PersonaInfo.vue'
+
 import AltaInvitado from '@/formularios/AltaInvitado.vue'
+import AltaAnfitrion from '@/formularios/AltaAnfitrion.vue'
 import AltaVisita from '@/formularios/AltaVisita.vue'
 import About from '@/components/About.vue'
 import NotFound from '@/components/NotFound.vue'
@@ -30,11 +38,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 // /* import specific icons */
-import { faCircleLeft, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faCircleMinus, faCircleLeft, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 // /* add icons to the library */
-library.add(faCircleLeft, faInstagram, faLinkedin, faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
+library.add(faHouse, faCircleMinus, faCircleLeft, faInstagram, faLinkedin, faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
 
 
 //theme PrimeVue
@@ -49,10 +57,20 @@ const pinia = createPinia()
 const routes = [
     { path: '/', component: Home, name: 'home' },
     { path: '/visitas', component: Visitas, name: 'visitas' },
+    
+    { path: '/busqueda', component: VisitasAnc, name: 'busqueda' },    
+
+    // sprint 1 (solo gestion de invitados)
     { path: '/invitados', component: Invitados, name: 'invitados' },
-    { path: '/busqueda', component: Busqueda, name: 'busqueda' },    
     { path: '/invitados/:identificador', component: InvitadoInfo, name: 'invitado' },
+    ///////////////////////////////////////
+
+    { path: '/personas', component: Personas, name: 'personas' },
+    { path: '/personas/:identificador', component: PersonaInfo, name: 'persona' },
+
+
     { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },
+    { path: '/nuevoanfitrion', component: AltaAnfitrion, name: 'nuevoanfitrion' },
     { path: '/nuevavisita', component: AltaVisita, name: 'nuevavisita' },
     { path: '/ayuda', component: About, name: 'ayuda' },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }

@@ -19,7 +19,7 @@
                   <!-- <router-link class="nav-link" aria-current="page" to="/visitas">Visitas</router-link>                  -->
                 </li>
                 <li class="nav-item">
-                  <router-link class="nav-link" :to="{ name: 'invitados' }" :class="$route.name == 'invitados' ? 'text-warning fw-bold' : ''">Invitados</router-link>
+                  <router-link class="nav-link" :to="{ name: 'personas' }" :class="$route.name == 'personas' ? 'text-warning fw-bold' : ''">Personas</router-link>
                   <!-- <router-link class="nav-link" to="/invitados">Invitados</router-link> -->
                 </li>
                 <li class="nav-item">
