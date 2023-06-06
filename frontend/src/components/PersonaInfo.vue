@@ -3,7 +3,7 @@ import Modelo from './Model.vue'
 import { mapActions, mapState } from 'pinia'
 import { personasStore } from '@/stores/personas'
 import ProgressSpinner from 'primevue/progressspinner'
-import { dateToString, timestampToFecha, timestampToHora } from '@/utils/utils'
+import { timestampToFecha, timestampToHora } from '@/utils/utils'
 
 
 export default {
@@ -49,22 +49,16 @@ export default {
     hora(d) {
       return timestampToHora(new Date(d))
     },
+    
   },
 
- async mounted()  {
-    console.log("mounted id = ", this.$route.params.identificador)
-    
-    await this.getVisitasPersona(this.$route.params.identificador)
-},
+  async created() {
+      console.log("created id = ", this.$route.params.identificador)
 
- async created() {
-    
-    this.getPersonaPorId(this.$route.params.identificador)   
-    
-    await this.getVisitasPersona(this.$route.params.identificador)
-
-    //console.log("json", JSON.stringify(visitasPersona, null, " "))
-}, 
+      await this.getPersonaPorId(this.$route.params.identificador)   
+      
+      console.log("persona json", JSON.stringify(this.personaApi, null, " "))
+  }, 
 
 }
 </script>
@@ -73,7 +67,6 @@ export default {
     <Modelo :titulo=tituloComponente>
       
       <div v-if="personaApi" class="alert alert-dark p-2 mb-0">
-
           <!-- informaciones comunes -->
           <div class="container border rounded mb-1 alert alert-secondary">
               <div class="row mt-1 mb-4">
@@ -97,10 +90,8 @@ export default {
               </div>         
           </div>
         
-          <!-- datos invitado -->
-          
+          <!-- datos invitado -->          
           <div v-if="esInvitado" class="container border rounded mb-1 alert alert-secondary">
-
               <div class="row mt-1 mb-4">
                   <div class="col-md-4">                        
                       <label class="fs-5">Matricula<span class="ms-3"><b>{{ personaApi.matricula }}</b></span></label>
@@ -131,7 +122,6 @@ export default {
               </div>              
           </div>
 
-
           <!-- datos anfitrion -->
           <div v-else class="container border rounded mb-1 alert alert-secondary">
               <div class="row mt-1">
@@ -146,45 +136,43 @@ export default {
                   </div>
               </div> 
           </div>
-          
-          
+                    
           <div v-if="visitasPersona" class="container border rounded mb-0 alert alert-light">   
-              <p v-if="esInvitado" class="fs-3 fw-bold text-center text-danger">Lista de visitas asistidas</p>
-              <p v-else class="fs-3 fw-bold text-center text-danger">Lista de visitas planificadas</p>
+              <p v-if="esInvitado" class="fs-3 fw-bold text-center text-warning">Lista de visitas del invitado</p>
+              <p v-else class="fs-3 fw-bold text-center text-danger">Lista de visitas planificadas por el anfitrión</p>
               
-              <table class="table table-striped table-hover">
-                <thead class="alert alert-primary" style="background-color:  rgb(4, 33, 117);">
-                    <tr class="cabezera">
-                      <th scope="col">Fecha/Hora Inicio</th>
-                      <th scope="col">Fecha/Hora Fin</th>
-                      <th scope="col">Actividad</th>
-                      <th scope="col">Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="linea" v-for="visita of visitasPersona" >
-                      <th scope="row">{{ fecha(visita.fechaInicio) }} a las {{ hora(visita.fechaInicio) }}</th>
-                      <td>{{ fecha(visita.fechaFin) }} a las {{ hora(visita.fechaFin) }}</td>
-                      <td>{{ visita.actividad }}</td>
-                      <td v-if="esPendiente(visita)">Pendiente</td>
-                      <td v-else>Hecha</td>
+              <div style="height: 300px; overflow-y: scroll;">
+                  <table class="table table-striped table-hover">                      
+                      <thead class="alert alert-primary" style="background-color: rgb(66, 102, 209);">    
+                        <tr class="cabezera">
+                          <th scope="col">Fecha/Hora Inicio</th>
+                          <th scope="col">Fecha/Hora Fin</th>
+                          <th scope="col">Actividad</th>
+                          <th scope="col">Estado</th>
+                        </tr>
+                      </thead>                      
+                      <tbody>
+                          <tr class="linea" v-for="visita of visitasPersona" >
+                            <th scope="row">{{ fecha(visita.fechaInicio) }} a las {{ hora(visita.fechaInicio) }}</th>
+                            <td>{{ fecha(visita.fechaFin) }} a las {{ hora(visita.fechaFin) }}</td>
+                            <td>{{ visita.actividad }}</td>
+                            <td v-if="esPendiente(visita)">Pendiente</td>
+                            <td v-else>Hecha</td>
 
-                      <!-- <td v-if="new Date(visita.fechaFin) > fechaHoy">Pendiente</td>
-                      <td v-else>hecha</td>  -->
+                            <!-- <td v-if="new Date(visita.fechaFin) > fechaHoy">Pendiente</td>
+                            <td v-else>hecha</td>  -->
 
-                      <!--<td>{{ estadoVisita(visita) }}</td>  -->
-
-                    </tr>
-                  </tbody>
-              </table>                            
+                            <!--<td>{{ estadoVisita(visita) }}</td>  -->
+                          </tr>
+                      </tbody>
+                  </table>                  
+              </div>                            
           </div>
 
           <div v-else class="container border rounded mb-0 alert alert-warning">
-
               <p class="text-center fw-bold fs-5">Esta persona no tiene visitas</p>
-
           </div> 
-
+          
           <pre>{{ JSON.stringify(visitasPersona, null, " ") }}</pre>
 
       </div> 
@@ -194,12 +182,11 @@ export default {
       </div>
              
       <div class="d-flex justify-content-center border rounded">
-        <button style="background-color: rgb(120, 124, 58); color: #ffffff;" @click="this.$router.push({ name: 'home' })" class="btn my-2 me-2">
+        <button @click="this.$router.push({ name: 'home' })" class="btn btn-secondary my-2 me-2">
           <font-awesome-icon icon="fa-solid fa-house" style="color: #ffffff;" class="me-2"/>Home
-
         </button> 
 
-        <button style="background-color: rgb(120, 124, 58); color: #ffffff;"  @click="this.$router.go(-1)" class="btn my-2 me-2">
+        <button @click="this.$router.go(-1)" class="btn btn-secondary my-2 me-2">
             <font-awesome-icon :icon="['fas', 'circle-left']" size="lg" style="color: #f6f5f4;" class="me-2"/>Atrás
         </button>               
       </div>        

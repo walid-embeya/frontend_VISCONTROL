@@ -1,0 +1,239 @@
+<script>
+import Modelo from '@/components/Model.vue'
+import { mapState, mapActions } from 'pinia'
+import { personasStore } from '@/stores/personas'
+import Calendar from 'primevue/calendar'
+
+export default {
+  components: { Modelo, Calendar },   ///// registro local de los componentes
+  data() {
+    return {
+      personaParaModificar: {
+        dni: '',
+        nombre: '',
+        apellidos: '',
+        telefono: '',
+        email: '',
+        nip: null,
+        area: null,
+        role: null,
+        matricula: '',
+        empresa: '',
+        autorizacion: null,
+        inicioAut: null,
+        finAut: null,
+        tipo: ''
+      },
+
+      
+      idPersona: null,
+
+      inicioAutValue: null,
+
+    }
+  },
+
+  computed: {
+    ...mapState(personasStore, [ 'personaApi' ]),
+
+    esInvitado() {
+        return this.personaApi.tipo == 'Invitado' ? true : false
+    },
+
+    tituloComponente() {
+        return this.esInvitado ? 'MODIFICACIÓN DEL INVITADO' : 'MODIFICACIÓN DEL ANFITRIÓN'
+    },    
+  },
+
+  methods: {
+    ...mapActions(personasStore, [ 'putPersona', 'getPersonaPorId' ]),
+
+    modificarPersona() {
+
+      console.log("personaApi : ", this.personaApi)
+      console.log("id de la persoan a modificar = ", this.personaParaModificar.id)
+      console.log("vamos a modificar la persona : ", JSON.stringify(this.personaParaModificar))
+      
+      this.putPersona(this.personaParaModificar)
+
+      // Limpiar los campos del formulario
+      // this.personaParaModificar = {
+      //   dni: '',
+      //   nombre: '',
+      //   apellidos: '',
+      //   telefono: '',
+      //   email: '',
+      //   nip: null,
+      //   area: null,
+      //   role: null,
+      //   matricula: '',
+      //   empresa: '',
+      //   autorizacion: null,
+      //   inicioAut: null,
+      //   finAut: null,
+      //   tipo: ''
+      // }
+    },
+  },
+
+  async created() {
+      // console.log("ruta params = ", this.$route.params)
+      // console.log("current ruta name = ", this.$route.name)
+
+      console.log('id de persona recuperada = ', this.$route.params.identificador)
+
+      await this.getPersonaPorId(this.$route.params.identificador).then((r) => this.personaParaModificar = this.personaApi)   
+  },
+
+}
+</script>
+
+<template>
+    <Modelo :titulo=tituloComponente>
+        <!-- Modal -->
+        <div class="modal fade" id="confirmacionOperacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmación de operación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">              
+                        <p><font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />Operación realizada con éxito</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form v-if="personaApi" class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
+            <!-- informaciones communes de persona -->
+            <div class="container alert alert-dark border rounded mb-1">              
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                      <label for="dni" class="form-label">DNI</label>
+                      <input type="text" class="form-control" id="dni" v-model="personaParaModificar.dni" placeholder="dni" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="nombre" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="dni" v-model="personaParaModificar.nombre" placeholder="nombre" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="apellidos" class="form-label">Apellidos</label>
+                      <input type="text" class="form-control" id="apellidos" v-model="personaParaModificar.apellidos" placeholder="apellidos" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                      <label for="telefono" class="form-label">Telefono</label>
+                      <input type="text" class="form-control" id="telefono" v-model="personaParaModificar.telefono" placeholder="0034 613 728 154">
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="email" v-model="personaParaModificar.email" placeholder="name@example.com">
+                    </div>
+                </div>
+            </div>
+
+            <!-- informaciones propias del invitado -->
+            <div v-if="personaApi.tipo == 'Invitado'" class="container alert alert-dark border rounded mb-2">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                      <label for="matricula" class="form-label">Matricula</label>
+                      <input type="text" class="form-control" id="matricula" v-model="personaParaModificar.matricula" placeholder="matricula" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="empresa" class="form-label">Empresa</label>
+                      <input type="text" class="form-control" id="empresa" v-model="personaParaModificar.empresa" placeholder="nombre de empresa" required>
+                    </div>
+                </div>
+                  
+                <div class="row">                      
+                    <div class="col-md-4">
+                      <div class="form-check form-check-inline">
+                          <input v-model="personaParaModificar.autorizacion" class="form-check-input" type="checkbox" id="autorizacion" value="option1">
+                          <label class="form-check-label" for="autorizacion">Autorizado</label>
+                      </div>                                      
+                    </div>                  
+                    <div v-if="personaParaModificar.autorizacion" class="col-md-8">                    
+                        <div class="row">
+                            <div class="col-md-5">
+                              <label for="fechainicio" class="form-label me-2">Fecha Inicio</label>
+                            </div>
+                            <div class="col-md-5">
+                              <label for="fechafin" class="form-label me-2">Fecha Fin</label>
+                            </div>
+                        </div>                     
+                        <div class="row">
+                            <div class="col-md-5">
+                                <Calendar v-model="personaParaModificar.fechaInicio" :show-time="false" dateFormat="dd/mm/yy"
+                                      :style="{ 'font-size': '14px', 'width': '200px', 'height': '35px' }"></Calendar>
+                                <!-- :defaultDate="new Date()"   @date-change="handleDateChange"-->                                
+                            </div>
+                            <div class="col-md-5">
+                                <Calendar v-model="personaParaModificar.fechaFin" :show-time="false" dateFormat="dd/mm/yy"
+                                      :style="{ 'font-size': '14px', 'width': '200px', 'height': '35px' }"></Calendar>
+                            </div>
+                        </div>                       
+                    </div>                                                      
+                </div>             
+            </div>
+
+            <!-- informaciones propias del anfitrion -->
+            <div v-else class="container alert alert-dark border rounded mb-2">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                      <label for="nip" class="form-label">NIP</label>
+                      <input type="text" class="form-control" id="nip" v-model="personaApi.nip" placeholder="NIP del anfitrión" required>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="area" class="form-label">Area</label>
+                      <input type="text" class="form-control" id="area" v-model="personaApi.area" placeholder="area de encarga del anfitrión" required>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="role" class="form-label">Role</label>
+                      <input type="text" class="form-control" id="role" v-model="personaApi.role" placeholder="role del anfitrión" required>
+                    </div>
+                </div>                        
+            </div>
+
+            <!-- botones de guardar y cancelar -->
+            <div class="d-flex justify-content-center p-2 mb-2">
+                <button type="submit" class="btn btn-success d-inline me-1" @click.prevent="modificarPersona" data-bs-toggle="modal" data-bs-target="#confirmacionOperacion">
+                    <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2"/>Actualizar</button>
+                            
+                <button type="submit" class="btn btn-secondary" @click="$router.push({ name: 'personas' })">Cancelar</button>
+            </div>        
+            
+            <pre>persona para modificar : {{ JSON.stringify(personaParaModificar, null, " ") }}</pre>
+
+        </form>
+
+        <div v-else class="text-center border rounded p-4 mb-0 " style="background-color: rgb(143, 170, 211);">
+            <h4>cargando datos de persona...</h4>
+        </div>  
+
+    </Modelo>
+</template>
+
+<style>
+
+  .columna {
+      text-align: center;
+  }
+
+  .linea{
+      text-align: center;
+  }
+
+</style>
+
+
+      
+      

@@ -19,6 +19,9 @@ import PersonaInfo from '@/components/PersonaInfo.vue'
 
 import AltaInvitado from '@/formularios/AltaInvitado.vue'
 import AltaAnfitrion from '@/formularios/AltaAnfitrion.vue'
+
+import ModificarPersona from '@/formularios/ModificarPersona.vue'
+
 import AltaVisita from '@/formularios/AltaVisita.vue'
 import About from '@/components/About.vue'
 import NotFound from '@/components/NotFound.vue'
@@ -66,7 +69,9 @@ const routes = [
     ///////////////////////////////////////
 
     { path: '/personas', component: Personas, name: 'personas' },
-    { path: '/personas/:identificador', component: PersonaInfo, name: 'personainfo' },
+    { path: '/personas/:identificador/personainfo', component: PersonaInfo, name: 'personainfo' },
+
+    { path: '/personas/:identificador/modificarpersona', component: ModificarPersona, name: 'modificarpersona' },
 
 
     { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },

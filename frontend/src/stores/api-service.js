@@ -16,9 +16,9 @@ export function llamadaAPI(method, body, path) {
         config.headers['Content-Type'] = 'application/json'
   }
 
+  //console.log('path = ', path)
   return axios.request(config)
 }
-
 
 // PUT
 function llamadaApiPUTParams(path, params = {}) {
@@ -32,11 +32,6 @@ function llamadaApiPUTParams(path, params = {}) {
   return axios.request(config);
 }
 
-
-
-
-
-
 // GETS
 export function getEntidades(nombre) {
   //console.log("get all de la entidad", nombre)
@@ -45,44 +40,33 @@ export function getEntidades(nombre) {
   return llamadaAPI('get',null,`${host}/${nombre}`)
 }
 
-
 function getEntidadPorId(nombre, id) {
-  console.log("recuperando entidad", nombre, "con id", id)
+  //console.log("recuperando entidad", nombre, "con id", id)
   return llamadaAPI('get', null, `${host}/${nombre}/${id}`)
 }
-
 
 function getEntidadPorNombre(nombre, campo, valor) {
   return llamadaAPI('get',null,`${host}/${nombre}/${campo}/${valor}`)
 }
-
 
 //POST
 function postEntidad(modelo, nombre) {
   return llamadaAPI('post', modelo, `${host}/${nombre}`)
 }
 
-
 //PUT
 function putEntidad(modelo, id, nombre) {
   return llamadaAPI('put', modelo, `${host}/${nombre}/${id}`)
 }
-
 
 //PATCH
 function patchEntidad(modelo, entidad, id, nombre) {
   return llamadaAPI('patch', modelo, `${host}/${entidad}/${id}/${nombre}`)
 }
 
-
-function PUTAumentarCretido(nombre, id, creditos) {
-  console.log("llamando a put de departamento:" + id + " milis" + creditos)
-  return llamadaApiPUTParams(`${host}/${nombre}/${id}/aumentarCredito`, { cantidad: creditos })
-}
-
 // DELETE
 function deleteEntidad(id, nombre) {
-  return llamadaAPI('delete',null,`${host}/${nombre}/${id}`)
+  return llamadaAPI('delete', null,`${host}/${nombre}/${id}`)
 }
 
 
@@ -112,8 +96,8 @@ export function deleteVisita(visita) {
 }
 
 /// POST INVITADOS A VISITA
-export function addInvitadosVisita(listaInvitados, id) {
-  return llamadaAPI('post', listaInvitados, `${host}/visitas/${id}/invitados`)
+export function addInvitadosToVisita(listaInvitados, id) {
+   return llamadaAPI('post', listaInvitados, `${host}/visitas/${id}/invitados`)
 }
 ////////////////////////////
 
@@ -132,7 +116,6 @@ export function getPersonas(tipo) {
 }
 
 export function getPersonaPorId(id) {
-  console.log("llamando a getPersonaPorID dentro del api-service")
   return getEntidadPorId('personas', id)
 }
 
@@ -151,6 +134,10 @@ export function deletePersona(persona) {
 
 /// GET VISITAS DE PERSONA
 export function getVisitasPersona(id) {
-  return llamadaAPI('get', `${host}/personas/${id}/visitas`)
+  let path=`${host}/personas/${id}/visitas`
+   return llamadaAPI('get', null, path)
+  //return llamadaAPI('get', null, `${host}/personas/${id}/visitas`)
 }
 ////////////////////////////
+
+

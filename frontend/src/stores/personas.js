@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getPersonas, getPersonaPorId, postPersona, getVisitasPersona, putPersona, deletePersona, llamadaAPI} from './api-service'
+import { getPersonas, getPersonaPorId, postPersona, getVisitasPersona, putPersona, deletePersona } from './api-service'
 
 
 export const personasStore = defineStore('personas', {
@@ -30,21 +30,59 @@ export const personasStore = defineStore('personas', {
         },
 
         async getInvitadosApi() {
-            await getPersonas('Invitado').then(r => this.invitadosApi = r.data._embedded.personas)            
-        },
-                
+            await getPersonas('Invitado').then((response) => {
+                let invitadosAux = response.data._embedded.personas
+                this.invitadosApi = []
+                invitadosAux.forEach(element => {    
+                    getPersonaPorId(element.id).then((r) => this.invitadosApi.push(r.data))                       
+                })      
+            })
+        },   
+    
         async getAnfitrionesApi() {
-            await getPersonas('Anfitrion').then(r => this.anfitrionesApi = r.data._embedded.personas)            
-        },      
-        
-        /////////////////////////////****************************************///////////////////////////////
-        async getPersonaPorId(id) {      
-            await getPersonaPorId(id).then(r => this.personaApi = r.data)           
+            await getPersonas('Anfitrion').then((response) => {
+                let anfitrionesAux = response.data._embedded.personas
+                this.anfitrionesApi = []
+                anfitrionesAux.forEach(element => {    
+                    getPersonaPorId(element.id).then((r) => this.anfitrionesApi.push(r.data))                       
+                })      
+            })
         },
+
+        /////////////////////////////****************************************///////////////////////////
+
+        async getPersonaPorId(id) {      
+            // await getPersonaPorId(id).then(r => this.personaApi = r.data)           
+            
+            await getPersonaPorId(id).then((response) =>  {
+                this.personaApi = response.data
+
+                getVisitasPersona(response.data.id).then((r) =>  {
+                    this.visitasPersona = []            
+                    if (r.data._embedded.visitas !== null) {
+                        this.visitasPersona = r.data._embedded.visitas            
+                    }
+                })   
+
+                // this.personaApi.inicioAut = new Date(element.inicioAut)
+                // this.personaApi.finAut = new Date(element.finAut)              
+            })
+        },
+
+        ////////////*********************************************////////////////
+        // async getVisitasPersona(id) {
+        //     //console.log("llamando a getVisiatsPersona dentro del store")
+        //     await getVisitasPersona(id).then((r) =>  {
+        //         this.visitasPersona = []            
+        //         if (r.data._embedded.visitas !== null) {
+        //             this.visitasPersona = r.data._embedded.visitas            
+        //         }
+        //     })           
+        // },
+        ///////////////////////////////////////////////////////////////////////
                             
         async postPersona(persona) {
             await postPersona(persona).then((response) => {
-                this.personasApi.push(persona)
                 if (persona.tipo=='Invitado') {
                    this.invitadosApi.push(persona)
                 }
@@ -63,21 +101,12 @@ export const personasStore = defineStore('personas', {
             }) 
             .catch((error) => {
                        console.error("A la hora de borrar la persona, Se ha producido un error : ", error);
-                     });     
+            });     
         },   
     
-        ////////////*********************************************////////////////
-
-
-        async getVisitasPersona(id) {
-            //console.log("llamando a getVisiatsPersona dentro del store")
-            await getVisitasPersona(id).then(r => this.visitasPersona = r.data._embedded.visitas)           
+        async putPersona(persona) {
+            console.log('put persona desde store')
+            await putPersona(persona)      
         },
-
-        async putPersona(persona, id) {
-            console.log('delete desde store')
-            await putPersona(persona, id)      
-        },
-
     }
   })
