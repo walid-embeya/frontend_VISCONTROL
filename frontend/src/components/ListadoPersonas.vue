@@ -16,7 +16,7 @@ export default {
     }
   },
   computed: {
-      ...mapState(personasStore,  [ 'personasApi' ]),
+    ...mapState(personasStore,  [ 'personasApi' ]),
   }, 
   methods: {
     ...mapActions(personasStore, ['getPersonasApi']),
@@ -82,21 +82,22 @@ export default {
                 </div>
               </div>
             </div>     
-
-
-            <table class="table table-striped table-hover mt-2">
-                <thead class="alert alert-primary">
-                  <tr class="header">
-                    <th scope="col">DNI</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>      
-                    <th scope="col">Tipo</th>                   
-                  </tr>
-                </thead>
-                <tbody>                    
-                    <Persona v-for="persona of personasApi" :persona="persona" />      
-                </tbody>
-            </table>
+            
+            <div style="height: 600px; overflow-y: scroll;">
+                <table class="table table-striped table-hover mt-2">
+                    <thead class="alert alert-primary">
+                      <tr class="header">
+                        <th scope="col">DNI</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellidos</th>      
+                        <th scope="col">Tipo</th>                   
+                      </tr>
+                    </thead>
+                    <tbody>                    
+                        <Persona v-for="persona of personasApi" :persona="persona" />      
+                    </tbody>
+                </table>
+            </div>
 
         </Modelo> 
 </template>
