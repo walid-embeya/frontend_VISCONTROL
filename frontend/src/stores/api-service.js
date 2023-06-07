@@ -103,7 +103,7 @@ export function addInvitadosToVisita(listaInvitados, id) {
 
 /// GET INVITADOS DE VISITA
 export function getInvitadosVisita(id) {
-  return llamadaAPI('get', `${host}/visitas/${id}/invitados`)
+  return llamadaAPI('get', null, `${host}/visitas/${id}/invitados`)
 }
 ////////////////////////////
 
@@ -131,12 +131,9 @@ export function deletePersona(persona) {
   return deleteEntidad(persona.id, 'personas')
 }
 
-
 /// GET VISITAS DE PERSONA
 export function getVisitasPersona(id) {
-  let path=`${host}/personas/${id}/visitas`
-   return llamadaAPI('get', null, path)
-  //return llamadaAPI('get', null, `${host}/personas/${id}/visitas`)
+  return llamadaAPI('get', null, `${host}/personas/${id}/visitas`)
 }
 ////////////////////////////
 
