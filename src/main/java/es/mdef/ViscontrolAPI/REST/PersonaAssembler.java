@@ -98,6 +98,7 @@ public class PersonaAssembler implements RepresentationModelAssembler<PersonaApi
 			throw new IllegalArgumentException("Unexpected value: " + model.getTipo());
 		}
 
+		persona.setId(model.getId());
 		persona.setDni(model.getDni());
 		persona.setNombre(model.getNombre());
 		persona.setApellidos(model.getApellidos());

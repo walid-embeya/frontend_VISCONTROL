@@ -1,63 +1,75 @@
 import { defineStore } from 'pinia'
 import visitasJson from '@/assets/visitas.json'
-import { getVisitas, postVisita, addInvitadosToVisita, getVisitaPorId } from './api-service'
+import { getVisitas, postVisita, addInvitadosToVisita, getVisitaPorId, getInvitadosVisita } from './api-service'
 import { dateToString, timestampToFecha, timestampToHora } from '@/utils/utils'
 
-const listaVisitas = visitasJson._embedded.visitas
 
 export const visitasStore = defineStore('visitas', {
     state: () => ({         //// state: equiv a Data
 
-        visitas: listaVisitas,   //// datos desde json
-
-        visitasApi: null,        ///// para cargarlo con la lista recuperado de la api
-        visitaApi: null,
-        idVisita: null,
+        visitasApi: null,       ///// para cargar la lista recuperado de la api
+        visitaApi: null,        ///// para recuperar una visita por ID
+        invitadosVisitaApi: undefined,    //// para recuperar la lista de invitados de una visita
+        idVisita: null,         ///// para recuperar el ID de visita tras agregar uns nueva visita y usarlo en anñadir invitados a dicha visita
 
     }),
 
-    getters: {         ////// getters: equiv a Computed
+    getters: {         ////// getters: equiv a Computed        
+        // visitasGlobalesApi() {
+        //     if (this.visitasApi) {
+        //         return this.visitasApi.sort((a,b) => a.fechaInicio - b.fechaInicio)  
+        //     }  
+        //     else
+        //         return null        
+        // },
 
-        
-        getVisitasGlobales() {
-            //// otra forma
-            //return listaVisitas.sort((a,b) => a.fechaInicio - b.fechaInicio)
-
-            return this.visitas.sort((a,b) => a.fechaInicio - b.fechaInicio)            
-        },
-
-        getVisitasPendientes() {
-            let fechaSistema = Date.now();           
-            return this.getVisitasGlobales.filter(v => new Date(v.fechaInicio) >= fechaSistema)            
-        },
-        
-        generarIdVisita() {
-            // let max=this.visitas[0].id;
-            // for(let i=1;i<this.visitas.length;i++) {
-            //     if (this.visitas[i].id > max) {
-            //         max = this.visitas[i].id
-            //     }
-            // }
-            // return max
-
-            //return this.visitas.reduce((p, c) => { return c.id > p ? c.id : p }, 0)
-        }
-        
+        // visitasPendientesApi() {
+        //     console.log("globales :", this.visitasGlobalesApi)
+        //     let fechaSistema = Date.now()        
+        //     if (this.visitasGlobalesApi) {           
+        //         return this.visitasGlobalesApi.filter(v => new Date(v.fechaInicio) >= fechaSistema)
+        //     }  
+        //     else 
+        //         return null         
+        // },
     },
 
     actions: {              ////// actions: equiv a Methods
         
+        // async getVisitasApi() {
+        //     await getVisitas().then(r => 
+        //         {
+        //            let visitasAux =  r.data._embedded.visitas  
+        //            visitasAux.forEach((element) => {
+        //                     element.fechaInicio = dateToString(new Date(element.fechaInicio))
+        //                     element.fechaFin = dateToString(new Date(element.fechaFin))
+        //                  });
+        //            this.visitasApi = visitasAux                   
+        //         }
+        //     )
+        // },
+
         async getVisitasApi() {
-            await getVisitas().then(r => 
+            await getVisitas().then((response) => 
                 {
-                   let visitasAux =  r.data._embedded.visitas  
-                   visitasAux.forEach((element) => {
-                            element.fechaInicio = dateToString(new Date(element.fechaInicio))
-                            element.fechaFin = dateToString(new Date(element.fechaFin))
-                         });
-                   this.visitasApi = visitasAux                   
-                }
-            )
+                    let visitasAux =  response.data._embedded.visitas  
+                    this.visitasApi = []
+                    visitasAux.forEach((element) => {
+                        let array = element._links.self.href.split('/')                
+                        let id = array[array.length-1]
+    
+                        getVisitaPorId(id).then((r) => {
+                            this.visitasApi.push(r.data)
+                        })
+
+                        ///// esto para Table Primevue
+                            // element.fechaInicio = dateToString(new Date(element.fechaInicio))
+                            // element.fechaFin = dateToString(new Date(element.fechaFin))
+                    })
+                   // this.visitasApi.sort((a,b) => a.fechaInicio - b.fechaInicio)                                    
+                })
+                
+                console.log("Lista Visitas API desde store: ", this.visitasApi)
         },
 
         async postVisita(visita) {
@@ -75,21 +87,14 @@ export const visitasStore = defineStore('visitas', {
         async getVisitaPorId(id) {
             await getVisitaPorId(id).then((r) => this.visitaApi = r.data)
         },
-       
-        
 
-
-
-
-
-
-
-
-
-
-        // getVisitaPorId(id) {
-        //    return this.visitas.find(v => v.id == id)
-        // },                            
+        async getInvitadosVisita(id) {
+            console.log("getInvitadosVisita dentro del store")
+            await getInvitadosVisita(id).then((response) => {
+                this.invitadosVisitaApi = response.data._embedded.personas
+            })
+        },
+                                        
     }
 
   })

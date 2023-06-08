@@ -16,6 +16,7 @@ public class VisitaAssembler implements RepresentationModelAssembler<VisitaApiIm
 	public VisitaModel toModel(VisitaApiImp entity) {
 		VisitaModel model = new VisitaModel();
 
+		model.setId(entity.getId());
 		model.setFechaInicio(entity.getFechaInicio());
 		model.setFechaFin(entity.getFechaFin());
 		model.setActividad(entity.getActividad());

@@ -3,100 +3,121 @@ import Modelo from './Model.vue'
 import Visita from './Visita.vue'
 import { mapActions, mapState } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
-// import visitasJson from '@/assets/visitas.json'
+
+import { timestampToFecha, timestampToHora } from '@/utils/utils'
+
 
 export default {
   components: { Modelo, Visita },   ///// registro local del componente "Visita"
   data() {
     return {
       visitas: [],
-      // visitasGlobales: [],
-      // visitasPendientes: [],
       ordenAscendente: true, 
       ordenarPor: 'fechaInicio' 
     }
   },
   computed:{
-    ...mapState(visitasStore, { globales: 'getVisitasGlobales', pendientes: 'getVisitasPendientes' }),
+    ...mapState(visitasStore, [ 'visitasApi', 'visitasPendientesApi' ]),
+
+    visitasPendientes() {
+        if (this.visitas) {
+            let fechaSistema = Date.now()                   
+            return this.visitas.filter(v => new Date(v.fechaInicio) >= fechaSistema)   
+        } 
+        else  
+            return null        
+    },
+
   },
 
   methods: {
-    // ...mapActions(visitasStore, { pendientes: 'getVisitasPendientes' }),
+    ...mapActions(visitasStore, [ 'getVisitasApi' ]),
+    
     sortByStartDate() {
         this.ordenarPor = 'fechaInicio';
         this.ordenAscendente = !this.ordenAscendente; // Cambiar el orden ascendente/descendente
 
         const orden = this.ordenAscendente ? 1 : -1 // Determinar el orden ascendente o descendente
+        
         return this.visitas.sort((a, b) => {
             if (a[this.ordenarPor] < b[this.ordenarPor]) return -1 * orden
             if (a[this.ordenarPor] > b[this.ordenarPor]) return 1 * orden
             return 0;
-          })
+        })
     },
     sortByActivity() {
-      this.ordenarPor = 'actividad';
-      this.ordenAscendente = !this.ordenAscendente; // Cambiar el orden ascendente/descendente
+        this.ordenarPor = 'actividad';
+        this.ordenAscendente = !this.ordenAscendente; // Cambiar el orden ascendente/descendente
 
-      const orden = this.ordenAscendente ? 1 : -1 // Determinar el orden ascendente o descendente
-      return this.visitas.sort((a, b) => {
-          if (a[this.ordenarPor] < b[this.ordenarPor]) return -1 * orden
-          if (a[this.ordenarPor] > b[this.ordenarPor]) return 1 * orden
-          return 0;
+        const orden = this.ordenAscendente ? 1 : -1 // Determinar el orden ascendente o descendente
+            
+        return this.visitas.sort((a, b) => {
+              if (a[this.ordenarPor] < b[this.ordenarPor]) return -1 * orden
+              if (a[this.ordenarPor] > b[this.ordenarPor]) return 1 * orden
+              return 0;
         })
+    },
 
-      // this.empresas.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      // return this.empresas;
-    }
   },
   
-  created() {
- 
-    // console.log("glob", this.globales)
+  async created() {               
 
-    // console.log("pend", this.pendientes)
-        
-    this.visitas = this.pendientes
+      await this.getVisitasApi()
+
+      this.visitas = this.visitasApi
+      // console.log("Lista Visitas API desde componente: ", this.visitasApi)
+
+      // console.log("Lista Visitas pendientes API : ", this.visitasPendientes)
+
+      
+
   }
 }
 </script>
 
 
 <template>
-  <div>
-     <Modelo titulo="LISTADO VISITAS">
-        <div v-if="visitas" class="container mt-5 mb-1">
+    
+    <Modelo titulo="LISTADO VISITAS">
 
-          <div class="row">
-              <div class="col-md-3">
-                  <label class="radio-inline me-5 fs-5 fw-bold">
-                      <input class="me-2" type="radio" name="optradio" checked @click="visitas=pendientes">PENDIENTES
-                  </label> 
-                  <label class="radio-inline me-4 fs-5 fw-bold">
-                      <input class="me-2" type="radio" name="optradio" @click="visitas=globales">GLOBAL
-                  </label>                  
-              </div>
+        <div class="container pt-3">
+            
+            <div class="row">            
+                <div class="col-md-3">
+                    <label class="radio-inline me-5 fs-5 fw-bold mt-2 mb-2 ">
+                        <input class="me-2" type="radio" name="optradio" checked @click="visitas=visitasPendientes">PENDIENTES
+                    </label> 
+                    <label class="radio-inline me-4 fs-5 fw-bold">
+                        <input class="me-2" type="radio" name="optradio" @click="visitas=visitasApi">GLOBAL
+                    </label>                  
+                </div>
 
-              <div class="col-md-6 text-center">
+                <div class="col-md-6 d-flex justify-content-center p-3 mb-3">
                   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" @click="sortByStartDate" checked>
-                    <label class="btn btn-outline-danger" for="btnradio1">Ordenar por fecha de inicio</label>
+                      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" @click="sortByStartDate" checked>
+                      <label class="btn btn-outline-info mt-1 fw-bold" for="btnradio1">Ordenar por fecha de inicio</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" @click="sortByActivity">
-                    <label class="btn btn-outline-danger" for="btnradio2">Ordenar por actividad</label>
+                      <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" @click="sortByActivity">
+                      <label class="btn btn-outline-info mt-1 fw-bold" for="btnradio2">Ordenar por actividad</label>
                   </div>
-              </div>
-             
-              <div class="col-md-3 text-center">
-                    <router-link :to="{ name: 'nuevavisita' }" class="btn btn-secondary btn-lg my-1" style="background-color: rgb(102, 102, 105);">
-                          <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2"/>Nueva Visita</router-link>             
-              </div>
-          </div>   
+                </div>
+              
+                <div class="col-md-3 d-flex justify-content-end p-3 mb-3">
+                      <router-link :to="{ name: 'nuevavisita' }" class="btn btn-success my-1">
+                            <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2"/>Nueva Visita</router-link>             
+                </div>
+            </div>    
         </div>
-        <div v-else>No hay visitas</div>
+        
+        <div v-if="visitas">                    
+            <Visita v-for="vis of visitas" :visita="vis" class="py-3 px-3 mb-1"></Visita>
+        </div>
       
-        <Visita v-for="vis of visitas" :visita="vis" class="py-2 px-2 mb-1"></Visita>
+        <div v-else class="container border rounded mb-0 alert alert-warning">
+            <p class="text-center fw-bold fs-5">No hay visitas</p>
+        </div>   
+        <!-- </div>     -->
      </Modelo>
-  </div> 
 </template>
 
 

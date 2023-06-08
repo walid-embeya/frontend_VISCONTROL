@@ -68,7 +68,6 @@ public class VisitaController {
 		return collection;
 	}
     
-    
     // Endpoint para recuperar una visita
     @GetMapping("{id}")
 	public VisitaModel one(@PathVariable Long id) {
@@ -80,7 +79,6 @@ public class VisitaController {
 		return assembler.toModel(visita);
 	}
     
-    
     // Endpoint para añadir una visita 
     @PostMapping
 	public VisitaModel add(@RequestBody VisitaPostModel model) {
@@ -90,8 +88,6 @@ public class VisitaController {
 		
 		return assembler.toModel(visita);
 	}
-    
-    
     
     // Endpoint para modificar una visita
     @PutMapping("{id}")
@@ -112,16 +108,6 @@ public class VisitaController {
 		
 		return assembler.toModel(visita);
 	}
-   
-    
-    // Endpoint para modificar un invitados de una visita
-    
-    
-    ///***********  no hace falta, se puede hacerlo con : delete + add *******************
-    
-    /////////////////////////////////////////////////////
-    
-   
     
     // Endpoint para recuperar la lista de invitados de una visita
     @GetMapping("{id}/invitados")
@@ -200,6 +186,19 @@ public class VisitaController {
 		log.info("Borrado visita " + id);
 		repositorio.deleteById(id);
 	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     // Endpoint para delete un invitado de una visita  

@@ -8,10 +8,18 @@ import org.springframework.hateoas.server.core.Relation;
 @Relation(itemRelation = "visita")
 public class VisitaModel extends RepresentationModel<VisitaModel> {
 
+	private Long id;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private String actuaciones;
 	private String actividad;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public Date getFechaInicio() {
 		return fechaInicio;

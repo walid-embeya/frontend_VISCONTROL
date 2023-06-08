@@ -34,10 +34,8 @@ function llamadaApiPUTParams(path, params = {}) {
 
 // GETS
 export function getEntidades(nombre) {
-  //console.log("get all de la entidad", nombre)
-
   //return llamadaAPI('get',null,`${host}api/${nombre}`)
-  return llamadaAPI('get',null,`${host}/${nombre}`)
+  return llamadaAPI('get', null, `${host}/${nombre}`)
 }
 
 function getEntidadPorId(nombre, id) {
@@ -46,7 +44,7 @@ function getEntidadPorId(nombre, id) {
 }
 
 function getEntidadPorNombre(nombre, campo, valor) {
-  return llamadaAPI('get',null,`${host}/${nombre}/${campo}/${valor}`)
+  return llamadaAPI('get', null, `${host}/${nombre}/${campo}/${valor}`)
 }
 
 //POST
@@ -66,7 +64,7 @@ function patchEntidad(modelo, entidad, id, nombre) {
 
 // DELETE
 function deleteEntidad(id, nombre) {
-  return llamadaAPI('delete', null,`${host}/${nombre}/${id}`)
+  return llamadaAPI('delete', null, `${host}/${nombre}/${id}`)
 }
 
 
@@ -103,6 +101,7 @@ export function addInvitadosToVisita(listaInvitados, id) {
 
 /// GET INVITADOS DE VISITA
 export function getInvitadosVisita(id) {
+  console.log("getInvitadosVisita dentro del api-service")
   return llamadaAPI('get', null, `${host}/visitas/${id}/invitados`)
 }
 ////////////////////////////
