@@ -43,14 +43,13 @@ export default {
   },
 
   computed: {
-    ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi']),
-    ...mapState(visitasStore, ['idVisita']),
+    ...mapState(personasStore, [ 'anfitrionesApi', 'invitadosApi' ]),
+    ...mapState(visitasStore, [ 'idVisita' ]),
   },
 
   methods: {
     ...mapActions(personasStore, ['getInvitadosApi', 'getAnfitrionesApi']),
     ...mapActions(visitasStore, ['postVisita', 'addInvitadosToVisita']),
-
 
     agregarVisita() {
       this.visita.anfitrion = this.anfitrionParaAnadir._links.self.href
@@ -71,7 +70,7 @@ export default {
     anadirInvitados() {
       if (this.idVisita != null) {
         this.invitados.listaInvitados = []
-        this.invitadosElegidos.forEach(inv => this.invitados.listaInvitados.push(inv._links.self.href))
+        this.invitadosElegidos.forEach(inv => this.invitados.listaInvitados.push(inv._links.self.href))    //////cargar solo los links de los invitados
 
         this.addInvitadosToVisita(this.invitados, this.idVisita)
       }
@@ -100,9 +99,7 @@ export default {
 
   created() {
     this.toast = useToast()
-
     this.getInvitadosApi()
-
     this.getAnfitrionesApi()
   },
 
@@ -112,18 +109,14 @@ export default {
 
 <template>
   <!-- para dialog -->
-
   <Toast />
-
-  <Dialog :visible="visible" modal header="Confirmación de grabación" :style="{ width: '50vw' }">
-    <p>
-      La nueva visita se está grabado en la base de datos con ID {{ idVisita }}
-    </p>
-    <template #footer>
-      <Button label="OK" icon="pi pi-info-circle" @click="showSuccess" class="p-button-lg" autofocus>OK</Button>
+  <Dialog :visible="visible" modal header="Confirmación" :style="{ width: '30vw' }">
+    <p>Nueva visita añadida en la base de datos con exito.<br>
+      Debería agregar uno o más invitados a esta visita</p>
+    <template class="d-flex justify-content-center">
+      <Button label="OK" icon="pi pi-info-circle" @click="showSuccess" class="p-button-lg mt-2" autofocus>OK</Button>
     </template>
   </Dialog>
-
 
   <!-- Modal visita finalizada -->
   <div class="modal fade" id="confirmacionVisitafinalizada" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -156,7 +149,9 @@ export default {
         </div>
         <div class="modal-body">
           <p><font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />Lista de invitatdos añadida a Visita {{
-            idVisita }} con éxito</p>
+            idVisita }} con éxito <br>
+            Puede actualizar la lista de invitados antes de finalizar la visita
+          </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -164,7 +159,6 @@ export default {
       </div>
     </div>
   </div>
-
 
   <Modelo titulo="CREACIÓN NUEVA VISITA">
 
@@ -181,8 +175,10 @@ export default {
           <div class="col-md-3">
             <label for="fechafin" class="form-label fs-5 fw-bold">Fecha/Hora Fin</label>
             <Calendar class="datosvisita" v-model="visita.fechaFin" :disabled="mostrarSegundoForm" :show-time="true"
-              dateFormat="dd/mm/yy" required :style="{ 'font-size': '14px', 'width': '200px', 'height': '40px' }">
+              dateFormat="dd/mm/yy" required :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px', 'color': mostrarSegundoForm ? 'black' : 'initial' }">
             </Calendar>
+
+
           </div>
           <div class="col-md-6">
             <label for="actividad" class="form-label fs-5 fw-bold">Actividad</label>
@@ -208,6 +204,7 @@ export default {
           <div class="col-md-5">
             <select class="form-select datosvisita me-2" v-model="anfitrionParaAnadir" :disabled="mostrarSegundoForm"
               required>
+              <option value="" disabled>--seleccionar un anfitrión--</option>
               <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
             </select>
           </div>
@@ -277,11 +274,11 @@ export default {
         </div>
       </div>
 
-      <!-- botones de guardar invitados y fionalizar (Segundo Endpoint)-->
+      <!-- botones de guardar invitados y finalizar visita (Segundo Endpoint)-->
       <div class="d-flex justify-content-center border rounded mb-0 p-3" style="background-color: rgb(169, 169, 189);">
         <button type="button" class="btn btn-warning d-inline me-1" @click.prevent="anadirInvitados"
           data-bs-toggle="modal" data-bs-target="#confirmacionInvitadosAnadidosVisita"><font-awesome-icon
-            icon="fa-solid fa-user-plus" class="me-2" />Añadir Invitados</button>
+            icon="fa-solid fa-user-plus" class="me-2" />Añadir Lista Invitados</button>
         <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#confirmacionVisitafinalizada"
           @click="finalizarVisita">Finalizar Visita</button>
       </div>
@@ -295,8 +292,8 @@ export default {
 }
 
 .p-button-lg {
-  font-size: 1.5rem;
-  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  padding: 0.75rem 2.75rem;
 }
 </style>
 

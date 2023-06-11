@@ -62,13 +62,13 @@ public class VisitaController {
     	CollectionModel<VisitaListaModel> collection = listaAssembler.toCollection(repositorio.findAll());
 		 
 		collection.add(
-					linkTo(methodOn(VisitaController.class).all()).withRel("Lista_Global_Visitas")					
+					linkTo(methodOn(VisitaController.class).all()).withRel("lista_global_visitas")					
 					);
 		
 		return collection;
 	}
     
-    // Endpoint para recuperar una visita
+    // Endpoint para recuperar una visita por id
     @GetMapping("{id}")
 	public VisitaModel one(@PathVariable Long id) {
 		VisitaApiImp visita = repositorio.findById(id)
@@ -79,7 +79,7 @@ public class VisitaController {
 		return assembler.toModel(visita);
 	}
     
-    // Endpoint para añadir una visita 
+    // Endpoint para añadir una nueva visita 
     @PostMapping
 	public VisitaModel add(@RequestBody VisitaPostModel model) {
     	VisitaApiImp visita = repositorio.save(postAssembler.toEntity(model));
@@ -89,17 +89,15 @@ public class VisitaController {
 		return assembler.toModel(visita);
 	}
     
-    // Endpoint para modificar una visita
+    // Endpoint para modificar una visita ya existente
     @PutMapping("{id}")
     public VisitaModel edit(@PathVariable Long id, @RequestBody VisitaPostModel model) {
-		VisitaApiImp visita = repositorio.findById(id).map(vis -> {
-			
+		VisitaApiImp visita = repositorio.findById(id).map(vis -> {			
 			vis.setFechaInicio(model.getFechaInicio());
 			vis.setFechaFin(model.getFechaFin());
 			vis.setActividad(model.getActividad());		
 			vis.setActuaciones(model.getActuaciones());	
-			vis.setAnfitrion((AnfitrionApiImp) model.getAnfitrion());
-						
+			vis.setAnfitrion((AnfitrionApiImp) model.getAnfitrion());					
 			return repositorio.save(vis);
 		})
 		.orElseThrow(() -> new RegisterNotFoundException(id, "visita"));
@@ -115,18 +113,16 @@ public class VisitaController {
 
     	VisitaApiImp visita = repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "visita"));
-
-    	CollectionModel<PersonaListaModel> collection =	personalistassembler.toCollection(visita.getInvitados());
     	
+    	CollectionModel<PersonaListaModel> collection =	personalistassembler.toCollection(visita.getInvitados());
     	log.info("Recuperado " + collection);
     	
     	collection.add(
-				linkTo(methodOn(VisitaController.class).invitadosVisita(id)).withRel("Lista_Invitados_Visita"));
+				linkTo(methodOn(VisitaController.class).invitadosVisita(id)).withRel("invitados_visita"));
     	
     	return collection;    	
 	}
-    
-    
+        
     // Endpoint para añadir un invitado a una visita  
     @PostMapping("{id}/addinvitado")
     public VisitaModel addInvitadoToVisita(@PathVariable Long id, @RequestBody InvitadoModel model) {
@@ -152,17 +148,16 @@ public class VisitaController {
    
         log.info("Añadido lista invitados en bloc ");
         
-        visita.getInvitados().clear();
-                         
+        visita.getInvitados().clear();                 
         listapostmodel.getListaInvitados().forEach(inv -> 
         	 { visita.getInvitados().add((InvitadoApiImp) inv);}
-        );       
+        );                           
+        repositorio.save(visita);        
         
-        //visita.getInvitados().addAll(listapostmodel.getListaInvitados());
-        //return assembler.toModel(repositorio.save(visita));
-        
-        repositorio.save(visita);                  
-        return assembler.toModel(visita);       
+        return assembler.toModel(visita);    
+        		//// Otro metodo para anadir la lista y guardar la visita
+    			//visita.getInvitados().addAll(listapostmodel.getListaInvitados());
+    			//return assembler.toModel(repositorio.save(visita));
     }
 
     // Endpoint para recuperar el infitrion de una visita (el que ha planificado esta visita)
@@ -201,7 +196,7 @@ public class VisitaController {
     
     
     
-    // Endpoint para delete un invitado de una visita  
+// Endpoint para delete un invitado de una visita  
 //    @DeleteMapping("{id}/invitados/invId")
 //	public void deleteInvitadoVisita(@PathVariable Long id, @PathVariable Long invId) {
 //    	

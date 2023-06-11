@@ -35,7 +35,7 @@ export default {
     visitasGlobales() {
       if (this.visitasApi) {
         return this.visitasApi
-        // .sort((a, b) => a.fechaInicio - b.fechaInicio)
+          // .sort((a, b) => a.fechaInicio - b.fechaInicio)
       }
       else
         return []
@@ -97,20 +97,15 @@ export default {
 
     mostrarAnfitrion(visita) {
       let array = visita._links.anfitrion.href.split('/')
-  
       let idAnfitrion = array[array.length - 1]
-
       this.$router.push({ name: 'personainfo', params: { identificador: idAnfitrion } })
     }
 
   },
 
   async created() {
-
     this.toast = useToast()
-
     await this.getVisitasApi()
-
     //console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
   }
 }
@@ -168,6 +163,3 @@ export default {
     Total : {{ visitasParaMostrar.length }} visitas
   </Modelo>
 </template>
-
-
-<style></style>

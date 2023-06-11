@@ -8,7 +8,6 @@ export default {
   components: { Modelo, Calendar },   ///// registro local de los componentes
   data() {
     return {
-
       personaParaModificar: {
         dni: '',
         nombre: '',
@@ -49,28 +48,7 @@ export default {
     ...mapActions(personasStore, ['putPersona', 'getPersonaPorId']),
 
     modificarPersona() {
-
-      console.log("vamos a modificar la persona : ", JSON.stringify(this.personaParaModificar))
-
       this.putPersona(this.personaParaModificar)
-
-      //Limpiar los campos del formulario
-      // this.personaParaModificar = {
-      //   dni: '',
-      //   nombre: '',
-      //   apellidos: '',
-      //   telefono: '',
-      //   email: '',
-      //   nip: null,
-      //   area: null,
-      //   role: null,
-      //   matricula: '',
-      //   empresa: '',
-      //   autorizacion: null,
-      //   inicioAut: null,
-      //   finAut: null,
-      //   tipo: ''
-      //}
     },
   },
 
@@ -90,6 +68,7 @@ export default {
 
 <template>
   <Modelo :titulo=tituloComponente>
+
     <!-- Modal -->
     <div class="modal fade" id="confirmacionOperacion" tabindex="-1" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -221,7 +200,7 @@ export default {
           data-bs-toggle="modal" data-bs-target="#confirmacionOperacion">
           <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2" />Actualizar</button>
 
-        <button type="submit" class="btn btn-secondary" @click="$router.push({ name: 'personas' })">Cancelar</button>
+        <button type="submit" class="btn btn-secondary" @click="this.$router.push({ name: 'personas' })"><font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cancelar</button>
       </div>
 
       <!-- <pre>persona API : {{ JSON.stringify(personaApi, null, " ") }}</pre>
@@ -236,13 +215,15 @@ export default {
   </Modelo>
 </template>
 
-<style>.columna {
+<style>
+.columna {
   text-align: center;
 }
 
 .linea {
   text-align: center;
-}</style>
+}
+</style>
 
 
       

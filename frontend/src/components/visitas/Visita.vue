@@ -8,9 +8,9 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 
 export default {
-  props: [ 'visita' ],  ///// aqui, la opcion "props" es un array of atributes string
+  props: ['visita'],  ///// aqui, la opcion "props" es un array of atributes string
   components: { Accordion, AccordionTab },   ///// registro local de los componentes
-  emits: ['borrarVisita', 'editarVisita', 'mostrarAnfitrion'],
+  emits: ['borrarVisita', 'editarVisita', 'mostrarAnfitrion' ],
   data() {
     return {
       invitadosVisita: []
@@ -41,7 +41,6 @@ export default {
   },
 
   created() {
-
     this.getInvitadosVisita(this.visita.id).then(invitados => {
       this.invitadosVisita = invitados
     })
@@ -114,9 +113,6 @@ export default {
 
      -->
 
-
-
-
     <div v-if="invitadosVisita" class="accordion accordion-flush alert alert-secondary mt-2 mb-0 border rounded"
       id="detallesVisita">
       <div class="accordion-item">
@@ -142,7 +138,6 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr v-for="invit in visita.listaInvitados"> -->
                 <tr v-for="invit in invitadosVisita">
                   <th scope="row">{{ invit.dni }}</th>
                   <td>{{ invit.nombre }}</td>
@@ -157,7 +152,7 @@ export default {
                   <td>
                     <router-link :to="{ name: 'personainfo', params: { identificador: invit.id } }"><font-awesome-icon
                         :icon="['fas', 'circle-info']" size="lg" style="color: #77767b;" /></router-link>
-                  </td>
+                  </td> 
                 </tr>
               </tbody>
             </table>
@@ -165,6 +160,11 @@ export default {
         </div>
       </div>
     </div>
+
+    <!--  
+     <div v-if="invitadosVisita" class="row">
+       <pre>invitados visita {{ visita.id }} recuperados del store : {{ JSON.stringify(invitadosVisita, null, " ") }}</pre>               
+    </div> -->
 
   </div>
 </template>
@@ -193,4 +193,5 @@ tr {
 
 [type="checkbox"]:checked+label:after {
   background: rgb(69, 180, 36);
-}</style>
+}
+</style>

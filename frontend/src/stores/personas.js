@@ -8,7 +8,7 @@ export const personasStore = defineStore('personas', {
         invitadosApi: null,
         anfitrionesApi: null,
         personaApi: null,
-        visitasPersona: null,
+        visitasPersona: [],
     }),
     
     getters: {         ////// getters: equiv a Computed
@@ -50,35 +50,23 @@ export const personasStore = defineStore('personas', {
         },
 
         /////////////////////////////****************************************///////////////////////////
-
-        async getPersonaPorId(id) {      
-            // await getPersonaPorId(id).then(r => this.personaApi = r.data)           
-            
+        async getPersonaPorId(id) {                           
             await getPersonaPorId(id).then((response) =>  {
-                this.personaApi = response.data
-
-                getVisitasPersona(response.data.id).then((r) =>  {
-                    this.visitasPersona = []            
-                    if (r.data._embedded.visitas !== null) {
-                        this.visitasPersona = r.data._embedded.visitas            
-                    }
-                })   
-
-                // this.personaApi.inicioAut = new Date(element.inicioAut)
-                // this.personaApi.finAut = new Date(element.finAut)              
+                this.personaApi = response.data             
             })
         },
 
         ////////////*********************************************////////////////
-        // async getVisitasPersona(id) {
-        //     //console.log("llamando a getVisiatsPersona dentro del store")
-        //     await getVisitasPersona(id).then((r) =>  {
-        //         this.visitasPersona = []            
-        //         if (r.data._embedded.visitas !== null) {
-        //             this.visitasPersona = r.data._embedded.visitas            
-        //         }
-        //     })           
-        // },
+        async getVisitasPersona(id) {
+            await getVisitasPersona(id).then((r) =>  {            
+                 if (r.data._embedded) {
+                     this.visitasPersona = r.data._embedded.visitas          
+                 }
+                 else {
+                    this.visitasPersona = []          
+                }
+            })           
+        },
         ///////////////////////////////////////////////////////////////////////
                             
         async postPersona(persona) {
@@ -95,17 +83,10 @@ export const personasStore = defineStore('personas', {
         },
                 
         async deletePersona(persona) {
-            await deletePersona(persona).then((response) => {
-                let indexToRemove = this.personasApi.indexOf(persona)
-                this.personasApi.splice(indexToRemove, 1)
-            }) 
-            .catch((error) => {
-                       console.error("A la hora de borrar la persona, Se ha producido un error : ", error);
-            });     
+            await deletePersona(persona)
         },   
     
         async putPersona(persona) {
-            console.log('put persona desde store')
             await putPersona(persona)      
         },
     }

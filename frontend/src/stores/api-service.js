@@ -5,46 +5,39 @@ export const host = "http://localhost:8080/api"
 //Llamada a la API genérica, parametrizada con method, body y path
 export function llamadaAPI(method, body, path) {
   let config = {
-      method: method ?? 'get',
-      maxBodyLength: Infinity,
-      url: path,
-      headers: {}
+    method: method ?? 'get',
+    maxBodyLength: Infinity,
+    url: path,
+    headers: {}
   }
 
   if (body) {
-      config.data = body,
-        config.headers['Content-Type'] = 'application/json'
+    config.data = body,
+      config.headers['Content-Type'] = 'application/json'
   }
 
-  //console.log('path = ', path)
   return axios.request(config)
 }
 
 // PUT
 function llamadaApiPUTParams(path, params = {}) {
   let config = {
-      method: 'put',
-      maxBodyLength: Infinity,
-      url: path,
-      headers: {},
-      params: params // Añadimos los parámetros a la llamada
+    method: 'put',
+    maxBodyLength: Infinity,
+    url: path,
+    headers: {},
+    params: params // Añadimos los parámetros a la llamada
   };
   return axios.request(config);
 }
 
 // GETS
 export function getEntidades(nombre) {
-  //return llamadaAPI('get',null,`${host}api/${nombre}`)
   return llamadaAPI('get', null, `${host}/${nombre}`)
 }
 
 function getEntidadPorId(nombre, id) {
-  //console.log("recuperando entidad", nombre, "con id", id)
   return llamadaAPI('get', null, `${host}/${nombre}/${id}`)
-}
-
-function getEntidadPorNombre(nombre, campo, valor) {
-  return llamadaAPI('get', null, `${host}/${nombre}/${campo}/${valor}`)
 }
 
 //POST
@@ -57,22 +50,16 @@ function putEntidad(modelo, id, nombre) {
   return llamadaAPI('put', modelo, `${host}/${nombre}/${id}`)
 }
 
-//PATCH
-function patchEntidad(modelo, entidad, id, nombre) {
-  return llamadaAPI('patch', modelo, `${host}/${entidad}/${id}/${nombre}`)
-}
-
 // DELETE
 function deleteEntidad(id, nombre) {
   return llamadaAPI('delete', null, `${host}/${nombre}/${id}`)
 }
 
-
-
 /////******************* visitas ****************/////////
 
 export function getVisitas() {
   return getEntidades('visitas')
+  // return getEntidades('visitas?sort=fechaInicio,asc')
 }
 
 export function getVisitaPorId(id) {
@@ -95,13 +82,13 @@ export function deleteVisita(visita) {
 
 /// POST INVITADOS A VISITA
 export function addInvitadosToVisita(listaInvitados, id) {
-   return llamadaAPI('post', listaInvitados, `${host}/visitas/${id}/invitados`)
+  return llamadaAPI('post', listaInvitados, `${host}/visitas/${id}/invitados`)
 }
 ////////////////////////////
 
 /// GET INVITADOS DE VISITA
+
 export function getInvitadosVisita(id) {
-  console.log("getInvitadosVisita dentro del api-service")
   return llamadaAPI('get', null, `${host}/visitas/${id}/invitados`)
 }
 ////////////////////////////
@@ -111,7 +98,7 @@ export function getInvitadosVisita(id) {
 ///// personas
 
 export function getPersonas(tipo) {
-  return getEntidades('personas?tipo='+tipo)
+  return getEntidades('personas?tipo=' + tipo)
 }
 
 export function getPersonaPorId(id) {

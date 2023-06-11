@@ -15,7 +15,7 @@ export default {
 
 
 <template>
-  <Modelo titulo="BUSQUEDA MULTI CRITERIOS">
+  <Modelo titulo="ESTADÍSTICAS">
 
 
 

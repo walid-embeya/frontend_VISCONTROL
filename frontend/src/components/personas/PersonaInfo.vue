@@ -55,12 +55,7 @@ export default {
   },
 
   async created() {
-
-    //console.log("peronsa id recuperado ", this.$route.params.identificador)
-
     await this.getPersonaPorId(this.$route.params.identificador)
-
-    //console.log("personaApi json", JSON.stringify(this.personaApi, null, " "))
   }
 
 
@@ -148,7 +143,7 @@ export default {
 
         <div style="height: 300px; overflow-y: scroll;">
           <table class="table table-striped table-hover">
-            <thead class="alert alert-primary" style="background-color: rgb(66, 102, 209);">
+            <thead class="alert alert-dark" style="background-color: rgb(134, 139, 139);">
               <tr class="cabezera">
                 <th scope="col">Fecha/Hora Inicio</th>
                 <th scope="col">Fecha/Hora Fin</th>
@@ -157,7 +152,7 @@ export default {
               </tr>
             </thead>
             <tbody>
-              <tr class="linea" v-for="visita of visitasPersona">
+              <tr v-for="visita of visitasPersona">
                 <th scope="row">{{ fecha(visita.fechaInicio) }} a las {{ hora(visita.fechaInicio) }}</th>
                 <td>{{ fecha(visita.fechaFin) }} a las {{ hora(visita.fechaFin) }}</td>
                 <td>{{ visita.actividad }}</td>
@@ -179,11 +174,11 @@ export default {
     </div>
 
     <div class="d-flex justify-content-center border rounded">
-      <button @click="this.$router.push({ name: 'home' })" class="btn btn-secondary my-2 me-2">
+      <button @click="this.$router.push({ name: 'home' })" class="btn btn-secondary my-2 me-1">
         <font-awesome-icon icon="fa-solid fa-house" style="color: #ffffff;" class="me-2" />Home
       </button>
 
-      <button @click="this.$router.go(-1)" class="btn btn-secondary my-2 me-2">
+      <button @click="this.$router.go(-1)" class="btn btn-secondary my-2">
         <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar
       </button>
     </div>
@@ -191,23 +186,11 @@ export default {
 </template>
 
 <style scoped>
+tr {
+  text-align: center;
+}
+
 .cabezera {
-  text-align: center;
   color: white;
-}
-
-.linea {
-  text-align: center;
-  color: black;
-}
-
-input[type="checkbox"]:disabled+label {
-  color: black;
-  font-style: normal;
-  font-weight: bold;
-}
-
-[type="checkbox"]:checked+label:after {
-  background: rgb(69, 180, 36);
 }
 </style>

@@ -34,9 +34,7 @@ public class VisitaPostAssembler implements RepresentationModelAssembler<VisitaA
 
 	public VisitaApiImp toEntity(VisitaPostModel model) {
 		
-		VisitaApiImp visita = new VisitaApiImp();
-		
-		//System.out.println("anfitrion : " + model.getAnfitrion());
+		VisitaApiImp visita = new VisitaApiImp();	
 		
 		if (model.getAnfitrion() instanceof AnfitrionApiImp) {
 			visita.setFechaInicio(model.getFechaInicio());

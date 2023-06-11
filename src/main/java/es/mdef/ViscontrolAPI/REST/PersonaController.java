@@ -24,8 +24,11 @@ import es.mdef.ViscontrolAPI.ViscontrolApiApplication;
 import es.mdef.ViscontrolAPI.entidades.AnfitrionApiImp;
 import es.mdef.ViscontrolAPI.entidades.InvitadoApiImp;
 import es.mdef.ViscontrolAPI.entidades.PersonaApiImp;
+import es.mdef.ViscontrolAPI.entidades.PersonaApiImp.Tipo;
+import es.mdef.ViscontrolAPI.entidades.VisitaApiImp;
 import es.mdef.ViscontrolAPI.repositorios.PersonaRepositorio;
 import es.mdef.ViscontrolAPI.repositorios.VisitaRepositorio;
+import es.mdef.ViscontrolLib.Invitado;
 import es.mdef.ViscontrolLib.Persona;
 import es.mdef.ViscontrolLib.Visita;
 
@@ -38,18 +41,21 @@ public class PersonaController {
 	private final PersonaAssembler assembler;
     private final PersonaListaAssembler listaassembler;
     private final VisitaListaAssembler visitalistassembler;
+    private final VisitaAssembler visitaassembler;
     private final Logger log;
    
     
 	public PersonaController(PersonaRepositorio repositorio, PersonaAssembler assembler, PersonaListaAssembler listaassembler, 
-			VisitaRepositorio repositorioVisita,  VisitaListaAssembler visitalistassembler) {
+			VisitaListaAssembler visitalistassembler, VisitaAssembler visitaassembler) {
 		this.repositorio = repositorio;
 		this.assembler = assembler;
-		this.visitalistassembler = visitalistassembler;
 		this.listaassembler = listaassembler;
+		this.visitalistassembler = visitalistassembler;	
+		this.visitaassembler = visitaassembler;
 		log = (Logger) ViscontrolApiApplication.log;
 	}
     
+	// Endpoint para recuperar una persona por id  
 	@GetMapping("{id}")
 	public PersonaModel one(@PathVariable Long id) {
 		PersonaApiImp persona = repositorio.findById(id)
@@ -58,32 +64,18 @@ public class PersonaController {
 		
 		return assembler.toModel(persona);
 	}
-	
-//	@GetMapping
-//	public CollectionModel<PersonaListaModel> all() {
-//		
-//		CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(repositorio.findAll());
-//		
-//		collection.add(
-//				linkTo(methodOn(PersonaController.class).all()).withRel("Lista_Personas")
-//				);
-//		
-//		return collection;
-//	}
 
-	
+	// Endpoint para recuperar recuperar la lista global de personas por parametro "tipo"  
 	@GetMapping
 	public CollectionModel<PersonaListaModel> all(@Param("tipo") String tipo) {
 		
 		List<PersonaApiImp> personas = repositorio.findAll();
 		
 		if (!tipo.equals("todos")) { 
-			personas = personas.stream().filter( p -> p.getTipo().toString().equals(tipo) ).collect(Collectors.toList());
-			
+			personas = personas.stream().filter( p -> p.getTipo().toString().equals(tipo) ).collect(Collectors.toList());			
 		}
 		
-		CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(personas);
-		
+		CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(personas);		
 		collection.add(
 				linkTo(methodOn(PersonaController.class).all(tipo)).withRel("Lista_Personas")
 				);
@@ -91,7 +83,7 @@ public class PersonaController {
 		return collection;
 	}
 	
-	
+	// Endpoint para añadir una nueva persona
 	@PostMapping
 	public PersonaModel add(@RequestBody PersonaModel model) {
 		PersonaApiImp persona = repositorio.save(assembler.toEntity(model));
@@ -99,6 +91,7 @@ public class PersonaController {
 		return assembler.toModel(persona);
 	}
 	
+	// Endpoint para modificar una persona ya existente 
 	@PutMapping("{id}")
     public PersonaModel edit(@PathVariable Long id, @RequestBody PersonaModel model) {
 		PersonaApiImp persona = repositorio.findById(id).map(pers -> {
@@ -124,7 +117,6 @@ public class PersonaController {
 				invitado.setAutorizacion(model.getAutorizacion());
 				invitado.setInicioAut(model.getInicioAut());
 				invitado.setFinAut(model.getFinAut());
-
 				break;
 			}
 			default:
@@ -139,6 +131,7 @@ public class PersonaController {
 		return assembler.toModel(persona);
 	}
 	
+	// Endpoint para recuperar la lista de visitas de una persona 
 	@GetMapping("{id}/visitas")
     public CollectionModel<VisitaListaModel> visitasDePersona(@PathVariable Long id) {
 	
@@ -156,7 +149,6 @@ public class PersonaController {
 		case Invitado: {
 			InvitadoApiImp invitado = (InvitadoApiImp) persona;
 			lista = invitado.getVisitas();
-
 			break;
 		}
 		
@@ -184,10 +176,41 @@ public class PersonaController {
 		return collection;
 	}
 	
+	// Endpoint para eliminar una persona 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
 		log.info("Borrado persona " + id);
 		repositorio.deleteById(id);
 	}
+	
+	///// endpoint del metodo personalizada : Recuperar el huésped (Invitado) más invitado por un Anfitrion
+	@GetMapping("{id}")
+	public PersonaModel masInvitadoPorAnfitrion(@PathVariable Long id) {
+		
+		PersonaApiImp persona = repositorio.findById(id)
+				.orElseThrow(() -> new RegisterNotFoundException(id, "persona"));
+		
+		if (persona.getTipo().equals(Tipo.Anfitrion)) {
+			
+			CollectionModel<VisitaModel> collection = this.visitasDePersona(id);
+			
+			
+			collection.forEach(vis -> { 
+				
+				VisitaApiImp visita = visitaassembler.toEntity(vis);
+				
+				List<Invitado> invitados = visita.getInvitados();
+			
+			
+			
+			});   
+			
+			
+		}
+		
+		return null;
+		
+	} 
+	
 	
 }

@@ -26,7 +26,8 @@ public class VisitaListaAssembler <T extends Visita> implements RepresentationMo
 		model.setActividad(((VisitaApiImp) entity).getActividad());
 			
 		model.add(
-				linkTo(methodOn(VisitaController.class).one(((VisitaApiImp) entity).getId())).withSelfRel()
+				linkTo(methodOn(VisitaController.class).one( ((VisitaApiImp) entity).getId())).withSelfRel()
+				//linkTo(methodOn(VisitaController.class).invitadosVisita(((VisitaApiImp) entity).getId())).withRel("invitados_visita")
 				);
 		return model;
 	} 

@@ -11,58 +11,54 @@ export default {
   data() {
     return {
       //// para recuperar el anfitrion seleccionado
-      anfitrionParaAnadir: null,
+      anfitrionParaModificar: null,
 
-      //// para select multiple (seleccionar uno o muchos invitados)
+      //// invitados de visita recuperados del store (para el elemento select multiple)
       invitadosElegidos: [],
 
       // la visita que queremos modificar
       visitaParaModificar: {
-        fechaInicio: new Date(),
-        fechaFin: new Date(),
+        fechaInicio: null,
+        fechaFin: null,
         actuaciones: '',
         actividad: '',
         anfitrion: ''
       },
 
       // los invitados que vamos a añadir a la visita
-      invitados: {
+      invitadosParaAnadir: {
         listaInvitados: []
       },
     }
   },
 
   computed: {
-    ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi']),
+    ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi', 'personaApi' ]),
     ...mapState(visitasStore, ['visitaApi']),
   },
 
   methods: {
-    ...mapActions(personasStore, ['getInvitadosApi', 'getAnfitrionesApi']),
-    ...mapActions(visitasStore, ['getVisitaPorId', 'putVisita', 'addInvitadosToVisita']),
+    ...mapActions(personasStore, [ 'getInvitadosApi', 'getAnfitrionesApi', 'getPersonaPorId' ]),
+    ...mapActions(visitasStore, [ 'getVisitaPorId', 'putVisita', 'addInvitadosToVisita', 'getInvitadosVisita' ]),
 
 
-    agregarVisita() {
+    modificarVisita() {
 
-      console.log(this.anfitrionParaAnadir._links.self.href)
-      this.visitaParaModificar.anfitrion = this.anfitrionParaAnadir._links.self.href
+      //console.log(this.anfitrionParaModificar._links.self.href)
+      this.visitaParaModificar.anfitrion = this.anfitrionParaModificar._links.self.href
 
-
-      console.log("vamos a modificar la visita", JSON.stringify(this.visitaParaModificar))
-
+      //console.log("vamos a modificar la visita", JSON.stringify(this.visitaParaModificar))
       this.putVisita(this.visitaParaModificar)
-
-      /////// Desactivar campos de visita para añadir invitados
     },
 
     anadirInvitados() {
-      //console.log("array invitados elegidos", this.invitadosElegidos)
+      console.log("array invitados elegidos", this.invitadosElegidos)
 
-      this.invitadosElegidos.forEach(inv => this.invitados.listaInvitados.push(inv._links.self.href))
+      this.invitadosElegidos.forEach(inv => this.invitadosParaAnadir.listaInvitados.push(inv._links.self.href))
 
-      console.log("invitados para anadir :", this.invitados.listaInvitados)
-
-      this.addInvitadosToVisita(this.invitados, this.idVisita)
+     // console.log("invitados para anadir :", this.invitadosParaAnadir.listaInvitados)
+      console.log("invitados para anadir ", JSON.stringify(this.invitadosParaAnadir))
+      this.addInvitadosToVisita(this.invitadosParaAnadir, this.$route.params.identificador)
     },
 
     darAltaAnfitrion() {
@@ -70,15 +66,29 @@ export default {
     },
   },
 
-  async created() {
-
+  mounted() {
     this.getInvitadosApi()
     this.getAnfitrionesApi()
+  },
 
+  async created() {
+    ////// recuperar la visita
     await this.getVisitaPorId(this.$route.params.identificador)
-
     this.visitaParaModificar = { ...this.visitaApi }   ///// clonar
-  }
+    this.visitaParaModificar.fechaInicio = new Date(this.visitaParaModificar.fechaInicio)
+    this.visitaParaModificar.fechaFin = new Date(this.visitaParaModificar.fechaFin)
+
+    ////// recuperar el anfitrion de la visita
+    let array = this.visitaApi._links.anfitrion.href.split('/')
+    let idAnfitrion = array[array.length - 1]
+    await this.getPersonaPorId(idAnfitrion)
+    this.anfitrionParaModificar = this.personaApi
+    
+     this.getInvitadosVisita(this.$route.params.identificador).then(invitados => {
+      this.invitadosElegidos = invitados
+    })
+  },
+
 }
 </script>
 
@@ -126,7 +136,8 @@ export default {
           </div>
 
           <div class="col-md-5">
-            <select class="form-select me-2" v-model="anfitrionParaAnadir">
+            <select class="form-select me-2" v-model="anfitrionParaModificar">
+              <option value="" disabled>--seleccionar un anfitrión--</option>
               <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
             </select>
           </div>
@@ -142,69 +153,75 @@ export default {
       </div>
 
       <!-- buton de guardar visita (Primer Endpoint) -->
-
       <div class="d-flex justify-content-center border rounded alert alert-primary p-2 m-0"
-        style="background-color: rgb(56, 56, 58);">
-
-        <button type="button" class="btn btn-light" @click.prevent="agregarVisita">
-          <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2" />Actualizar Visita</button>
+        style="background-color: rgb(214, 214, 226);">
+        <button type="button" class="btn btn-success me-2" @click.prevent="modificarVisita">
+          <font-awesome-icon icon="fa-solid fa-file-pen" size="lg" class="me-2" />Modificar Visita</button>
+        <button type="button" class="btn btn-secondary" @click="this.$router.go(-1)">
+          <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cancelar</button>
       </div>
 
     </form>
 
     <form class="border rounded mb-1 p-1" style="background-color: rgb(16, 70, 151);">
-
       <!-- datos visitantes -->
-      <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
+      <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">      
         <div class="row">
-          <div class="col-md-4">
-            <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Selección de invitados</label>
+          <div class="col-md-4 d-flex justify-content-center">
+            <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Lista de invitados</label>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-5">
+            <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Invitados Seleccionados</label>
           </div>
         </div>
 
         <div class="row mb-3">
           <!-- select multiple -->
-          <div class="col-md-5">
-            <select class="form-select" multiple v-model="invitadosElegidos">
+          <div class="col-md-5">        
+            <select class="form-select" multiple v-model="invitadosElegidos" data-bs-toggle="tooltip"
+              data-bs-placement="left" title="Para elegir un invitado, pulsa CTRL y haz clic para añadirlo a la visita">
               <option v-for="inv of invitadosApi" :value="inv">{{ inv.dni }} - {{ inv.nombre }} {{ inv.apellidos }}
               </option>
             </select>
           </div>
 
           <!-- tabla para lista de invitados (se puede solo eliminar invitado) -->
-          <div class="col-md-7 alert alert-warning">
+          <div class="col-md-7 alert alert-light">
             <table class="table table-hover table-striped">
               <thead>
                 <tr>
-                  <th scope="col">DNI</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Apellidos</th>
-                  <!-- <th scope="col">Empresa</th>     -->
-
+                  <th scope="col" class="table-dark">DNI</th>
+                  <th scope="col" class="table-dark">Nombre</th>
+                  <th scope="col" class="table-dark">Apellidos</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="elemento of invitadosElegidos">
-                  <td>{{ elemento.dni }}</td>
+                  <th scope="row">{{ elemento.dni }}</th>
                   <td>{{ elemento.nombre }}</td>
                   <td>{{ elemento.apellidos }}</td>
                 </tr>
-                <!-- <font-awesome-icon icon="fa-sharp fa-solid fa-circle-minus" style="color: #e01b24;" /> -->
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- botones de guardar invitados y fionalizar (Segundo Endpoint)-->
-
-      <div class="d-flex justify-content-center border rounded mb-0 p-3" style="background-color: rgb(56, 56, 58);">
-        <button type="button" class="btn btn-success d-inline me-1" @click.prevent="anadirInvitados">
-          <font-awesome-icon icon="fa-solid fa-user-plus" class="me-2" />Añadir Invitados</button>
+      <!-- botones de guardar invitados y finalizar visita (Segundo Endpoint)-->
+      <div class="d-flex justify-content-center border rounded mb-0 p-3" style="background-color: rgb(62, 62, 125);">
+        <button type="button" class="btn btn-light d-inline me-1" @click.prevent="anadirInvitados">
+          <font-awesome-icon icon="fa-solid fa-user-plus" class="me-2" />Actualizar Lista Invitados</button>
       </div>
     </form>
   </Modelo>
 </template>
+
+<style>
+tr {
+  text-align: center
+}
+</style>
 
 
 

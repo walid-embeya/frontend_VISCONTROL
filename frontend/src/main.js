@@ -22,11 +22,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 // /* import specific icons */
-import { faXmark, faIdCard, faSort, faUserPlus, faCheck, faHouse, faCircleMinus, faCircleLeft, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
+import { faFilePen, faXmark, faIdCard, faSort, faUserPlus, faCheck, faHouse, faCircleMinus, faCircleLeft, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 // /* add icons to the library */
-library.add(faXmark, faIdCard, faSort, faUserPlus, faCheck, faHouse, faCircleMinus, faCircleLeft, faInstagram, faLinkedin, faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
+library.add(faFilePen, faXmark, faIdCard, faSort, faUserPlus, faCheck, faHouse, faCircleMinus, faCircleLeft, faInstagram, faLinkedin, faTwitter, faFacebook, faCircleInfo, faPlusCircle, faCircleCheck, faPenToSquare, faTrashCan, faSquareXmark, faFloppyDisk, faList)
 
 //theme PrimeVue
 import "primevue/resources/themes/lara-light-indigo/theme.css";
