@@ -44,15 +44,4 @@ public class VisitaAssembler implements RepresentationModelAssembler<VisitaApiIm
 		
 		return visita;	
 	}
-	
-	
-	
-//	public CollectionModel<VisitaModel> toCollection(List<VisitaApiImp> lista) {
-//		CollectionModel<VisitaModel> collection = CollectionModel.of(
-//				lista.stream().map(this::toModel).collect(Collectors.toList())
-//				);
-//		
-//		return collection;
-//	}
-
 }

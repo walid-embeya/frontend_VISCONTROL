@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,11 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.qos.logback.classic.Logger;
 import es.mdef.ViscontrolAPI.ViscontrolApiApplication;
 import es.mdef.ViscontrolAPI.entidades.AnfitrionApiImp;
+import es.mdef.ViscontrolAPI.entidades.FrecuenciaVisita;
 import es.mdef.ViscontrolAPI.entidades.InvitadoApiImp;
 import es.mdef.ViscontrolAPI.entidades.PersonaApiImp;
 import es.mdef.ViscontrolAPI.entidades.PersonaApiImp.Tipo;
@@ -67,20 +68,21 @@ public class PersonaController {
 
 	// Endpoint para recuperar recuperar la lista global de personas por parametro "tipo"  
 	@GetMapping
-	public CollectionModel<PersonaListaModel> all(@Param("tipo") String tipo) {
-		
-		List<PersonaApiImp> personas = repositorio.findAll();
-		
-		if (!tipo.equals("todos")) { 
-			personas = personas.stream().filter( p -> p.getTipo().toString().equals(tipo) ).collect(Collectors.toList());			
-		}
-		
-		CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(personas);		
-		collection.add(
-				linkTo(methodOn(PersonaController.class).all(tipo)).withRel("Lista_Personas")
-				);
-		
-		return collection;
+	public CollectionModel<PersonaListaModel> all(@RequestParam(value = "tipo", defaultValue = "todos") String tipo) {
+	    List<PersonaApiImp> personas = repositorio.findAll();
+	    
+	    if (!tipo.equals("todos")) { 
+	        personas = personas.stream()
+	            .filter(p -> p.getTipo().toString().equals(tipo))
+	            .collect(Collectors.toList());
+	    }
+	    
+	    CollectionModel<PersonaListaModel> collection = listaassembler.toCollection(personas);
+	    collection.add(
+	        linkTo(methodOn(PersonaController.class).all(tipo)).withRel("Lista_Personas")
+	    );
+	    
+	    return collection;
 	}
 	
 	// Endpoint para añadir una nueva persona
@@ -93,7 +95,7 @@ public class PersonaController {
 	
 	// Endpoint para modificar una persona ya existente 
 	@PutMapping("{id}")
-    public PersonaModel edit(@PathVariable Long id, @RequestBody PersonaModel model) {
+    	public PersonaModel edit(@PathVariable Long id, @RequestBody PersonaModel model) {
 		PersonaApiImp persona = repositorio.findById(id).map(pers -> {
 			
 			pers.setDni(model.getDni());
@@ -134,7 +136,6 @@ public class PersonaController {
 	// Endpoint para recuperar la lista de visitas de una persona 
 	@GetMapping("{id}/visitas")
     public CollectionModel<VisitaListaModel> visitasDePersona(@PathVariable Long id) {
-	
 		PersonaApiImp persona = repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "persona"));
 		
@@ -183,34 +184,13 @@ public class PersonaController {
 		repositorio.deleteById(id);
 	}
 	
-	///// endpoint del metodo personalizada : Recuperar el huésped (Invitado) más invitado por un Anfitrion
-	@GetMapping("{id}")
-	public PersonaModel masInvitadoPorAnfitrion(@PathVariable Long id) {
+	// Endpoint del metodo personalizada : Recuperar el huésped (Invitado) más invitado por un Anfitrion
+    @GetMapping("{id}/personaMasInvitada")
+    public PersonaModel GuestMasInvitadoPorAnfitrion(@PathVariable Long id) {
+    	
+    	Long idInvitado = repositorio.findFrecuentGuestByHost(id);
+    	 	
+		return this.one(idInvitado);    	
+    }
 		
-		PersonaApiImp persona = repositorio.findById(id)
-				.orElseThrow(() -> new RegisterNotFoundException(id, "persona"));
-		
-		if (persona.getTipo().equals(Tipo.Anfitrion)) {
-			
-			CollectionModel<VisitaModel> collection = this.visitasDePersona(id);
-			
-			
-			collection.forEach(vis -> { 
-				
-				VisitaApiImp visita = visitaassembler.toEntity(vis);
-				
-				List<Invitado> invitados = visita.getInvitados();
-			
-			
-			
-			});   
-			
-			
-		}
-		
-		return null;
-		
-	} 
-	
-	
 }

@@ -3,8 +3,6 @@ package es.mdef.ViscontrolAPI.REST;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,8 +22,6 @@ import es.mdef.ViscontrolAPI.entidades.PersonaApiImp;
 import es.mdef.ViscontrolAPI.entidades.VisitaApiImp;
 import es.mdef.ViscontrolAPI.repositorios.PersonaRepositorio;
 import es.mdef.ViscontrolAPI.repositorios.VisitaRepositorio;
-import es.mdef.ViscontrolLib.Invitado;
-
 
 @CrossOrigin(origins = "*")
 @RestController

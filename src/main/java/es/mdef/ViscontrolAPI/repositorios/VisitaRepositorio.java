@@ -1,16 +1,12 @@
 package es.mdef.ViscontrolAPI.repositorios;
 
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import es.mdef.ViscontrolAPI.entidades.VisitaApiImp;
 
-
-public interface VisitaRepositorio extends JpaRepository<VisitaApiImp, Long> {
-	
-	//List<PersonaApiImp> findInvitadosById(Long id);
-	
-	//List<Visita> findByAnfitrionId(Long id);
+@RepositoryRestResource(path="visitas", collectionResourceRel="visitas")
+public interface VisitaRepositorio extends JpaRepository<VisitaApiImp, Long> {	
 	
 }
