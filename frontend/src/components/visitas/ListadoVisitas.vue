@@ -33,9 +33,9 @@ export default {
     },
 
     visitasGlobales() {
-      if (this.visitasApi) {
+      if (this.visitasApi) {      
         return this.visitasApi
-        // .sort((a, b) => a.fechaInicio - b.fechaInicio)
+        //.sort((a, b) => new Date(b.fechaInicio) < new Date(a.fechaInicio))   ///// sort por fechaInicio desc 
       }
       else
         return []
@@ -106,7 +106,7 @@ export default {
   created() {
     this.toast = useToast()
     this.getVisitasApi()
-    //console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
+    console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
   }
 }
 </script>
