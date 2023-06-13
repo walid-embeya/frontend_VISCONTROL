@@ -208,7 +208,6 @@ export default {
   </Modelo>
 </template>
 
-
 <style scoped>
 tr {
   text-align: center;

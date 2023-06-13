@@ -1,7 +1,7 @@
 <script>
 
 export default {
-  props: ['persona'],  ///// aqui, la opcion "props" es un array of atributes string
+  props: ['persona'],           
   emits: ['borrarPersona', 'editarPersona', 'mostrarPersona'],
   data() {
     return {}
