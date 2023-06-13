@@ -54,10 +54,9 @@ export default {
     this.getVisitasPersona(this.$route.params.identificador)
   },
 
-  async created() {
-    await this.getPersonaPorId(this.$route.params.identificador)
-  }
-
+  created() {
+    this.getPersonaPorId(this.$route.params.identificador)
+  },
 
 }
 </script>

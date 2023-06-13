@@ -39,8 +39,6 @@ export default {
     crearInvitado() {
       this.personaParaAnadir.tipo = 'Invitado'
 
-      console.log(this.isAutorizado)
-
       if (!this.isAutorizado) {
         this.personaParaAnadir.inicioAut = null
         this.personaParaAnadir.finAut = null
@@ -66,10 +64,8 @@ export default {
 
   },
 
-  async created() {
-    //console.log("current ruta = ", this.$route.name)
-    // console.log("ruta params = ", this.$route.params)
-    await this.getInvitadosApi()
+  created() {
+    this.getInvitadosApi()
   },
 
 }

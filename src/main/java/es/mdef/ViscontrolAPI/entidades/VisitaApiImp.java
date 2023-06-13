@@ -19,5 +19,4 @@ public class VisitaApiImp extends VisitaImp {
 				+ ", getActividad()=" + getActividad() + "]";
 	}
 	
-
 }

@@ -67,6 +67,7 @@ export const visitasStore = defineStore('visitas', {
 
     async postVisita(visita) {
       await postVisita(visita).then((r) => {
+        ////// recuperar el ID de la visita añadida para poder agregar invitados
         let array = r.data._links.self.href.split('/')
         this.idVisita = array[array.length - 1]
       })

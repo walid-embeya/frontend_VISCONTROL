@@ -17,7 +17,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(visitasStore, [ 'visitasApi' ]),
+    ...mapState(visitasStore, ['visitasApi']),
 
     visitasParaMostrar() {
       return this.filtroPendiente ? this.visitasPendientes : this.visitasGlobales
@@ -35,7 +35,7 @@ export default {
     visitasGlobales() {
       if (this.visitasApi) {
         return this.visitasApi
-          // .sort((a, b) => a.fechaInicio - b.fechaInicio)
+        // .sort((a, b) => a.fechaInicio - b.fechaInicio)
       }
       else
         return []
@@ -43,7 +43,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(visitasStore, [ 'getVisitasApi', 'deleteVisita' ]),
+    ...mapActions(visitasStore, ['getVisitasApi', 'deleteVisita']),
 
     sortByStartDate() {
       this.ordenarPor = 'fechaInicio'
@@ -96,16 +96,16 @@ export default {
     },
 
     mostrarAnfitrion(visita) {
+      //// recuperar el ID del anfitrion para pasarlo como parametro a la ruta
       let array = visita._links.anfitrion.href.split('/')
       let idAnfitrion = array[array.length - 1]
       this.$router.push({ name: 'personainfo', params: { identificador: idAnfitrion } })
     }
-
   },
 
-  async created() {
+  created() {
     this.toast = useToast()
-    await this.getVisitasApi()
+    this.getVisitasApi()
     //console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
   }
 }

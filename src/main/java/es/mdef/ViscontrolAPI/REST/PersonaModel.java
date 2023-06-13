@@ -152,8 +152,4 @@ public class PersonaModel extends RepresentationModel<PersonaModel> {
 	public String toString() {
 		return "PersonaModel [dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", tipo=" + tipo + "]";
 	}
-	
-	
-	
-
 }

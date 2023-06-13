@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <header>
+  <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
@@ -16,12 +16,25 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <router-link class="nav-link" aria-current="page" :to="{ name: 'visitas' }"
-                :class="$route.name == 'visitas' ? 'text-warning fw-bold' : ''">Visitas</router-link> 
+                :class="$route.name == 'visitas' ? 'text-warning fw-bold' : ''">Visitas</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'personas' }"
                 :class="$route.name == 'personas' ? 'text-warning fw-bold' : ''">Personas</router-link>
-            </li>                    
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="consultasDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false" :class="$route.name == 'personamasinvitada' ? 'text-warning fw-bold' : ''">
+                Consultas
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="consultasDropdown">
+                <li>
+                  <router-link class="dropdown-item" :to="{ name: 'personamasinvitada' }">Consultar persona más
+                    invitada</router-link>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'ayuda' }"
                 :class="$route.name == 'ayuda' ? 'text-warning fw-bold' : ''">Ayuda</router-link>
@@ -30,19 +43,20 @@
         </div>
       </div>
     </nav>
-  </header>
+  </div>
 </template>
 
 
 <style scoped>
-.navbar {
+/* .navbar {
   background-color: #a6acaf;
 }
 
 .navbar-brand:hover {
   color: white;
-}
+} */
 
-.nav-link:hover {
+/* .nav-link:hover {
   color: white;
-}</style>
+} */
+</style>

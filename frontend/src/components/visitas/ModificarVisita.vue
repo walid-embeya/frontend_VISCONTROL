@@ -4,7 +4,7 @@ import { mapActions, mapState } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
 import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
-
+import { llamadaAPI } from '@/stores/api-service'
 
 export default {
   components: { Modelo, Calendar },   ///// registro local de los componentes
@@ -33,31 +33,24 @@ export default {
   },
 
   computed: {
-    ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi', 'personaApi' ]),
+    ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi', 'personaApi']),
     ...mapState(visitasStore, ['visitaApi']),
   },
 
   methods: {
-    ...mapActions(personasStore, [ 'getInvitadosApi', 'getAnfitrionesApi', 'getPersonaPorId' ]),
-    ...mapActions(visitasStore, [ 'getVisitaPorId', 'putVisita', 'addInvitadosToVisita', 'getInvitadosVisita' ]),
+    ...mapActions(personasStore, ['getInvitadosApi', 'getAnfitrionesApi', 'getPersonaPorId']),
+    ...mapActions(visitasStore, ['getVisitaPorId', 'putVisita', 'addInvitadosToVisita', 'getInvitadosVisita']),
 
 
     modificarVisita() {
-
-      //console.log(this.anfitrionParaModificar._links.self.href)
       this.visitaParaModificar.anfitrion = this.anfitrionParaModificar._links.self.href
 
-      //console.log("vamos a modificar la visita", JSON.stringify(this.visitaParaModificar))
       this.putVisita(this.visitaParaModificar)
     },
 
     anadirInvitados() {
-      console.log("array invitados elegidos", this.invitadosElegidos)
-
       this.invitadosElegidos.forEach(inv => this.invitadosParaAnadir.listaInvitados.push(inv._links.self.href))
 
-     // console.log("invitados para anadir :", this.invitadosParaAnadir.listaInvitados)
-      console.log("invitados para anadir ", JSON.stringify(this.invitadosParaAnadir))
       this.addInvitadosToVisita(this.invitadosParaAnadir, this.$route.params.identificador)
     },
 
@@ -79,12 +72,15 @@ export default {
     this.visitaParaModificar.fechaFin = new Date(this.visitaParaModificar.fechaFin)
 
     ////// recuperar el anfitrion de la visita
-    let array = this.visitaApi._links.anfitrion.href.split('/')
-    let idAnfitrion = array[array.length - 1]
-    await this.getPersonaPorId(idAnfitrion)
-    this.anfitrionParaModificar = this.personaApi
-    
-     this.getInvitadosVisita(this.$route.params.identificador).then(invitados => {
+    await llamadaAPI("get", null, this.visitaApi._links.anfitrion.href).then((response) => {
+      this.anfitrionParaModificar = response.data
+    })
+    // let array = this.visitaApi._links.anfitrion.href.split('/')
+    // let idAnfitrion = array[array.length - 1]
+    // await this.getPersonaPorId(idAnfitrion)
+    // this.anfitrionParaModificar = this.personaApi
+
+    this.getInvitadosVisita(this.$route.params.identificador).then(invitados => {
       this.invitadosElegidos = invitados
     })
   },
@@ -98,7 +94,6 @@ export default {
     <form class="p-1 border rounded" style="background-color: rgb(16, 70, 151);">
 
       <!-- datos visita -->
-
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
         <div class="row">
           <div class="col-md-3">
@@ -127,7 +122,6 @@ export default {
             <label for="anfitrion" class="form-label fs-5 fw-bold">Anfitrión</label>
           </div>
         </div>
-
 
         <div class="row mb-2">
           <div class="col-md-6">
@@ -165,7 +159,7 @@ export default {
 
     <form class="border rounded mb-1 p-1" style="background-color: rgb(16, 70, 151);">
       <!-- datos visitantes -->
-      <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">      
+      <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
         <div class="row">
           <div class="col-md-4 d-flex justify-content-center">
             <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Lista de invitados</label>
@@ -178,7 +172,7 @@ export default {
 
         <div class="row mb-3">
           <!-- select multiple -->
-          <div class="col-md-5">        
+          <div class="col-md-5">
             <select class="form-select" multiple v-model="invitadosElegidos" data-bs-toggle="tooltip"
               data-bs-placement="left" title="Para elegir un invitado, pulsa CTRL y haz clic para añadirlo a la visita">
               <option v-for="inv of invitadosApi" :value="inv">{{ inv.dni }} - {{ inv.nombre }} {{ inv.apellidos }}

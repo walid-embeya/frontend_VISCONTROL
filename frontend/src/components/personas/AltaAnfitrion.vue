@@ -31,7 +31,6 @@ export default {
 
     crearAnfitrion() {
       this.personaParaAnadir.tipo = "Anfitrion";
-      //console.log("vamos a dar de alta el Anfitrion", JSON.stringify(this.personaParaAnadir))
 
       this.postPersona(this.personaParaAnadir)
 
@@ -51,8 +50,8 @@ export default {
 
   },
 
-  async created() {
-    await this.getAnfitrionesApi()
+  created() {
+    this.getAnfitrionesApi()
   }
 }
 </script>

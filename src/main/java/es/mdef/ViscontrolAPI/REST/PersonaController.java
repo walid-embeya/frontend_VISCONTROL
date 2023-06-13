@@ -22,15 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.qos.logback.classic.Logger;
 import es.mdef.ViscontrolAPI.ViscontrolApiApplication;
 import es.mdef.ViscontrolAPI.entidades.AnfitrionApiImp;
-import es.mdef.ViscontrolAPI.entidades.FrecuenciaVisita;
 import es.mdef.ViscontrolAPI.entidades.InvitadoApiImp;
 import es.mdef.ViscontrolAPI.entidades.PersonaApiImp;
-import es.mdef.ViscontrolAPI.entidades.PersonaApiImp.Tipo;
-import es.mdef.ViscontrolAPI.entidades.VisitaApiImp;
 import es.mdef.ViscontrolAPI.repositorios.PersonaRepositorio;
-import es.mdef.ViscontrolAPI.repositorios.VisitaRepositorio;
-import es.mdef.ViscontrolLib.Invitado;
-import es.mdef.ViscontrolLib.Persona;
 import es.mdef.ViscontrolLib.Visita;
 
 
@@ -42,17 +36,15 @@ public class PersonaController {
 	private final PersonaAssembler assembler;
     private final PersonaListaAssembler listaassembler;
     private final VisitaListaAssembler visitalistassembler;
-    private final VisitaAssembler visitaassembler;
     private final Logger log;
    
     
 	public PersonaController(PersonaRepositorio repositorio, PersonaAssembler assembler, PersonaListaAssembler listaassembler, 
-			VisitaListaAssembler visitalistassembler, VisitaAssembler visitaassembler) {
+			VisitaListaAssembler visitalistassembler) {
 		this.repositorio = repositorio;
 		this.assembler = assembler;
 		this.listaassembler = listaassembler;
 		this.visitalistassembler = visitalistassembler;	
-		this.visitaassembler = visitaassembler;
 		log = (Logger) ViscontrolApiApplication.log;
 	}
     
@@ -95,9 +87,8 @@ public class PersonaController {
 	
 	// Endpoint para modificar una persona ya existente 
 	@PutMapping("{id}")
-    	public PersonaModel edit(@PathVariable Long id, @RequestBody PersonaModel model) {
-		PersonaApiImp persona = repositorio.findById(id).map(pers -> {
-			
+    public PersonaModel edit(@PathVariable Long id, @RequestBody PersonaModel model) {
+		PersonaApiImp persona = repositorio.findById(id).map(pers -> {			
 			pers.setDni(model.getDni());
 			pers.setNombre(model.getNombre());
 			pers.setApellidos(model.getApellidos());			
@@ -151,8 +142,7 @@ public class PersonaController {
 			InvitadoApiImp invitado = (InvitadoApiImp) persona;
 			lista = invitado.getVisitas();
 			break;
-		}
-		
+		}		
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + persona.getTipo());
 		}
@@ -164,7 +154,6 @@ public class PersonaController {
 			collection.add(linkTo(methodOn(PersonaController.class).visitasDePersona(persona.getId())).withRel("Visitas_Anfitrion"));
 		    break;
 		}
-	
 		case Invitado: {
 			collection.add(linkTo(methodOn(PersonaController.class).visitasDePersona(persona.getId())).withRel("Visitas_Invitado"));
 			break;
@@ -186,11 +175,9 @@ public class PersonaController {
 	
 	// Endpoint del metodo personalizada : Recuperar el huésped (Invitado) más invitado por un Anfitrion
     @GetMapping("{id}/personaMasInvitada")
-    public PersonaModel GuestMasInvitadoPorAnfitrion(@PathVariable Long id) {
-    	
-    	Long idInvitado = repositorio.findFrecuentGuestByHost(id);
-    	 	
+    public PersonaModel GuestMasInvitadoPorAnfitrion(@PathVariable Long id) {    	
+    	Long idInvitado = repositorio.findFrecuentGuestByHost(id);    	
 		return this.one(idInvitado);    	
     }
-		
+			
 }

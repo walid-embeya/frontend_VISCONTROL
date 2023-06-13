@@ -36,9 +36,9 @@ public class VisitaListaAssembler <T extends Visita> implements RepresentationMo
 		CollectionModel<VisitaListaModel> collection = CollectionModel.of(
 				lista.stream().map(this::toModel).collect(Collectors.toList())
 				);
-//		collection.add(
-//				linkTo(methodOn(VisitaController.class).all()).withRel("lista_visitas")
-//				);
+		//collection.add(
+		//			linkTo(methodOn(VisitaController.class).all()).withRel("lista_visitas")
+		//			);
 		
 		return collection;
 	}

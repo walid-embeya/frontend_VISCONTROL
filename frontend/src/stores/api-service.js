@@ -55,7 +55,7 @@ function deleteEntidad(id, nombre) {
   return llamadaAPI('delete', null, `${host}/${nombre}/${id}`)
 }
 
-/////******************* visitas ****************/////////
+///////************************ visitas ***************************////////
 
 export function getVisitas() {
   return getEntidades('visitas')
@@ -71,12 +71,10 @@ export function postVisita(visita) {
 }
 
 export function putVisita(visita) {
-  //console.log("llamando a put ", categoria, categoria.id)
   return putEntidad(visita, visita.id, 'visitas')
 }
 
 export function deleteVisita(visita) {
-  //console.log("llamando a delete ", categoria, categoria.id)
   return deleteEntidad(visita.id, 'visitas')
 }
 
@@ -84,18 +82,13 @@ export function deleteVisita(visita) {
 export function addInvitadosToVisita(listaInvitados, id) {
   return llamadaAPI('post', listaInvitados, `${host}/visitas/${id}/invitados`)
 }
-////////////////////////////
 
 /// GET INVITADOS DE VISITA
-
 export function getInvitadosVisita(id) {
   return llamadaAPI('get', null, `${host}/visitas/${id}/invitados`)
 }
-////////////////////////////
 
-
-
-///// personas
+///////************************ personas ***************************////////
 
 export function getPersonas(tipo) {
   return getEntidades('personas?tipo=' + tipo)
@@ -121,6 +114,11 @@ export function deletePersona(persona) {
 export function getVisitasPersona(id) {
   return llamadaAPI('get', null, `${host}/personas/${id}/visitas`)
 }
-////////////////////////////
+
+////// Metodo Personalizada 
+export function getPersonaMasInvitado(id) {
+  return llamadaAPI('get', null, `${host}/personas/${id}/personaMasInvitada`)
+}
+
 
 

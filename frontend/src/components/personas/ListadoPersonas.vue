@@ -11,16 +11,24 @@ import { useToast } from 'primevue/usetoast'
 import { Modal } from '~bootstrap'
 import { nextTick } from 'vue'
 
-
 export default {
   components: { Persona, Modelo, ConfirmDialog, Toast },                   ///// registro local de los componentes
   data() {
     return {
-      opcionElegida: 'anfitrion'
+      opcionElegida: 'anfitrion',
+
+      dniParaBuscar: '',     // almacena el dni de la peronsa que queremos buscar
+      tipoFiltro: '',        // almacena el tipo de persona seleccionado para el filtro  
+      resultadosBusqueda: [],
+      filtroPendiente: false,
     }
   },
   computed: {
     ...mapState(personasStore, ['personasApi']),
+
+    personasParaMostrar() {
+      return this.filtroPendiente ? this.resultadosBusqueda : this.personasApi
+    },
   },
   methods: {
     ...mapActions(personasStore, ['getPersonasApi', 'deletePersona']),
@@ -68,6 +76,37 @@ export default {
         }
       })
     },
+
+    buscarPersonaPorDni() {
+      if (this.dniParaBuscar) {
+        this.filtroPendiente = true
+        this.resultadosBusqueda = []    ///// vaciar el array resultadosBusqueda
+        const personaEncontrada = this.personasApi.find(persona => persona.dni === this.dniParaBuscar)
+        if (personaEncontrada) {
+          this.resultadosBusqueda = [personaEncontrada] // Almacena los resultados de la búsqueda
+        }
+      } else {          ////DNI vacío, el resultados de búsqueda es toda las personas
+        this.filtroPendiente = false
+        this.resultadosBusqueda = this.personasApi
+      }
+    },
+
+    buscarPersonasPorTipo() {
+      if (this.tipoFiltro) {
+        this.filtroPendiente = true
+        this.resultadosBusqueda = []          ///// vaciar el array resultadosBusqueda
+        if (this.tipoFiltro == 'Todos') {
+          this.resultadosBusqueda = this.personasApi
+        }
+        else {
+          this.resultadosBusqueda = this.personasApi.filter(persona => persona.tipo === this.tipoFiltro)
+        }
+      } else {        // tipoFiltro vacío, el resultados de búsqueda es toda las personas
+        this.filtroPendiente = false
+        this.resultadosBusqueda = this.personasApi
+      }
+    },
+
   },
 
   created() {
@@ -84,12 +123,21 @@ export default {
     <Toast />
     <ConfirmDialog></ConfirmDialog>
 
-    <!-- Button Modal -->
-    <div class="d-flex justify-content-start">
-      <button @click="mostrarModal" type="button" class="btn btn-success mt-2" data-bs-toggle="modal"
-        data-bs-target="#addPersona">
-        <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2" />Nueva Persona
-      </button>
+    <div class="my-3">
+      <div class="d-flex justify-content-between">
+        <!-- Boton Modal -->
+        <button @click="mostrarModal" type="button" class="btn btn-success" data-bs-toggle="modal"
+          data-bs-target="#addPersona">
+          <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2" />Nueva Persona
+        </button>
+
+        <!-- Boton busqueda -->
+        <div class="d-flex justify-content-end">
+          <input type="text" v-model="dniParaBuscar" @input="buscarPersonaPorDni" placeholder="Buscar por DNI"
+            class="form-control me-2 ">
+          <button @click="buscarPersonaPorDni" type="button" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
     </div>
 
     <!-- Modal -->
@@ -125,22 +173,33 @@ export default {
         </div>
       </div>
     </div>
-
-    <div v-if="personasApi" style="height: 600px; overflow-y: scroll;">
-      <table class="table table-striped table-hover mt-2">
-        <thead class="alert alert-primary">
-          <tr>
-            <th scope="col">DNI</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Tipo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <Persona v-for="persona of personasApi" :persona="persona" @mostrarPersona="mostrarPersona"
-            @editarPersona="editarPersona" @borrarPersona="borrarPersona"></Persona>
-        </tbody>
-      </table>
+    <div v-if="personasApi">
+      <div style="height: 600px; overflow-y: scroll;" class="border rounded mb-3">
+        <table class="table table-striped table-hover">
+          <thead class="alert alert-primary">
+            <tr>
+              <th scope="col">DNI</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">
+                <div>
+                  <label for="tipoFiltro" class="me-2">Tipo</label>
+                  <select id="tipoFiltro" v-model="tipoFiltro" @click="buscarPersonasPorTipo">
+                    <option value="">Todos</option>
+                    <option value="Anfitrion">Anfitrión</option>
+                    <option value="Invitado">Invitado</option>
+                  </select>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <Persona v-for="persona of personasParaMostrar" :persona="persona" @mostrarPersona="mostrarPersona"
+              @editarPersona="editarPersona" @borrarPersona="borrarPersona"></Persona>
+          </tbody>
+        </table>
+      </div>
+      <p class="fw-bold">{{ personasParaMostrar.length }} registros encontrados</p>
     </div>
 
     <div v-else class="text-center alert alert-light border rounded p-4 mb-0">

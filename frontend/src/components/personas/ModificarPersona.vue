@@ -55,11 +55,13 @@ export default {
   async created() {
     await this.getPersonaPorId(this.$route.params.identificador)
 
-    this.personaParaModificar = { ...this.personaApi }   ///// clone superficial
+    if (this.personaApi) {
+      this.personaParaModificar = { ...this.personaApi }   ///// clone superficial
 
-    if (this.personaApi.inicioAut != null) {
-      this.personaParaModificar.inicioAut = new Date(this.personaParaModificar.inicioAut)
-      this.personaParaModificar.finAut = new Date(this.personaParaModificar.finAut)
+      if (this.personaApi.inicioAut != null) {
+        this.personaParaModificar.inicioAut = new Date(this.personaParaModificar.inicioAut)
+        this.personaParaModificar.finAut = new Date(this.personaParaModificar.finAut)
+      }
     }
   },
 
@@ -200,7 +202,9 @@ export default {
           data-bs-toggle="modal" data-bs-target="#confirmacionOperacion">
           <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2" />Actualizar</button>
 
-        <button type="submit" class="btn btn-secondary" @click="this.$router.push({ name: 'personas' })"><font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cancelar</button>
+        <button type="submit" class="btn btn-secondary"
+          @click="this.$router.push({ name: 'personas' })"><font-awesome-icon icon="fa-solid fa-xmark" size="lg"
+            class="me-2" />Cancelar</button>
       </div>
 
       <!-- <pre>persona API : {{ JSON.stringify(personaApi, null, " ") }}</pre>

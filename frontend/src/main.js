@@ -46,6 +46,8 @@ const Visitas = () => import('@/components/visitas/ListadoVisitas.vue')
 const AltaVisita = () => import('@/components/visitas/AltaVisita.vue')
 const ModificarVisita = () => import('@/components/visitas/ModificarVisita.vue')
 
+const PersonaMasInvitada = () => import('@/components/consultas/PersonaMasInvitada.vue')
+
 const About = () => import('@/components/About.vue')
 const NotFound = () => import('@/components/NotFound.vue')
 
@@ -61,6 +63,9 @@ const routes = [
   { path: '/personas/:identificador/modificarpersona', component: ModificarPersona, name: 'modificarpersona' },
   { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },
   { path: '/nuevoanfitrion', component: AltaAnfitrion, name: 'nuevoanfitrion' },
+
+  { path: '/consultas/personamasinvitada', component: PersonaMasInvitada, name: 'personamasinvitada' },
+
   { path: '/ayuda', component: About, name: 'ayuda' },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]

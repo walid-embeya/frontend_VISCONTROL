@@ -3,14 +3,11 @@ import { mapActions } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
 import { timestampToFecha, timestampToHora } from '@/utils/utils'
 
-///// primevue
-import Accordion from 'primevue/accordion';
-import AccordionTab from 'primevue/accordiontab';
 
 export default {
-  props: ['visita'],  ///// aqui, la opcion "props" es un array of atributes string
-  components: { Accordion, AccordionTab },   ///// registro local de los componentes
-  emits: ['borrarVisita', 'editarVisita', 'mostrarAnfitrion' ],
+  props: ['visita'],
+  // components: { Accordion, AccordionTab },   ///// registro local de los componentes
+  emits: ['borrarVisita', 'editarVisita', 'mostrarAnfitrion'],
   data() {
     return {
       invitadosVisita: []
@@ -59,18 +56,44 @@ export default {
       <div class="col-md-4">
         <label class="fs-5"><b>Hora Inicio</b><span class="ms-4">{{ horaInicio }}</span></label>
       </div>
-      <div v-if="esPendiente(visita)" class="col-md-1 d-flex justify-content-start rounded op ms-3 me-3">
+
+      <div v-if="esPendiente(visita)" class="col-md-3">
+        <div class="d-flex flex-wrap">
+          <span v-if="esPendiente(visita)" class="badge bg-secondary p-2 m-2" @click="$emit('editarVisita', visita)">
+          <font-awesome-icon :icon="['fas', 'pen-to-square']" size="lg" style="color: #e5a50a;"
+            class="me-1"></font-awesome-icon>
+          Editar visita</span>
+
+        <span class="badge bg-secondary p-2 m-2" @click="$emit('borrarVisita', visita)">
+          <font-awesome-icon :icon="['fas', 'trash-can']" size="lg" style="color: #e01b24;"
+            class="me-1"></font-awesome-icon>
+          Borrar visita</span>  
+        </div>
+
+        <!-- <span v-if="esPendiente(visita)" class="badge bg-secondary p-2 me-2" @click="$emit('editarVisita', visita)">
+          <font-awesome-icon :icon="['fas', 'pen-to-square']" size="lg" style="color: #e5a50a;"
+            class="me-1"></font-awesome-icon>
+          Editar visita</span>
+
+        <span class="badge bg-secondary p-2" @click="$emit('borrarVisita', visita)">
+          <font-awesome-icon :icon="['fas', 'trash-can']" size="lg" style="color: #e01b24;"
+            class="me-1"></font-awesome-icon>
+          Borrar visita</span> -->
+
+      </div>
+
+      <!-- <div v-if="esPendiente(visita)" class="col-md-1 d-flex justify-content-start rounded op me-2">
         <span v-if="esPendiente(visita)" class="badge bg-secondary p-2 me-2" @click="$emit('editarVisita', visita)">
           <font-awesome-icon :icon="['fas', 'pen-to-square']" size="lg" style="color: #e5a50a;"
             class="me-1"></font-awesome-icon>
           Editar visita</span>
       </div>
-      <div v-if="esPendiente(visita)" class="col-md-1 d-flex justify-content-start rounded op ms-3 me-3">
+      <div v-if="esPendiente(visita)" class="col-md-1 d-flex justify-content-start rounded op me-2">
         <span class="badge bg-secondary p-2" @click="$emit('borrarVisita', visita)">
           <font-awesome-icon :icon="['fas', 'trash-can']" size="lg" style="color: #e01b24;"
             class="me-1"></font-awesome-icon>
           Borrar visita</span>
-      </div>
+      </div> -->
     </div>
 
     <div class="row mb-3">
@@ -98,20 +121,6 @@ export default {
         <label class="fs-5"><b>Descripción</b><span class="ms-4">{{ visita.actuaciones }}</span></label>
       </div>
     </div>
-
-
-
-    <!-- PRIMEVUE
-
-
-<Accordion :activeIndex="0">
-    <AccordionTab v-for="tab in tabs" :key="tab.title" :header="tab.title">
-        <p>{{ tab.content }}</p>
-    </AccordionTab>
-</Accordion>
-
-
-     -->
 
     <div v-if="invitadosVisita" class="accordion accordion-flush alert alert-secondary mt-2 mb-0 border rounded"
       id="detallesVisita">
@@ -152,7 +161,7 @@ export default {
                   <td>
                     <router-link :to="{ name: 'personainfo', params: { identificador: invit.id } }"><font-awesome-icon
                         :icon="['fas', 'circle-info']" size="lg" style="color: #77767b;" /></router-link>
-                  </td> 
+                  </td>
                 </tr>
               </tbody>
             </table>

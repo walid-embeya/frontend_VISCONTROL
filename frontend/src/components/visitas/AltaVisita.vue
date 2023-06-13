@@ -43,8 +43,8 @@ export default {
   },
 
   computed: {
-    ...mapState(personasStore, [ 'anfitrionesApi', 'invitadosApi' ]),
-    ...mapState(visitasStore, [ 'idVisita' ]),
+    ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi']),
+    ...mapState(visitasStore, ['idVisita']),
   },
 
   methods: {
@@ -148,8 +148,8 @@ export default {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p><font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />Lista de invitatdos añadida a Visita {{
-            idVisita }} con éxito <br>
+          <p><font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />Lista de
+            invitatdos añadida a Visita {{ idVisita }} con éxito <br>
             Puede actualizar la lista de invitados antes de finalizar la visita
           </p>
         </div>
@@ -175,10 +175,9 @@ export default {
           <div class="col-md-3">
             <label for="fechafin" class="form-label fs-5 fw-bold">Fecha/Hora Fin</label>
             <Calendar class="datosvisita" v-model="visita.fechaFin" :disabled="mostrarSegundoForm" :show-time="true"
-              dateFormat="dd/mm/yy" required :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px', 'color': mostrarSegundoForm ? 'black' : 'initial' }">
+              dateFormat="dd/mm/yy" required
+              :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px', 'color': mostrarSegundoForm ? 'black' : 'initial' }">
             </Calendar>
-
-
           </div>
           <div class="col-md-6">
             <label for="actividad" class="form-label fs-5 fw-bold">Actividad</label>
@@ -192,19 +191,20 @@ export default {
             <label for="actuacion" class="form-label fs-5 fw-bold">Descripción</label>
           </div>
           <div class="col-md-6">
-            <label for="anfitrion" class="form-label fs-5 fw-bold">Anfitrión</label>
+            <label for="anfitrionVisita" class="form-label fs-5 fw-bold">Anfitrión</label>
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-md-6">
             <textarea class="form-control" id="actuacion" rows="3" v-model="visita.actuaciones"
-              :disabled="mostrarSegundoForm" placeholder="descripción de la visita" style="resize: none;" :style="{ color: mostrarSegundoForm ? 'gray' : 'black' }"></textarea>
+              :disabled="mostrarSegundoForm" placeholder="descripción de la visita" style="resize: none;"
+              :style="{ color: mostrarSegundoForm ? 'gray' : 'black' }"></textarea>
           </div>
           <div class="col-md-5">
-            <select class="form-select datosvisita me-2" v-model="anfitrionParaAnadir" :disabled="mostrarSegundoForm"
-              required>
-              <option value="" disabled>--seleccionar un anfitrión--</option>
+            <select id="anfitrionVisita" class="form-select datosvisita me-2" v-model="anfitrionParaAnadir"
+              :disabled="mostrarSegundoForm" required>
+              <option value="">--seleccionar un anfitrión--</option>
               <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
             </select>
           </div>

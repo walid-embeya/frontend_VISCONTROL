@@ -20,7 +20,6 @@ import es.mdef.ViscontrolAPI.entidades.AnfitrionApiImp;
 import es.mdef.ViscontrolAPI.entidades.InvitadoApiImp;
 import es.mdef.ViscontrolAPI.entidades.PersonaApiImp;
 import es.mdef.ViscontrolAPI.entidades.VisitaApiImp;
-import es.mdef.ViscontrolAPI.repositorios.PersonaRepositorio;
 import es.mdef.ViscontrolAPI.repositorios.VisitaRepositorio;
 
 @CrossOrigin(origins = "*")
@@ -29,7 +28,6 @@ import es.mdef.ViscontrolAPI.repositorios.VisitaRepositorio;
 public class VisitaController {
 	
 	private final VisitaRepositorio repositorio;
-	private final PersonaRepositorio personarepositorio;
 	private final VisitaAssembler assembler;
     private final VisitaListaAssembler listaAssembler;
     private final VisitaPostAssembler postAssembler;
@@ -38,15 +36,13 @@ public class VisitaController {
     private final Logger log;
 	
     public VisitaController(VisitaRepositorio repositorio, VisitaAssembler assembler, VisitaListaAssembler listaAssembler,
-    		 VisitaPostAssembler postAssembler, PersonaListaAssembler personalistassembler, PersonaAssembler personaassembler,
-    		 PersonaRepositorio personarepositorio) {
+    		 VisitaPostAssembler postAssembler, PersonaListaAssembler personalistassembler, PersonaAssembler personaassembler) {
 		this.repositorio = repositorio;
 		this.assembler = assembler;
 		this.listaAssembler = listaAssembler;
 		this.postAssembler = postAssembler;
 		this.personalistassembler = personalistassembler;
 		this.personaassembler = personaassembler;
-		this.personarepositorio = personarepositorio;
 		log = (Logger) ViscontrolApiApplication.log;
 	}
     
@@ -148,12 +144,14 @@ public class VisitaController {
         listapostmodel.getListaInvitados().forEach(inv -> 
         	 { visita.getInvitados().add((InvitadoApiImp) inv);}
         );                           
+        
+        //// Otro metodo para anadir la lista y guardar la visita
+		//visita.getInvitados().addAll(listapostmodel.getListaInvitados());
+		//return assembler.toModel(repositorio.save(visita));
+        
         repositorio.save(visita);        
         
-        return assembler.toModel(visita);    
-        		//// Otro metodo para anadir la lista y guardar la visita
-    			//visita.getInvitados().addAll(listapostmodel.getListaInvitados());
-    			//return assembler.toModel(repositorio.save(visita));
+        return assembler.toModel(visita);            	
     }
 
     // Endpoint para recuperar el infitrion de una visita (el que ha planificado esta visita)
@@ -179,44 +177,31 @@ public class VisitaController {
 	}
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-// Endpoint para delete un invitado de una visita  
-//    @DeleteMapping("{id}/invitados/invId")
-//	public void deleteInvitadoVisita(@PathVariable Long id, @PathVariable Long invId) {
-//    	
-//    	VisitaApiImp visita = repositorio.findById(id)
-//        		.orElseThrow(() -> new RegisterNotFoundException(id, "visita")); 
-//    	
-//    	log.info("Borrado invitado de visita " + id);
-//    	
-//        System.out.println(personarepositorio.findById(invId));
-//    	
-//    	int index = 0;
-//    	
-//    	for (int i = 0; i < visita.getInvitados().size(); i++) {
-//    		if (visita.getInvitados().get(i).equals(personarepositorio.findById(invId)))  {
-//    			index = i;
-//    			break;    			
-//    		}			
-//		}
-//    	
-//    	System.out.println(index);
-//    	
-//    	visita.getInvitados().remove(index);
-//    	    	   
-//	}
+    // Endpoint para delete un invitado de una visita  
+	//    @DeleteMapping("{id}/invitados/invId")
+	//	public void deleteInvitadoVisita(@PathVariable Long id, @PathVariable Long invId) {
+	//    	
+	//    	VisitaApiImp visita = repositorio.findById(id)
+	//        		.orElseThrow(() -> new RegisterNotFoundException(id, "visita")); 
+	//    	
+	//    	log.info("Borrado invitado de visita " + id);
+	//    	
+	//        System.out.println(personarepositorio.findById(invId));
+	//    	
+	//    	int index = 0;
+	//    	
+	//    	for (int i = 0; i < visita.getInvitados().size(); i++) {
+	//    		if (visita.getInvitados().get(i).equals(personarepositorio.findById(invId)))  {
+	//    			index = i;
+	//    			break;    			
+	//    		}			
+	//		}
+	//    	
+	//    	System.out.println(index);
+	//    	
+	//    	visita.getInvitados().remove(index);
+	//    	    	   
+	//	}
     
 }
     
@@ -229,30 +214,4 @@ public class VisitaController {
 
 
 
-
-    
-    /////******************************************* para probar ****************************************
-//	@GetMapping("{id}/usuarios")
-//	public CollectionModel<PreguntaListaModel> preguntas(@PathVariable Long id) {
-//		List<Pregunta> preguntas = repositorio.findById(id)
-//				.orElseThrow(() -> new RegisterNotFoundException(id, "usuario"))
-//				.getPreguntas();
-//		return CollectionModel.of(
-//				preguntas.stream().map(preg -> preguntaListaAssembler.toModel(preg)).collect(Collectors.toList()),
-//				linkTo(methodOn(UsuarioController.class).preguntas(id)).withSelfRel()
-//				);
-//	}
-    
-//	********************************************* para probar
-    
-//  @GetMapping("{id}/pedidos") 
-//	public CollectionModel<PedidoListaModel> pedidos (@PathVariable Long id) {
-//		return CollectionModel.of(
-//				pedidoRepositorio.findByEmpleadoId(id).stream().map(pedido->
-//						pedidoListaAssembler.toModel(pedido)).collect(Collectors.toList()),
-//					linkTo(methodOn(EmpleadoController.class).one(id)).slash("pedidos").withSelfRel()
-//				);
-//	}
-//    
-	
 
