@@ -131,7 +131,6 @@ public class VisitaController {
         return assembler.toModel(visita);
     }
     
-    
     // Endpoint para añadir un lista de invitados a una visita   
     @PostMapping("{id}/invitados")
     public VisitaModel addListaInvitadosToVisita(@PathVariable Long id, @RequestBody InvitadoListaPostModel listapostmodel) {
@@ -175,33 +174,6 @@ public class VisitaController {
 		log.info("Borrado visita " + id);
 		repositorio.deleteById(id);
 	}
-    
-    
-    // Endpoint para delete un invitado de una visita  
-	//    @DeleteMapping("{id}/invitados/invId")
-	//	public void deleteInvitadoVisita(@PathVariable Long id, @PathVariable Long invId) {
-	//    	
-	//    	VisitaApiImp visita = repositorio.findById(id)
-	//        		.orElseThrow(() -> new RegisterNotFoundException(id, "visita")); 
-	//    	
-	//    	log.info("Borrado invitado de visita " + id);
-	//    	
-	//        System.out.println(personarepositorio.findById(invId));
-	//    	
-	//    	int index = 0;
-	//    	
-	//    	for (int i = 0; i < visita.getInvitados().size(); i++) {
-	//    		if (visita.getInvitados().get(i).equals(personarepositorio.findById(invId)))  {
-	//    			index = i;
-	//    			break;    			
-	//    		}			
-	//		}
-	//    	
-	//    	System.out.println(index);
-	//    	
-	//    	visita.getInvitados().remove(index);
-	//    	    	   
-	//	}
     
 }
     

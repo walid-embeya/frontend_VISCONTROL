@@ -173,6 +173,32 @@ public class PersonaController {
 		repositorio.deleteById(id);
 	}
 	
+	// Endpoint para eliminar las visitas de una persona 
+	@DeleteMapping("{id}/visitas")
+	public void deleteVisitasPersona(@PathVariable Long id) {
+		PersonaApiImp persona = repositorio.findById(id)
+					.orElseThrow(() -> new RegisterNotFoundException(id, "persona"));
+			
+		log.info("Borrado visitas persona " + id);
+		    
+		switch (persona.getTipo()) {
+		case Anfitrion: {
+			AnfitrionApiImp anfitrion = (AnfitrionApiImp) persona;
+			anfitrion.getVisitas().clear();
+			break;
+		}
+		case Invitado: {
+			InvitadoApiImp invitado = (InvitadoApiImp) persona;
+			invitado.getVisitas().clear();
+			break;
+		}		
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + persona.getTipo());
+		}
+			
+		repositorio.save(persona);
+	}
+	
 	// Endpoint del metodo personalizada : Recuperar el huésped (Invitado) más invitado por un Anfitrion
     @GetMapping("{id}/personaMasInvitada")
     public PersonaModel GuestMasInvitadoPorAnfitrion(@PathVariable Long id) {    	
