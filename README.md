@@ -25,3 +25,5 @@ VISCONTROL es una aplicación web que permite llevar la gestión y control sobre
 7. **Despliegue** en Internet: 
    1. API: https://apiviscontrol-walidembeya.b4a.run/api/
    1. Web: https://viscontrol.netlify.app
+8. **Postman**
+https://documenter.getpostman.com/view/25303504/2s93m63Naf
