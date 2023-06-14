@@ -106,7 +106,7 @@ export default {
   created() {
     this.toast = useToast()
     this.getVisitasApi()
-    console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
+    //console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
   }
 }
 </script>

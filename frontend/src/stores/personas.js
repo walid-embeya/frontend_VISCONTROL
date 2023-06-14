@@ -80,7 +80,7 @@ export const personasStore = defineStore('personas', {
     },
 
     async getPersonaMasInvitado(id) {
-      await huespedMasInvitado(id).then(r => {
+      await getPersonaMasInvitado(id).then(r => {
         this.huespedMasInvitado = r.data
       })
       

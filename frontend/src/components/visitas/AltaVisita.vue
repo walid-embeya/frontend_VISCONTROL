@@ -6,16 +6,17 @@ import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
 
 import Toast from 'primevue/toast'
-import Dialog from 'primevue/dialog'
+// import { Dialog } from 'primevue/dialog'
 import { useToast } from 'primevue/usetoast'
 
 
 export default {
-  components: { Modelo, Calendar, Dialog, Toast },   ///// registro local de los componentes
+  // components: { Modelo, Calendar, Dialog, Toast },   ///// registro local de los componentes
+  components: { Modelo, Calendar, Toast },
   data() {
     return {
       ////// para dialog primevue
-      visible: false,
+      //visible: false,
 
       //// para recuperar el anfitrion seleccionado
       anfitrionParaAnadir: '',
@@ -56,7 +57,7 @@ export default {
       this.postVisita(this.visita)
 
       ////// confirm dialog de primevue
-      this.visible = true
+      // this.visible = true
 
       ////// para mostrar y ocultar componente de agregación de invitados
       this.mostrarSegundoForm = true;
@@ -108,16 +109,17 @@ export default {
 
 
 <template>
-  <!-- para dialog -->
-  <Toast />
-  <Dialog :visible="visible" modal header="Confirmación" :style="{ width: '30vw' }">
+  <!-- para dialog p-button-lg-->
+  <Toast /> 
+  <!-- <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '30vw' }">
     <p>Nueva visita añadida en la base de datos con exito.<br>
       Debería agregar uno o más invitados a esta visita</p>
     <template class="d-flex justify-content-center">
-      <Button label="OK" icon="pi pi-info-circle" @click="showSuccess" class="p-button-lg mt-2" autofocus>OK</Button>
+      <Button label="OK" icon="pi pi-info-circle" @click="showSuccess" class="btn btn-secondary mt-2" autofocus>OK</Button> 
     </template>
-  </Dialog>
+  </Dialog>  -->
 
+ 
   <!-- Modal visita finalizada -->
   <div class="modal fade" id="confirmacionVisitafinalizada" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -160,8 +162,8 @@ export default {
     </div>
   </div>
 
-  <Modelo titulo="CREACIÓN NUEVA VISITA">
 
+  <Modelo titulo="CREACIÓN NUEVA VISITA">
     <form class="p-1 border rounded" style="background-color: rgb(16, 70, 151);">
       <!-- datos visita -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
@@ -204,7 +206,7 @@ export default {
           <div class="col-md-5">
             <select id="anfitrionVisita" class="form-select datosvisita me-2" v-model="anfitrionParaAnadir"
               :disabled="mostrarSegundoForm" required>
-              <option value="">--seleccionar un anfitrión--</option>
+              <option value="" disabled>--seleccionar un anfitrión--</option>
               <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
             </select>
           </div>
@@ -215,7 +217,6 @@ export default {
             </button>
           </div>
         </div>
-
       </div>
 
       <!-- buton de guardar visita (Primer Endpoint) -->
@@ -295,6 +296,11 @@ export default {
   font-size: 1rem;
   padding: 0.75rem 2.75rem;
 }
+
+.icono {
+  margin-right: 0.5rem;
+}
+
 </style>
 
 

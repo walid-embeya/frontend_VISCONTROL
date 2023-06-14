@@ -1,6 +1,5 @@
 <script setup>
 import Menu from './components/Menu.vue'
-  // import AltaVisita from '@/formularios/AltaVisita.vue'
 </script>
 
 <template>
@@ -8,7 +7,6 @@ import Menu from './components/Menu.vue'
     <Menu></Menu>
     <div class="container">
       <router-view></router-view>
-      <!-- <AltaVisita /> -->
     </div>
 
   </div>

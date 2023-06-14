@@ -78,18 +78,25 @@ export default {
     },
 
     buscarPersonaPorDni() {
-      if (this.dniParaBuscar) {
-        this.filtroPendiente = true
-        this.resultadosBusqueda = []    ///// vaciar el array resultadosBusqueda
-        const personaEncontrada = this.personasApi.find(persona => persona.dni === this.dniParaBuscar)
-        if (personaEncontrada) {
-          this.resultadosBusqueda = [personaEncontrada] // Almacena los resultados de la búsqueda
-        }
-      } else {          ////DNI vacío, el resultados de búsqueda es toda las personas
-        this.filtroPendiente = false
-        this.resultadosBusqueda = this.personasApi
+    if (this.dniParaBuscar) {
+      this.filtroPendiente = true
+      this.resultadosBusqueda = []         // Vaciar el array resultadosBusqueda
+      const caracterBuscado = this.dniParaBuscar.toLowerCase()
+      
+      // Filtrar las personas cuyo DNI contenga el carácter buscado
+      const personasEncontradas = this.personasApi.filter(persona => persona.dni.toLowerCase().includes(caracterBuscado))
+
+      // const personaEncontrada = this.personasApi.find(persona => persona.dni === this.dniParaBuscar)
+      if (personasEncontradas.length > 0) {
+        this.resultadosBusqueda = personasEncontradas; // Almacena los resultados de la búsqueda
       }
-    },
+    } else {
+      // DNI vacío, los resultados de búsqueda son todas las personas
+      this.filtroPendiente = false;
+      this.resultadosBusqueda = this.personasApi;
+    }
+   },
+
 
     buscarPersonasPorTipo() {
       if (this.tipoFiltro) {

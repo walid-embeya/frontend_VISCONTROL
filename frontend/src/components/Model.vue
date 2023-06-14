@@ -6,14 +6,10 @@ export default {
 </script>
 
 <template>
-  <!-- <div class="container alert alert-light"> -->
-  <div class="mb-3">
-    <h1 class="titulo">{{ titulo }}</h1>
-
-
-  </div>
-
-  <div>
+  <div class="container alert alert-light">
+    <div>
+      <h1 class="titulo">{{ titulo }}</h1>
+    </div>
     <slot></slot>
   </div>
 </template>

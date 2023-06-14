@@ -2,30 +2,75 @@
 import Modelo from '@/components/Model.vue'
 import { mapActions, mapState } from 'pinia'
 import { personasStore } from '@/stores/personas'
+import { llamadaAPI } from '@/stores/api-service'
+import { timestampToFecha, timestampToHora } from '@/utils/utils'
+
 
 export default {
   components: { Modelo },   ///// registro local de los componentes
   data() {
     return {
-      opcionElegida: 0,
-      anfitrion: null,
-
+      anfitrion: '',
+      visitasInvitadoMostrado: [],
     }
   },
 
   computed: {
-    ...mapState(personasStore, ['anfitrionesApi', 'huespedMasInvitado']),
+    ...mapState(personasStore, ['anfitrionesApi', 'huespedMasInvitado', 'visitasPersona']),
+
+    fechaHoy() {
+      return new Date()
+    },
   },
 
   methods: {
-    ...mapActions(personasStore, ['getAnfitrionesApi', 'getPersonaMasInvitado']),
+    ...mapActions(personasStore, ['getAnfitrionesApi', 'getPersonaMasInvitado', 'getVisitasPersona']),
 
-    mostrarResultadoConsulta() {
+    async mostrarResultadoConsulta() {
+      //console.log("anfitrion : ", JSON.stringify(this.anfitrion, null, 2))
+      if (this.anfitrion) {
+        ///// recuperar la persona mas invitada por el anfitrion con ID
+        await this.getPersonaMasInvitado(this.anfitrion.id)
 
-      if (this.opcionElegida == 0) {
-        console.log("anfitrion : ", JSON.stringify(this.anfitrion.id, null, 2))
-        this.getPersonaMasInvitado(this.anfitrion.id)
+        //// recuperar las visitas planificadas por este anfitrion y asistidas por de este invitado       
+        if (this.huespedMasInvitado) {
+          this.getVisitasPersona(this.huespedMasInvitado.id).then(r => {
+            this.visitasInvitadoMostrado = [],
+              this.visitasPersona.forEach(v => {
+                llamadaAPI('get', null, v._links.self.href).then((response) => {
+                  ////// recuperar el ID del anfitrion de cada visita
+                  let linkAnfitrion = response.data._links.anfitrion.href
+                  let array = linkAnfitrion.split('/')
+                  let idAnfitrion = array[array.length - 1]
+
+                  if (idAnfitrion == this.anfitrion.id) {
+                    this.visitasInvitadoMostrado.push(v)
+                  }
+                })
+              })
+          })
+        }
       }
+      else {
+        this.visitasInvitadoMostrado = []
+      }
+    },
+
+    estadoVisita(visita) {
+      return new Date(visita.fechaFin) > this.fechaHoy ? 'Pendiente' : 'Hecha'
+    },
+
+    fecha(d) {
+      return timestampToFecha(new Date(d))
+    },
+
+    hora(d) {
+      return timestampToHora(new Date(d))
+    },
+
+    nuevaConsulta() {
+      this.anfitrion = null
+      this.visitasInvitadoMostrado = []
     },
 
   },
@@ -40,59 +85,106 @@ export default {
 <template>
   <Modelo titulo="CONSULTAR EL HUÉSPED MÁS INVITADO">
 
-    <div class="container alert alert-primary border rounded mb-1">
-      <div class="row align-items-center">
-        <div class="col-auto">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="opcion" id="opcion1" value="opcion1" @click="opcionElegida=0" checked>
-            <label class="form-check-label" for="opcion1">
-              Por Anfitrión
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="opcion" id="opcion2" value="opcion2" @click="opcionElegida=1" disabled>
-            <label class="form-check-label" for="opcion2">
-              En todas lass visitas
-            </label>
-          </div>
-        </div>
-
-        <div v-if="opcionElegida === 0" class="col-auto ms-5">
-          <label for="anfitrionvisita" class="form-label fs-5 fw-bold">Anfitrión</label>
-        </div>
-        <div v-if="opcionElegida === 0" class="col-auto">
-          <select id="anfitrionVisita" class="form-select me-5" v-model="anfitrion" @click="mostrarResultadoConsulta" required>
-            <option value="">--seleccionar un anfitrión--</option>
-            <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
-          </select>
-        </div>
+    <!-- para elegir un anfitrion -->
+    <div class="d-flex flex-row alert alert-dark border rounded mb-0">
+      <div class="me-3">
+        <label for="anfitrionvisita" class="form-label fs-5 fw-bold">Anfitrión</label>
+      </div>
+      <div>
+        <select id="anfitrionVisita" class="form-select me-5" v-model="anfitrion" @click="mostrarResultadoConsulta"
+          required>
+          <option value="" disabled>--seleccionar un anfitrión--</option>
+          <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
+        </select>
       </div>
     </div>
 
+    <form v-if="huespedMasInvitado" class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
+      <!-- informaciones communes de persona -->
+      <div class="container alert alert-dark border rounded mb-1">
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="dni" class="form-label">DNI</label>
+            <input type="text" class="form-control" id="dni" v-model="huespedMasInvitado.dni" readonly>
+          </div>
+          <div class="col-md-4">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" v-model="huespedMasInvitado.nombre" readonly>
+          </div>
+          <div class="col-md-4">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" v-model="huespedMasInvitado.apellidos" readonly>
+          </div>
+        </div>
 
-    <div v-if="huespedMasInvitado" class="container alert alert-dark border rounded">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="telefono" class="form-label">Telefono</label>
+            <input type="text" class="form-control" id="telefono" v-model="huespedMasInvitado.telefono" readonly>
+          </div>
 
-      <pre>JSON.stringify(huespedMasInvitado, null, 2)</pre>
+          <div class="col-md-4">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" v-model="huespedMasInvitado.email" readonly>
+          </div>
+        </div>
+      </div>
 
+      <!-- informaciones propias del invitado -->
+      <div class="container alert alert-dark border rounded mb-1">
+        <div class="row mb-0">
+          <div class="col-md-4">
+            <label for="matricula" class="form-label">Matricula</label>
+            <input type="text" class="form-control" id="matricula" v-model="huespedMasInvitado.matricula" readonly>
+          </div>
+          <div class="col-md-4">
+            <label for="empresa" class="form-label">Empresa</label>
+            <input type="text" class="form-control" id="empresa" v-model="huespedMasInvitado.empresa" readonly>
+          </div>
+          <div class="col-md-4 align-self-end">
+            <div class="form-check">
+              <input v-model="huespedMasInvitado.autorizacion" class="form-check-input" type="checkbox" id="autorizacion"
+                value="option1">
+              <label class="form-check-label" for="autorizacion">Autorizado</label>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    </div>
+      <div v-if="visitasInvitadoMostrado" class="container border rounded alert alert-light">
+        <p class="fs-3 fw-bold text-center text-danger">Lista de Visitas</p>
 
+        <div style="height: 200px; overflow-y: scroll;">
+          <table class="table table-striped table-hover">
+            <thead class="alert alert-dark" style="background-color: rgb(134, 139, 139);">
+              <tr class="cabezera">
+                <th scope="col">Fecha/Hora Inicio</th>
+                <th scope="col">Fecha/Hora Fin</th>
+                <th scope="col">Actividad</th>
+                <th scope="col">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="visita of visitasInvitadoMostrado">
+                <th scope="row">{{ fecha(visita.fechaInicio) }} a las {{ hora(visita.fechaInicio) }}</th>
+                <td>{{ fecha(visita.fechaFin) }} a las {{ hora(visita.fechaFin) }}</td>
+                <td>{{ visita.actividad }}</td>
+                <td v-if="estadoVisita(visita) == 'Pendiente'" class="fw-bold text-danger">{{ estadoVisita(visita) }}</td>
+                <td v-else>{{ estadoVisita(visita) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <!-- boton de cerrar -->
+      <div class="d-flex justify-content-center p-2">
+        <button type="submit" class="btn btn-secondary me-1" @click="nuevaConsulta"><font-awesome-icon
+            icon="fa-solid fa-magnifying-glass" size="lg" class="me-2" />
+          Nueva consulta</button>
+        <button type="submit" class="btn btn-secondary" @click="$router.push({ name: 'home' })"><font-awesome-icon
+            icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar</button>
+      </div>
+    </form>
   </Modelo>
 </template>
-

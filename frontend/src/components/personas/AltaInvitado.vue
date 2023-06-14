@@ -104,7 +104,7 @@ export default {
           </div>
           <div class="col-md-4">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="dni" v-model="personaParaAnadir.nombre" placeholder="nombre"
+            <input type="text" class="form-control" id="nombre" v-model="personaParaAnadir.nombre" placeholder="nombre"
               required>
           </div>
           <div class="col-md-4">

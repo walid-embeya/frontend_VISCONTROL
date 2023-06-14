@@ -2,29 +2,16 @@
 @import "~bootstrap/scss/bootstrap";
 
 /* font-familiy personalizadas */
-@import url('https://fonts.googleapis.com/css?family=Akaya Kanadaka');
-
-@import url('https://fonts.googleapis.com/css?family=Akaya Telivigala');
-
 @import url('https://fonts.googleapis.com/css?family=Alexandria');
 
 
-h1 {
-  margin: 0;
-}
-
-ul {
-  margin: 0;
-}
-
-.titulo {
-    margin: 2rem;  
-    //font-family: 'Akaya Telivigala';
+.titulo { 
+    padding-top: 2rem;
+    padding-bottom: 4rem;
     font-family: 'Alexandria';
     font-weight: bold;
     font-size:35px;
     text-align: center;
-    // color: royalblue;
     color: rgb(6, 63, 233)
   }
 

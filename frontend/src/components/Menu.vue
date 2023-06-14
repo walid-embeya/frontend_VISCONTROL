@@ -24,11 +24,11 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="consultasDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false" :class="$route.name == 'personamasinvitada' ? 'text-warning fw-bold' : ''">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 Consultas
               </a>
-              <ul class="dropdown-menu" aria-labelledby="consultasDropdown">
+              <ul class="dropdown-menu">
                 <li>
                   <router-link class="dropdown-item" :to="{ name: 'personamasinvitada' }">Consultar persona más
                     invitada</router-link>
@@ -38,7 +38,7 @@
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'ayuda' }"
                 :class="$route.name == 'ayuda' ? 'text-warning fw-bold' : ''">Ayuda</router-link>
-            </li>
+            </li>            
           </ul>
         </div>
       </div>
@@ -46,17 +46,3 @@
   </div>
 </template>
 
-
-<style scoped>
-/* .navbar {
-  background-color: #a6acaf;
-}
-
-.navbar-brand:hover {
-  color: white;
-} */
-
-/* .nav-link:hover {
-  color: white;
-} */
-</style>
