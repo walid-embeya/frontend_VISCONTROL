@@ -27,9 +27,7 @@ export default {
     ...mapActions(personasStore, ['getAnfitrionesApi', 'getPersonaMasInvitado', 'getVisitasPersona']),
 
     async mostrarResultadoConsulta() {
-      //console.log("anfitrion : ", JSON.stringify(this.anfitrion, null, 2))
       if (this.anfitrion) {
-        ///// recuperar la persona mas invitada por el anfitrion con ID
         await this.getPersonaMasInvitado(this.anfitrion.id)
 
         //// recuperar las visitas planificadas por este anfitrion y asistidas por de este invitado       
@@ -37,8 +35,9 @@ export default {
           this.getVisitasPersona(this.huespedMasInvitado.id).then(r => {
             this.visitasInvitadoMostrado = [],
               this.visitasPersona.forEach(v => {
+
+                ////// recuperar el ID del anfitrion de cada visita
                 llamadaAPI('get', null, v._links.self.href).then((response) => {
-                  ////// recuperar el ID del anfitrion de cada visita
                   let linkAnfitrion = response.data._links.anfitrion.href
                   let array = linkAnfitrion.split('/')
                   let idAnfitrion = array[array.length - 1]
@@ -47,6 +46,7 @@ export default {
                     this.visitasInvitadoMostrado.push(v)
                   }
                 })
+
               })
           })
         }
@@ -67,23 +67,18 @@ export default {
     hora(d) {
       return timestampToHora(new Date(d))
     },
-
-    nuevaConsulta() {
-      this.anfitrion = null
-      this.visitasInvitadoMostrado = []
-    },
-
   },
 
   created() {
     this.getAnfitrionesApi()
   },
+
 };
 </script>
 
 
 <template>
-  <Modelo titulo="CONSULTAR EL HUÉSPED MÁS INVITADO">
+  <Modelo titulo="EL HUÉSPED MÁS INVITADO POR UN ANFITRIÓN">
 
     <!-- para elegir un anfitrion -->
     <div class="d-flex flex-row alert alert-dark border rounded mb-0">
@@ -151,12 +146,12 @@ export default {
         </div>
       </div>
 
-      <div v-if="visitasInvitadoMostrado" class="container border rounded alert alert-light">
+      <div v-if="visitasInvitadoMostrado" class="container border rounded alert alert-light mb-0">
         <p class="fs-3 fw-bold text-center text-danger">Lista de Visitas</p>
 
         <div style="height: 200px; overflow-y: scroll;">
           <table class="table table-striped table-hover">
-            <thead class="alert alert-dark" style="background-color: rgb(134, 139, 139);">
+            <thead class="table-dark" style="background-color: rgb(134, 139, 139);">
               <tr class="cabezera">
                 <th scope="col">Fecha/Hora Inicio</th>
                 <th scope="col">Fecha/Hora Fin</th>
@@ -178,11 +173,8 @@ export default {
       </div>
 
       <!-- boton de cerrar -->
-      <div class="d-flex justify-content-center p-2">
-        <button type="submit" class="btn btn-secondary me-1" @click="nuevaConsulta"><font-awesome-icon
-            icon="fa-solid fa-magnifying-glass" size="lg" class="me-2" />
-          Nueva consulta</button>
-        <button type="submit" class="btn btn-secondary" @click="$router.push({ name: 'home' })"><font-awesome-icon
+      <div class="d-flex justify-content-center border rounded mb-0 p-2" style="background-color: rgb(236, 231, 224);">
+        <button type="submit" class="btn btn-secondary" @click="this.$router.push({ name: 'home' })"><font-awesome-icon
             icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar</button>
       </div>
     </form>

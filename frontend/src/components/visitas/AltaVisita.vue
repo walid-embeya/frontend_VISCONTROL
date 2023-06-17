@@ -4,19 +4,16 @@ import { mapActions, mapState } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
 import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
-
-import Toast from 'primevue/toast'
-// import { Dialog } from 'primevue/dialog'
-import { useToast } from 'primevue/usetoast'
+import Dialog from 'primevue/dialog'
 
 
 export default {
-  // components: { Modelo, Calendar, Dialog, Toast },   ///// registro local de los componentes
-  components: { Modelo, Calendar, Toast },
+  components: { Modelo, Calendar, Dialog },    ///// registro local de los componentes
   data() {
     return {
       ////// para dialog primevue
-      //visible: false,
+      visible: false,
+      mensajeDialog: '',
 
       //// para recuperar el anfitrion seleccionado
       anfitrionParaAnadir: '',
@@ -56,16 +53,12 @@ export default {
       this.visita.anfitrion = this.anfitrionParaAnadir._links.self.href
       this.postVisita(this.visita)
 
-      ////// confirm dialog de primevue
-      // this.visible = true
+      ///// para Dialog primevue
+      this.mensajeDialog = 'Nueva visita añadida con exito ! Debería agregar uno o más invitados a esta visita'
+      this.visible = true
 
       ////// para mostrar y ocultar componente de agregación de invitados
-      this.mostrarSegundoForm = true;
-    },
-
-    showSuccess() {
-      this.visible = false
-      this.$toast.add({ severity: 'success', summary: 'Visita añadida', detail: this.idVisita, life: 3000 })
+      this.mostrarSegundoForm = true
     },
 
     anadirInvitados() {
@@ -99,7 +92,6 @@ export default {
   },
 
   created() {
-    this.toast = useToast()
     this.getInvitadosApi()
     this.getAnfitrionesApi()
   },
@@ -109,17 +101,18 @@ export default {
 
 
 <template>
-  <!-- para dialog p-button-lg-->
-  <Toast /> 
-  <!-- <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '30vw' }">
-    <p>Nueva visita añadida en la base de datos con exito.<br>
-      Debería agregar uno o más invitados a esta visita</p>
-    <template class="d-flex justify-content-center">
-      <Button label="OK" icon="pi pi-info-circle" @click="showSuccess" class="btn btn-secondary mt-2" autofocus>OK</Button> 
+  <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '30vw' }">
+    <p>
+      <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
+      {{ mensajeDialog }}
+    </p>
+    <template #footer>
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-primary" @click="visible = false">OK</button>
+      </div>
     </template>
-  </Dialog>  -->
+  </Dialog>
 
- 
   <!-- Modal visita finalizada -->
   <div class="modal fade" id="confirmacionVisitafinalizada" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -134,7 +127,7 @@ export default {
             idVisita }} y sus invitatdos añadidos con éxito</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="">Close</button>
         </div>
       </div>
     </div>
@@ -162,19 +155,18 @@ export default {
     </div>
   </div>
 
-
   <Modelo titulo="CREACIÓN NUEVA VISITA">
     <form class="p-1 border rounded" style="background-color: rgb(16, 70, 151);">
       <!-- datos visita -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
-        <div class="row">
+        <div class="row pb-3">
           <div class="col-md-3">
             <label for="fechainicio" class="form-label fs-5 fw-bold">Fecha/Hora Inicio</label>
             <Calendar class="datosvisita" v-model="visita.fechaInicio" :disabled="mostrarSegundoForm" :show-time="true"
               dateFormat="dd/mm/yy" required :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px' }">
             </Calendar>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 flex-wrap">
             <label for="fechafin" class="form-label fs-5 fw-bold">Fecha/Hora Fin</label>
             <Calendar class="datosvisita" v-model="visita.fechaFin" :disabled="mostrarSegundoForm" :show-time="true"
               dateFormat="dd/mm/yy" required
@@ -191,30 +183,31 @@ export default {
         <div class="row my-2">
           <div class="col-md-6">
             <label for="actuacion" class="form-label fs-5 fw-bold">Descripción</label>
-          </div>
-          <div class="col-md-6">
-            <label for="anfitrionVisita" class="form-label fs-5 fw-bold">Anfitrión</label>
-          </div>
-        </div>
-
-        <div class="row mb-2">
-          <div class="col-md-6">
             <textarea class="form-control" id="actuacion" rows="3" v-model="visita.actuaciones"
               :disabled="mostrarSegundoForm" placeholder="descripción de la visita" style="resize: none;"
               :style="{ color: mostrarSegundoForm ? 'gray' : 'black' }"></textarea>
           </div>
-          <div class="col-md-5">
-            <select id="anfitrionVisita" class="form-select datosvisita me-2" v-model="anfitrionParaAnadir"
-              :disabled="mostrarSegundoForm" required>
-              <option value="" disabled>--seleccionar un anfitrión--</option>
-              <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
-            </select>
-          </div>
-          <div class="col-md-1">
-            <button type="button" @click="darAltaAnfitrion" class="btn btn-dark" data-bs-toggle="tooltip"
-              data-bs-placement="right" title="hacer clic para dar de alta un nuevo anfitrión">
-              <font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" style="color: #ffffff;" />
-            </button>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="anfitrionVisita" class="form-label fs-5 fw-bold">Anfitrión</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <select id="anfitrionVisita" class="form-select datosvisita me-2" v-model="anfitrionParaAnadir"
+                  :disabled="mostrarSegundoForm" required>
+                  <option value="" disabled>--seleccionar un anfitrión--</option>
+                  <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
+                </select>
+              </div>
+              <div class="col-md-1">
+                <button type="button" @click="darAltaAnfitrion" class="btn btn-danger" data-bs-toggle="tooltip"
+                  data-bs-placement="right" title="hacer clic para dar de alta un nuevo anfitrión">
+                  <font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" style="color: #ffffff;" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -222,9 +215,9 @@ export default {
       <!-- buton de guardar visita (Primer Endpoint) -->
       <div class="d-flex justify-content-center border rounded alert alert-primary p-2 m-0"
         style="background-color: rgb(169, 169, 189);">
-        <button :disabled="mostrarSegundoForm" type="button" class="btn btn-success me-2" @click.prevent="agregarVisita">
+        <button :disabled="mostrarSegundoForm" type="button" class="btn btn-primary me-2" @click.prevent="agregarVisita">
           <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2" />Guardar Visita</button>
-        <button :disabled="mostrarSegundoForm" type="button" class="btn btn-secondary" @click="this.$router.go(-1)">
+        <button :disabled="mostrarSegundoForm" type="button" class="btn btn-primary" @click="this.$router.go(-1)">
           <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cancelar</button>
       </div>
     </form>
@@ -300,7 +293,6 @@ export default {
 .icono {
   margin-right: 0.5rem;
 }
-
 </style>
 
 

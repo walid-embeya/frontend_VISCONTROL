@@ -115,6 +115,11 @@ export function getVisitasPersona(id) {
   return llamadaAPI('get', null, `${host}/personas/${id}/visitas`)
 }
 
+////// DELETE VISITAS DE PERSONA 
+export function borrarVisitasPersona(id) {
+  return llamadaAPI('delete', null, `${host}/personas/${id}/visitas`)
+}
+
 ////// Metodo Personalizada 
 export function getPersonaMasInvitado(id) {
   return llamadaAPI('get', null, `${host}/personas/${id}/personaMasInvitada`)

@@ -6,9 +6,10 @@ import { visitasStore } from '@/stores/visitas'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import ProgressSpinner from 'primevue/progressspinner'
 
 export default {
-  components: { Modelo, Visita, ConfirmDialog, Toast },   ///// registro local de los componentes
+  components: { Modelo, Visita, ConfirmDialog, Toast, ProgressSpinner },   ///// registro local de los componentes
   data() {
     return {
       ordenAscendente: true,
@@ -16,6 +17,7 @@ export default {
       filtroPendiente: true
     }
   },
+
   computed: {
     ...mapState(visitasStore, ['visitasApi']),
 
@@ -26,16 +28,27 @@ export default {
     visitasPendientes() {
       if (this.visitasApi) {
         let fechaSistema = new Date()
-        return this.visitasApi.filter(v => new Date(v.fechaFin) >= fechaSistema)
+
+        let listaPendiante = this.visitasApi.filter(v => new Date(v.fechaFin) >= fechaSistema)
+        if (this.ordenAscendente) {
+          return listaPendiante.sort((a, b) => { return new Date(a[this.ordenarPor]) - new Date(b[this.ordenarPor]) })
+        }
+        else {
+          return listaPendiante.sort((a, b) => { return new Date(b[this.ordenarPor]) - new Date(a[this.ordenarPor]) })
+        }
       }
       else
         return []
     },
 
     visitasGlobales() {
-      if (this.visitasApi) {      
-        return this.visitasApi
-        //.sort((a, b) => new Date(b.fechaInicio) < new Date(a.fechaInicio))   ///// sort por fechaInicio desc 
+      if (this.visitasApi) {
+        if (this.ordenAscendente) {
+          return this.visitasApi.sort((a, b) => { return new Date(a[this.ordenarPor]) - new Date(b[this.ordenarPor]) })
+        }
+        else {
+          return this.visitasApi.sort((a, b) => { return new Date(b[this.ordenarPor]) - new Date(a[this.ordenarPor]) })
+        }
       }
       else
         return []
@@ -47,15 +60,9 @@ export default {
 
     sortByStartDate() {
       this.ordenarPor = 'fechaInicio'
-      this.ordenAscendente = !this.ordenAscendente; // Cambiar el orden ascendente/descendente
-
-      const orden = this.ordenAscendente ? 1 : -1 // Determinar el orden ascendente o descendente
-      return this.visitasParaMostrar.sort((a, b) => {
-        if (a[this.ordenarPor] < b[this.ordenarPor]) return -1 * orden
-        if (a[this.ordenarPor] > b[this.ordenarPor]) return 1 * orden
-        return 0;
-      })
+      this.ordenAscendente = !this.ordenAscendente
     },
+
     sortByActivity() {
       this.ordenarPor = 'actividad'
       this.ordenAscendente = !this.ordenAscendente // Cambiar el orden ascendente/descendente
@@ -64,7 +71,7 @@ export default {
       return this.visitasParaMostrar.sort((a, b) => {
         if (a[this.ordenarPor] < b[this.ordenarPor]) return -1 * orden
         if (a[this.ordenarPor] > b[this.ordenarPor]) return 1 * orden
-        return 0;
+        return 0
       })
     },
 
@@ -118,14 +125,13 @@ export default {
     <Toast />
     <ConfirmDialog></ConfirmDialog>
 
-    <div class="container pt-3">
-
+    <div class="container">
       <div class="row">
         <div class="col-md-3">
-          <label class="radio-inline me-5 fs-5 fw-bold mt-2 mb-2 ">
+          <label class="radio-inline me-5 fs-5 fw-bold pt-2 tipo_visita">
             <input class="me-2" type="radio" name="optradio" checked @click="filtroPendiente = true">PENDIENTES
           </label>
-          <label class="radio-inline me-4 fs-5 fw-bold">
+          <label class="radio-inline me-4 fs-5 pt-2 fw-bold tipo_visita">
             <input class="me-2" type="radio" name="optradio" @click="filtroPendiente = false">GLOBAL
           </label>
         </div>
@@ -151,15 +157,32 @@ export default {
       </div>
     </div>
 
-    <div v-if="visitasParaMostrar">
-      <Visita v-for="visita of visitasParaMostrar" :visita="visita" @borrarVisita="borrarVisita"
-        @editarVisita="editarVisita" @mostrarAnfitrion="mostrarAnfitrion" class="py-3 px-3 mb-1"></Visita>
+    <div v-if="!visitasParaMostrar" class="container border rounded mb-0 alert alert-warning">
+      <ProgressSpinner />
     </div>
 
-    <div v-else class="container border rounded mb-0 alert alert-warning">
-      <p class="text-center fw-bold fs-5">No hay visitas</p>
+    <div v-else>
+      <div style="height: 600px; overflow-y: scroll;" class="alert alert-light border rounded mb-4 p-2">
+        <Visita v-for="visita of visitasParaMostrar" :visita="visita" @borrarVisita="borrarVisita"
+          @editarVisita="editarVisita" @mostrarAnfitrion="mostrarAnfitrion" class="py-3 px-3 mb-1"></Visita>
+      </div>
+
+      <p><strong>Total : </strong> {{ visitasParaMostrar.length }} visitas</p>
     </div>
 
-    Total : {{ visitasParaMostrar.length }} visitas
+
+    <!-- Total : {{ visitasParaMostrar.length }} visitas -->
   </Modelo>
 </template>
+
+<style>
+@media (max-width: 768px) {
+  .tipo_visita {
+    font-size: 12px;
+    /* text-align: center;
+      margin-top: -2vh;
+      margin-bottom: -3vh; */
+  }
+
+}
+</style>

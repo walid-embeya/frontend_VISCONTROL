@@ -5,11 +5,16 @@ import { visitasStore } from '@/stores/visitas'
 import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
 import { llamadaAPI } from '@/stores/api-service'
+import Dialog from 'primevue/dialog'
 
 export default {
-  components: { Modelo, Calendar },   ///// registro local de los componentes
+  components: { Modelo, Calendar, Dialog },   ///// registro local de los componentes
   data() {
     return {
+      ////// para dialog primevue
+      visible: false,
+      mensajeDialog: '',
+
       //// para recuperar el anfitrion seleccionado
       anfitrionParaModificar: null,
 
@@ -41,17 +46,24 @@ export default {
     ...mapActions(personasStore, ['getInvitadosApi', 'getAnfitrionesApi', 'getPersonaPorId']),
     ...mapActions(visitasStore, ['getVisitaPorId', 'putVisita', 'addInvitadosToVisita', 'getInvitadosVisita']),
 
-
     modificarVisita() {
       this.visitaParaModificar.anfitrion = this.anfitrionParaModificar._links.self.href
 
       this.putVisita(this.visitaParaModificar)
+
+      ///// para Dialog primevue
+      this.mensajeDialog = ' Datos visita modificados con éxito.'
+      this.visible = true
     },
 
     anadirInvitados() {
       this.invitadosElegidos.forEach(inv => this.invitadosParaAnadir.listaInvitados.push(inv._links.self.href))
 
       this.addInvitadosToVisita(this.invitadosParaAnadir, this.$route.params.identificador)
+
+      ///// para Dialog primevue
+      this.mensajeDialog = 'Lista de invitados actualizada con éxito.'
+      this.visible = true
     },
 
     darAltaAnfitrion() {
@@ -75,10 +87,6 @@ export default {
     await llamadaAPI("get", null, this.visitaApi._links.anfitrion.href).then((response) => {
       this.anfitrionParaModificar = response.data
     })
-    // let array = this.visitaApi._links.anfitrion.href.split('/')
-    // let idAnfitrion = array[array.length - 1]
-    // await this.getPersonaPorId(idAnfitrion)
-    // this.anfitrionParaModificar = this.personaApi
 
     this.getInvitadosVisita(this.$route.params.identificador).then(invitados => {
       this.invitadosElegidos = invitados
@@ -91,6 +99,19 @@ export default {
 
 <template>
   <Modelo titulo="MODIFICAR VISITA">
+
+    <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '30vw' }">
+      <p>
+        <font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />
+        {{ mensajeDialog }}
+      </p>
+      <template #footer>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-secondary" @click="visible = false">OK</button>
+        </div>
+      </template>
+    </Dialog>
+
     <form class="p-1 border rounded" style="background-color: rgb(16, 70, 151);">
 
       <!-- datos visita -->
@@ -152,7 +173,7 @@ export default {
         <button type="button" class="btn btn-success me-2" @click.prevent="modificarVisita">
           <font-awesome-icon icon="fa-solid fa-file-pen" size="lg" class="me-2" />Modificar Visita</button>
         <button type="button" class="btn btn-secondary" @click="this.$router.go(-1)">
-          <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cancelar</button>
+          <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar</button>
       </div>
 
     </form>

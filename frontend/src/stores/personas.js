@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { getPersonas, getPersonaPorId, postPersona, getVisitasPersona, putPersona, deletePersona, getPersonaMasInvitado } from './api-service'
-
+import { getPersonas, getPersonaPorId, postPersona, getVisitasPersona, putPersona, deletePersona, borrarVisitasPersona, getPersonaMasInvitado } from './api-service'
 
 export const personasStore = defineStore('personas', {
   state: () => ({         //// state: equiv a Data (variables reactivos)
@@ -10,9 +9,14 @@ export const personasStore = defineStore('personas', {
     personaApi: null,
     visitasPersona: [],
     huespedMasInvitado: null,
+    modeConeccion: 'Usuario'
   }),
 
   actions: {              ////// actions: equiv a Methods
+
+    changeUserMode(role) {
+      this.modeConeccion = role
+    },
 
     async getPersonasApi() {
       await getPersonas('todos').then(r => this.personasApi = r.data._embedded.personas)
@@ -38,14 +42,12 @@ export const personasStore = defineStore('personas', {
       })
     },
 
-    /////////////////////////////****************************************///////////////////////////
     async getPersonaPorId(id) {
       await getPersonaPorId(id).then((response) => {
         this.personaApi = response.data
       })
     },
 
-    ////////////*********************************************////////////////
     async getVisitasPersona(id) {
       await getVisitasPersona(id).then((r) => {
         if (r.data._embedded) {
@@ -56,7 +58,10 @@ export const personasStore = defineStore('personas', {
         }
       })
     },
-    ///////////////////////////////////////////////////////////////////////
+
+    async borrarVisitasPersona(id) {
+      await borrarVisitasPersona(id)
+    },
 
     async postPersona(persona) {
       await postPersona(persona).then((response) => {
@@ -83,8 +88,8 @@ export const personasStore = defineStore('personas', {
       await getPersonaMasInvitado(id).then(r => {
         this.huespedMasInvitado = r.data
       })
-      
+
     },
-    
+
   }
 })

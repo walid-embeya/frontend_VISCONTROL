@@ -1,5 +1,22 @@
 <script>
+import { personasStore } from '@/stores/personas'
+import { mapState, mapActions } from 'pinia'
 
+export default {
+  data() {
+    return {
+
+    }
+  },
+
+  computed: {
+    ...mapState(personasStore, ['modeConeccion']),
+  },
+
+  methods: {
+    ...mapActions(personasStore, ['changeUserMode']),
+  },
+};
 </script>
 
 <template>
@@ -24,8 +41,8 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                :class="$route.name == 'personamasinvitada' ? 'text-warning fw-bold' : ''">
                 Consultas
               </a>
               <ul class="dropdown-menu">
@@ -38,11 +55,41 @@
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'ayuda' }"
                 :class="$route.name == 'ayuda' ? 'text-warning fw-bold' : ''">Ayuda</router-link>
-            </li>            
+            </li>
           </ul>
+
+          <!-- Menú "modo coneccion" -->
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ modeConeccion }}
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#" @click="changeUserMode('Administrador')">Administrador</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" @click="changeUserMode('Usuario')">Usuario</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <font-awesome-icon icon="fa-solid fa-user" class="ms-2" style="color: #ffffff;" />
         </div>
       </div>
     </nav>
   </div>
 </template>
 
+
+<!-- <style>
+.navbar-nav.ml-auto {
+  flex-direction: row;
+  /* Cambia la dirección del flexbox para que los elementos estén en fila */
+}
+
+.navbar-nav.ml-auto .nav-item {
+  margin-left: 10px;
+  /* Ajusta el espaciado entre los elementos */
+}
+</style> -->
