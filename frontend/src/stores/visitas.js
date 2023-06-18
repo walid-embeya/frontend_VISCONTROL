@@ -27,7 +27,7 @@ export const visitasStore = defineStore('visitas', {
 
             // visita.listaInvitados = []
             // llamadaAPI("get", null, r.data._links.lista_invitados.href).then(resp => {     //// llamada al link de lista invitados de la visita                        
-            //     if (resp.data) {
+            //     if (resp.data._embedded) {
             //       visita.listaInvitados = resp.data._embedded.personas
             //     }                    
             // })               

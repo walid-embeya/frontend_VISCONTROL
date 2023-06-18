@@ -23,14 +23,22 @@ export default {
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
+        <!-- <a class="navbar-brand" href="#">
+          <img id="picture" src="../images/viscontrol.jpg" alt="LOGO" height="60" width="60" style="margin: 0; padding: -4px;" />
+        </a> -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
           aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <router-link class="navbar-brand" :to="{ name: 'home' }"
-          :class="$route.name == 'home' ? 'text-warning fw-bold' : ''">Home</router-link>
+        <!-- <router-link class="navbar-brand" :to="{ name: 'home' }"
+          :class="$route.name == 'home' ? 'text-warning fw-bold' : ''">Home</router-link> -->
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'home' }"
+                :class="$route.name == 'home' ? 'text-warning fw-bold' : ''">Home</router-link>
+            </li>
             <li class="nav-item">
               <router-link class="nav-link" aria-current="page" :to="{ name: 'visitas' }"
                 :class="$route.name == 'visitas' ? 'text-warning fw-bold' : ''">Visitas</router-link>

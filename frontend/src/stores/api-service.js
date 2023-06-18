@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-export const host = "http://localhost:8080/api"
+//export const host = "http://localhost:8080/api"
+export const host = 'https://apiviscontrol-walidembeya.b4a.run/api/'
+
+///// para cambiar http por https
+const HTTP_TO_HTTPS_ENABLE = true
 
 //Llamada a la API genérica, parametrizada con method, body y path
 export function llamadaAPI(method, body, path) {
@@ -10,6 +14,9 @@ export function llamadaAPI(method, body, path) {
     url: path,
     headers: {}
   }
+ 
+  ///// para cambiar http por https
+  config.url = httpToHttps(path)
 
   if (body) {
     config.data = body,
@@ -125,5 +132,15 @@ export function getPersonaMasInvitado(id) {
   return llamadaAPI('get', null, `${host}/personas/${id}/personaMasInvitada`)
 }
 
+
+///// para cambiar http por https
+function httpToHttps(link) {
+
+  if(HTTP_TO_HTTPS_ENABLE && link.startsWith('http:')) {
+    link = link.replace('http:', 'https:')
+  }
+
+  return link
+}
 
 

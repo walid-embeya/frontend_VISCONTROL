@@ -9,7 +9,7 @@ export const personasStore = defineStore('personas', {
     personaApi: null,
     visitasPersona: [],
     huespedMasInvitado: null,
-    modeConeccion: 'Usuario'
+    modeConeccion: 'Administrador'
   }),
 
   actions: {              ////// actions: equiv a Methods

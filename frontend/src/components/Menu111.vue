@@ -23,7 +23,9 @@ export default {
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+        <!-- <a class="navbar-brand" href="#">Navbar</a>-->
+        <router-link class="navbar-brand" to="/">Navbar</router-link>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
           aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -33,19 +35,19 @@ export default {
 
             <li class="nav-item">
               <!-- <a class="nav-link active" aria-current="page" href="#">Home</a> -->
-              <router-link class="navbar-brand" :to="{ name: 'home' }"
+              <router-link class="nav-link active" aria-current="page" :to="{ name: 'home' }" 
                 :class="$route.name == 'home' ? 'text-warning fw-bold' : ''">Home</router-link>
             </li>
             
             <li class="nav-item">
               <!-- <a class="nav-link" href="#">Features</a> -->
-              <router-link class="nav-link" aria-current="page" :to="{ name: 'visitas' }"
+              <router-link class="nav-link" :to="{ name: 'visitas' }" 
                 :class="$route.name == 'visitas' ? 'text-warning fw-bold' : ''">Visitas</router-link>
             </li>
 
             <li class="nav-item">
               <!-- <a class="nav-link" href="#">Pricing</a> -->
-              <router-link class="nav-link" :to="{ name: 'personas' }"
+              <router-link class="nav-link" :to="{ name: 'personas' }" 
                 :class="$route.name == 'personas' ? 'text-warning fw-bold' : ''">Personas</router-link>
             </li>
 
@@ -59,6 +61,13 @@ export default {
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul>
             </li>
+
+            <li class="nav-item">
+              <!-- <a class="nav-link" href="#">Help</a> -->
+              <router-link class="nav-link" :to="{ name: 'ayuda' }" 
+                :class="$route.name == 'ayuda' ? 'text-warning fw-bold' : ''">Ayuda</router-link>
+            </li>
+
           </ul>
         </div>
       </div>
