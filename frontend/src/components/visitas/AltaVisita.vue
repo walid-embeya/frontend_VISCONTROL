@@ -65,7 +65,6 @@ export default {
       if (this.idVisita != null) {
         this.invitados.listaInvitados = []
         this.invitadosElegidos.forEach(inv => this.invitados.listaInvitados.push(inv._links.self.href))    //////cargar solo los links de los invitados
-
         this.addInvitadosToVisita(this.invitados, this.idVisita)
       }
     },

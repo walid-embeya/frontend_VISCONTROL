@@ -71,4 +71,10 @@ export default {
 .footer {
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 2em;
+  }
+}
 </style>

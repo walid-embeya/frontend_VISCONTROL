@@ -12,6 +12,14 @@ export default {
     }
   },
 
+  watch: {
+    visita(value) {
+      this.getInvitadosVisita(this.visita.id).then(invitados => {
+        this.invitadosVisita = invitados
+      })
+    },
+  },
+
   computed: {
     ...mapState(personasStore, ['modeConeccion']),
 
@@ -30,7 +38,6 @@ export default {
     horaFin() {
       return timestampToHora(new Date(this.visita.fechaFin))
     },
-
   },
 
   methods: {
@@ -47,7 +54,6 @@ export default {
       this.invitadosVisita = invitados
     })
   },
-
 }
 </script>
 
@@ -109,7 +115,7 @@ export default {
             :data-bs-target="`#flush-collapse${visita.id}`" aria-expanded="false"
             :aria-controls="`flush-collapse${visita.id}`" style="color: darkred;">
             <font-awesome-icon :icon="['fas', 'list']" style="color: #a51d2d;" class="me-2" />Mostrar lista de invitados
-            <!-- {{ visita.id }} -->
+            {{ visita.id }}
           </button>
         </h2>
         <div :id="`flush-collapse${visita.id}`" class="accordion-collapse collapse" data-bs-parent="#detallesVisita">
@@ -144,7 +150,6 @@ export default {
                 </tbody>
               </table>
             </div>
-
           </div>
         </div>
       </div>

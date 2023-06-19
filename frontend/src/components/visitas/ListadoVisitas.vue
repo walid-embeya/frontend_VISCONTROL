@@ -14,12 +14,12 @@ export default {
     return {
       ordenAscendente: true,
       ordenarPor: 'fechaInicio',
-      filtroPendiente: true
+      filtroPendiente: true,
     }
   },
 
   computed: {
-    ...mapState(visitasStore, ['visitasApi']),
+    ...mapState(visitasStore, ['visitasApi', 'visitasPendientesApi']),
 
     visitasParaMostrar() {
       return this.filtroPendiente ? this.visitasPendientes : this.visitasGlobales
@@ -84,10 +84,8 @@ export default {
         acceptLabel: 'Sí',
         accept: () => {
           this.deleteVisita(visita).then((r) => {
-            if (r.status == 204) {
-              let indexToRemove = this.visitasApi.indexOf(visita)
-              this.visitasApi.splice(indexToRemove, 1)
-            }
+            let indexToRemove = this.visitasApi.indexOf(visita)
+            this.visitasApi.splice(indexToRemove, 1)
           })
             .catch((error) => {
               console.error("A la hora de borrar la visita, Se ha producido un error : ", error)
@@ -115,7 +113,7 @@ export default {
   created() {
     this.toast = useToast()
     this.getVisitasApi()
-    //console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
+    // console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
   }
 }
 </script>
@@ -159,7 +157,7 @@ export default {
       </div>
     </div>
 
-    <div v-if="!visitasParaMostrar" class="container border rounded mb-0 alert alert-warning">
+    <div v-if="visitasParaMostrar.length == 0" class="container border rounded mb-0 alert alert-warning text-center">
       <ProgressSpinner />
     </div>
 
@@ -178,8 +176,6 @@ export default {
 @media (max-width: 768px) {
   .tipo_visita {
     font-size: 1vh;
-
   }
-
 }
 </style>

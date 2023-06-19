@@ -3,7 +3,6 @@ import Modelo from '@/components/Model.vue'
 import Persona from './Persona.vue'
 import { mapState, mapActions } from 'pinia'
 import { personasStore } from '@/stores/personas'
-
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
@@ -21,14 +20,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(personasStore, ['personasApi']),
+    ...mapState(personasStore, ['personasApi', 'visitasPersona']),
 
     personasParaMostrar() {
       return this.filtroPendiente ? this.resultadosBusqueda : this.personasApi
     },
   },
   methods: {
-    ...mapActions(personasStore, ['getPersonasApi', 'deletePersona', 'borrarVisitasPersona']),
+    ...mapActions(personasStore, ['getPersonasApi', 'deletePersona', 'borrarVisitasPersona', 'getVisitasPersona']),
 
     mostrarModal() {
       Modal.getOrCreateInstance('#addPersona').show()
@@ -50,7 +49,7 @@ export default {
       this.$router.push({ name: 'modificarpersona', params: { identificador: persona.id } })
     },
 
-    borrarPersona(persona) {
+    async borrarPersona(persona) {
       this.$confirm.require({
         message: '¿ Está seguro de borrar la persona con DNI ' + persona.dni + ' y sus visitas ?',
         header: 'Confirmación de borrado',
@@ -59,15 +58,19 @@ export default {
         acceptLabel: 'Sí',
         accept: () => {
           this.deletePersona(persona).then((r) => {
-            if (r.status == 204) {
-              let indexToRemove = this.personasApi.indexOf(persona)
-              this.personasApi.splice(indexToRemove, 1)
-            }
+            let indexToRemove = this.personasApi.indexOf(persona)
+            this.personasApi.splice(indexToRemove, 1)
           })
             .catch((error) => {
               console.error("A la hora de borrar la persona, Se ha producido un error : ", error);
             })
-          this.borrarVisitasPersona(this.persona.id)
+
+          this.getVisitasPersona(persona.id).then((response) => {
+            if (this.visitasPersona) {
+              this.borrarVisitasPersona(persona.id)
+            }
+          })
+
           this.$toast.add({ severity: 'success', summary: 'Borrado', detail: persona.dni, life: 3000 })
         },
         reject: () => {
@@ -95,7 +98,6 @@ export default {
         this.resultadosBusqueda = this.personasApi;
       }
     },
-
 
     buscarPersonasPorTipo() {
       if (this.tipoFiltro) {
@@ -140,7 +142,6 @@ export default {
       <div class="d-flex justify-content-end">
         <input id="dni" type="text" v-model="dniParaBuscar" @input="buscarPersonaPorDni" placeholder="buscar por DNI"
           class="form-control me-2 ">
-        <!-- <button @click="buscarPersonaPorDni" type="button" class="btn btn-primary">Buscar</button> -->
       </div>
     </div>
 
@@ -182,13 +183,12 @@ export default {
       <div style="height: 600px; overflow-y: scroll;" class="border rounded mb-4 p-2">
         <table class="table table-striped table-hover">
           <thead>
-            <tr class="border">
+            <tr>
               <th scope="col" class="color-thead">DNI</th>
               <th scope="col" class="color-thead">Nombre</th>
               <th scope="col" class="color-thead">Apellidos</th>
               <th scope="col" class="color-thead">
                 <div>
-                  <!-- <label for="tipoFiltro" class="me-2">Tipo</label> -->
                   <select id="tipoFiltro" v-model="tipoFiltro" @click="buscarPersonasPorTipo">
                     <option value="">Todos</option>
                     <option value="Anfitrion">Anfitrión</option>

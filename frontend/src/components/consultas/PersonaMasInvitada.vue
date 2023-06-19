@@ -5,10 +5,11 @@ import { personasStore } from '@/stores/personas'
 import { llamadaAPI } from '@/stores/api-service'
 import { timestampToFecha, timestampToHora } from '@/utils/utils'
 import Dialog from 'primevue/dialog'
+import ProgressSpinner from 'primevue/progressspinner'
 
 
 export default {
-  components: { Modelo, Dialog },   ///// registro local de los componentes
+  components: { Modelo, Dialog, ProgressSpinner },   ///// registro local de los componentes
   data() {
     return {
       anfitrion: '',
@@ -35,6 +36,7 @@ export default {
     ...mapActions(personasStore, ['getAnfitrionesApi', 'getPersonaMasInvitado', 'getVisitasPersona']),
 
     async mostrarResultadoConsulta() {
+
       if (this.anfitrion) {
         await this.getVisitasPersona(this.anfitrion.id)
         if (this.visitasPersona) {
@@ -44,7 +46,6 @@ export default {
             this.getVisitasPersona(this.huespedMasInvitado.id).then(r => {
               this.visitasInvitadoMostrado = []
               this.visitasPersona.forEach(v => {
-
                 ////// recuperar el ID del anfitrion de cada visita
                 llamadaAPI('get', null, v._links.self.href).then((response) => {
                   let linkAnfitrion = response.data._links.anfitrion.href
@@ -59,15 +60,17 @@ export default {
           })
         }
         else {
-          this.mostrarSegundoForm = false
+
           ///// para Dialog primevue
           this.visible = true
           this.mensajeDialog = 'No hay resultado para este anfitrión'
+
+          this.mostrarSegundoForm = false
         }
       }
       else {
         ///////  no hay eleccion de un anfitrion
-        this.visitasInvitadoMostrado = []
+        this.mostrarSegundoForm = false
       }
     },
 
@@ -121,10 +124,19 @@ export default {
       </div>
     </div>
 
-    <form v-if="huespedMasInvitado && mostrarSegundoForm" class="p-2 border rounded"
-      style="background-color: rgb(143, 170, 211);">
+    <!-- <div v-if="!seleccted">
+
+    </div>
+
+    <div v-else-if="!mostrarSegundoForm" class="text-center">
+      <p>
+        <ProgressSpinner></ProgressSpinner>
+      </p>
+    </div> -->
+
+    <form v-if="mostrarSegundoForm" class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
       <!-- informaciones communes de persona -->
-      <div class="container alert alert-dark border rounded mb-1">
+      <div v-if="huespedMasInvitado" class="container alert alert-dark border rounded mb-1">
         <div class="row mb-3">
           <div class="col-md-4">
             <label for="dni" class="form-label">DNI</label>
@@ -154,7 +166,7 @@ export default {
       </div>
 
       <!-- informaciones propias del invitado -->
-      <div class="container alert alert-dark border rounded mb-1">
+      <div v-if="huespedMasInvitado" class="container alert alert-dark border rounded mb-1">
         <div class="row mb-0">
           <div class="col-md-4">
             <label for="matricula" class="form-label">Matricula</label>

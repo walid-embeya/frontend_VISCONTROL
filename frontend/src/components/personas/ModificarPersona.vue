@@ -178,19 +178,19 @@ export default {
         <div class="row mb-4">
           <div class="col-md-4">
             <label for="nip" class="form-label">NIP</label>
-            <input type="text" class="form-control" id="nip" v-model="personaApi.nip" placeholder="NIP del anfitrión"
+            <input type="text" class="form-control" id="nip" v-model="personaParaModificar.nip" placeholder="NIP del anfitrión"
               required>
           </div>
 
           <div class="col-md-4">
             <label for="area" class="form-label">Area</label>
-            <input type="text" class="form-control" id="area" v-model="personaApi.area"
+            <input type="text" class="form-control" id="area" v-model="personaParaModificar.area"
               placeholder="area de encarga del anfitrión" required>
           </div>
 
           <div class="col-md-4">
             <label for="role" class="form-label">Role</label>
-            <input type="text" class="form-control" id="role" v-model="personaApi.role" placeholder="role del anfitrión"
+            <input type="text" class="form-control" id="role" v-model="personaParaModificar.role" placeholder="role del anfitrión"
               required>
           </div>
         </div>

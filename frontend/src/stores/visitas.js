@@ -10,12 +10,7 @@ export const visitasStore = defineStore('visitas', {
     idVisita: null,         ///// para recuperar el ID de visita tras agregar uns nueva visita y usarlo en anñadir invitados a dicha visita
   }),
 
-  getters: {         ////// getters: equiv a Computed  
-
-  },
-
   actions: {              ////// actions: equiv a Methods
-
     async getVisitasApi() {
       await getVisitas().then((response) => {
         this.visitasApi = reactive([])
@@ -25,39 +20,29 @@ export const visitasStore = defineStore('visitas', {
           llamadaAPI("get", null, v._links.self.href).then(r => {     //// llamada al link de visita
             let visita = r.data
 
-            // visita.listaInvitados = []
-            // llamadaAPI("get", null, r.data._links.lista_invitados.href).then(resp => {     //// llamada al link de lista invitados de la visita                        
-            //     if (resp.data._embedded) {
-            //       visita.listaInvitados = resp.data._embedded.personas
-            //     }                    
-            // })               
+            // visita.listaInvitados = null
+            // llamadaAPI("get", null, r.data._links.lista_invitados.href).then(resp => {     //// llamada al link de lista invitados de la visita                                                                          
+            //   if (resp.data._embedded != null) {
+            //     visita.listaInvitados = resp.data._embedded.personas
+            //   }
+            // })
+            // console.log('lista invitados de visita ', visita.id, ' tras llamada : ', visita.listaInvitados)
+
             this.visitasApi.push(visita)
           })
         })
-
-        // visitasAux.forEach((element) => {
-        //   let array = element._links.self.href.split('/')
-        //   let id = array[array.length - 1]  ///// id de cada visita 
-
-        //   getVisitaPorId(id).then((r) => {
-        //     let visita = r.data
-        //     this.visitasApi.push(visita)
-        //   })
-        // })
-
       })
-
-      // console.log("visitas api dentro store", this.visitaApi)
     },
 
     async getInvitadosVisita(id) {
       return getInvitadosVisita(id).then((response) => {
         let listaInvitados = reactive([])
         let invitadosAux = []
+
         if (response.data._embedded) {
           invitadosAux = response.data._embedded.personas
           invitadosAux.forEach(i => {
-            llamadaAPI("get", null, i._links.self.href).then(r => listaInvitados.push(r.data))      //// llamada al link de invitado  y cargar toda la persona (invitado) a listaInvitados                
+            llamadaAPI("get", null, i._links.self.href).then(r => listaInvitados.push(r.data))      //// llamada al link de invitado y cargar toda la persona (invitado) a listaInvitados                
           })
         }
 
@@ -67,11 +52,9 @@ export const visitasStore = defineStore('visitas', {
 
     async postVisita(visita) {
       await postVisita(visita).then((r) => {
-        if (r.status == 201) {
-          ////// recuperar el ID de la visita añadida para poder agregar invitados
-          let array = r.data._links.self.href.split('/')
-          this.idVisita = array[array.length - 1]
-        }
+        ////// recuperar el ID de la visita añadida para poder agregar invitados
+        let array = r.data._links.self.href.split('/')
+        this.idVisita = array[array.length - 1]
       })
     },
 

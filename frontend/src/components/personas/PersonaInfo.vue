@@ -136,18 +136,19 @@ export default {
         </div>
       </div>
 
-      <div v-if="visitasPersona.length > 1" class="container border rounded mb-0 alert alert-light">
+      <div v-if="visitasPersona" class="container border rounded mb-0 alert alert-light">
+
         <p v-if="esInvitado" class="fs-3 fw-bold text-center text-warning">Lista de visitas del invitado</p>
         <p v-else class="fs-3 fw-bold text-center text-danger">Lista de visitas planificadas por el anfitrión</p>
 
         <div style="height: 300px; overflow-y: scroll;">
           <table class="table table-striped table-hover">
             <thead class="alert alert-dark" style="background-color: rgb(134, 139, 139);">
-              <tr class="cabezera">
-                <th scope="col">Fecha/Hora Inicio</th>
-                <th scope="col">Fecha/Hora Fin</th>
-                <th scope="col">Actividad</th>
-                <th scope="col">Estado</th>
+              <tr>
+                <th scope="col" class="color-thead">Fecha/Hora Inicio</th>
+                <th scope="col" class="color-thead">Fecha/Hora Fin</th>
+                <th scope="col" class="color-thead">Actividad</th>
+                <th scope="col" class="color-thead">Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -163,8 +164,9 @@ export default {
         </div>
       </div>
 
-      <div v-else class="container border rounded mb-0 alert alert-warning">
-        <p class="text-center fw-bold fs-5">Esta persona no tiene visitas</p>
+      <div v-else class="container border rounded mb-0 alert alert-light text-center">
+        <!-- <p class="text-center fw-bold fs-5">Esta persona no tiene visitas</p> -->
+        <ProgressSpinner />
       </div>
     </div>
 
@@ -172,7 +174,7 @@ export default {
       <ProgressSpinner />
     </div>
 
-    <div class="d-flex justify-content-center border rounded">
+    <div class="d-flex justify-content-center border rounded alert alert-warning">
       <button @click="this.$router.push({ name: 'home' })" class="btn btn-secondary my-2 me-1">
         <font-awesome-icon icon="fa-solid fa-house" style="color: #ffffff;" class="me-2" />Home
       </button>
@@ -189,7 +191,7 @@ tr {
   text-align: center;
 }
 
-.cabezera {
-  color: white;
+.color-thead {
+  background-color: grey;
 }
 </style>
