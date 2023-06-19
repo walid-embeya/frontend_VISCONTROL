@@ -58,9 +58,11 @@ export default {
         acceptClass: 'p-button-danger',
         acceptLabel: 'Sí',
         accept: () => {
-          this.deletePersona(persona).then((response) => {
-            let indexToRemove = this.personasApi.indexOf(persona)
-            this.personasApi.splice(indexToRemove, 1)
+          this.deletePersona(persona).then((r) => {
+            if (r.status == 204) {
+              let indexToRemove = this.personasApi.indexOf(persona)
+              this.personasApi.splice(indexToRemove, 1)
+            }
           })
             .catch((error) => {
               console.error("A la hora de borrar la persona, Se ha producido un error : ", error);

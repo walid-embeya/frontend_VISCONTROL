@@ -61,19 +61,6 @@ export default {
       <div class="col-md-4">
         <label class="fs-5"><b>Hora Inicio</b><span class="ms-4">{{ horaInicio }}</span></label>
       </div>
-
-      <!-- <div v-if="esPendiente(visita)" class="col-md-3">
-        <div class="d-flex flex-wrap">
-          <span class="badge bg-secondary p-2 m-2 opcion" @click="$emit('editarVisita', visita)">
-            <font-awesome-icon :icon="['fas', 'pen-to-square']" size="lg" style="color: #e5a50a;"
-              class="me-1"></font-awesome-icon>Editar visita</span>
-
-          <span v-if="modeConeccion == 'Administrador'" class="badge bg-secondary p-2 m-2 opcion"
-            @click="$emit('borrarVisita', visita)">
-            <font-awesome-icon :icon="['fas', 'trash-can']" size="lg" style="color: #e01b24;"
-              class="me-1"></font-awesome-icon>Borrar visita</span>
-        </div>
-      </div> -->
     </div>
 
     <div class="row mb-3">
@@ -84,24 +71,16 @@ export default {
         <label class="fs-5"><b>Hora Fin</b><span class="ms-5">{{ horaFin }}</span></label>
       </div>
     </div>
-
     <div class="row mb-3">
       <div class="col-md-9">
         <label class="fs-5"><b>Actividad</b><span class="ms-5">{{ visita.actividad }}</span></label>
       </div>
-      <!-- <div class="col-md-3">
-        <span class="badge text-bg-danger d-flex justify-content-center rounded opcion p-2 fs-7"
-          @click="$emit('mostrarAnfitrion', visita)">
-          <font-awesome-icon icon="fa-solid fa-id-card" size="lg" class="me-2" />Ver Anfitrión</span>
-      </div> -->
     </div>
-
     <div class="row mb-3">
       <div class="col-md-12">
         <label class="fs-5"><b>Descripción</b><span class="ms-4">{{ visita.actuaciones }}</span></label>
       </div>
     </div>
-
     <div class="row mb-3">
       <div v-if="esPendiente(visita)" class="col-md-6 mb-2">
         <div class="d-flex flex-wrap">
@@ -113,10 +92,8 @@ export default {
             @click="$emit('borrarVisita', visita)">
             <font-awesome-icon :icon="['fas', 'trash-can']" size="lg" style="color: #e01b24;"
               class="me-1"></font-awesome-icon>Borrar visita</span>
-
         </div>
       </div>
-
       <div class="col-md-6 mb-2 d-flex">
         <span class="badge text-bg-danger d-flex justify-content-center rounded opcion p-2 fs-7"
           @click="$emit('mostrarAnfitrion', visita)">
@@ -132,13 +109,11 @@ export default {
             :data-bs-target="`#flush-collapse${visita.id}`" aria-expanded="false"
             :aria-controls="`flush-collapse${visita.id}`" style="color: darkred;">
             <font-awesome-icon :icon="['fas', 'list']" style="color: #a51d2d;" class="me-2" />Mostrar lista de invitados
-            {{ visita.id }}
+            <!-- {{ visita.id }} -->
           </button>
         </h2>
-
         <div :id="`flush-collapse${visita.id}`" class="accordion-collapse collapse" data-bs-parent="#detallesVisita">
           <div class="accordion-body">
-
             <div class="table-responsive">
               <table class="table table-striped table-hover">
                 <thead>
@@ -157,12 +132,10 @@ export default {
                     <td>{{ invit.nombre }}</td>
                     <td>{{ invit.apellidos }}</td>
                     <td>{{ invit.empresa }}</td>
-
                     <td v-if="invit.autorizacion == true"><input type="checkbox" id="autorizado" name="autorizado"
                         checked><label for="disabled"></label></td>
                     <td v-else><input type="checkbox" id="noAutorizado" name="noAutorizado" disabled><label
                         for="disabled"></label></td>
-
                     <td>
                       <router-link :to="{ name: 'personainfo', params: { identificador: invit.id } }"><font-awesome-icon
                           :icon="['fas', 'circle-info']" size="lg" style="color: #77767b;" /></router-link>
@@ -209,10 +182,5 @@ tr {
   background: rgb(69, 180, 36);
 }
 
-@media(max-width:768px) {
-  /* td {
-    color: red;
-    background-color: green;
-  } */
-}
+@media(max-width:768px) {}
 </style>

@@ -83,9 +83,11 @@ export default {
         acceptClass: 'p-button-danger',
         acceptLabel: 'Sí',
         accept: () => {
-          this.deleteVisita(visita).then((response) => {
-            let indexToRemove = this.visitasApi.indexOf(visita)
-            this.visitasApi.splice(indexToRemove, 1)
+          this.deleteVisita(visita).then((r) => {
+            if (r.status == 204) {
+              let indexToRemove = this.visitasApi.indexOf(visita)
+              this.visitasApi.splice(indexToRemove, 1)
+            }
           })
             .catch((error) => {
               console.error("A la hora de borrar la visita, Se ha producido un error : ", error)
@@ -169,19 +171,14 @@ export default {
 
       <p><strong>Total : </strong> {{ visitasParaMostrar.length }} visitas</p>
     </div>
-
-
-    <!-- Total : {{ visitasParaMostrar.length }} visitas -->
   </Modelo>
 </template>
 
 <style>
 @media (max-width: 768px) {
   .tipo_visita {
-    font-size: 12px;
-    /* text-align: center;
-      margin-top: -2vh;
-      margin-bottom: -3vh; */
+    font-size: 1vh;
+
   }
 
 }

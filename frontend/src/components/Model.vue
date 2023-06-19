@@ -10,5 +10,4 @@ export default {
     <h1 class="titulo">{{ titulo }}</h1>
   </div>
   <slot></slot>
-  <!-- </div> -->
 </template>

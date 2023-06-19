@@ -1,10 +1,10 @@
+
 <script>
 import Modelo from '@/components/Model.vue'
 
 export default {
   components: { Modelo },   ///// registro local de los componentes
 }
-
 </script>
 
 <template>

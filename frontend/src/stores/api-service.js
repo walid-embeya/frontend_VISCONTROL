@@ -14,7 +14,7 @@ export function llamadaAPI(method, body, path) {
     url: path,
     headers: {}
   }
- 
+
   ///// para cambiar http por https
   config.url = httpToHttps(path)
 
@@ -132,14 +132,11 @@ export function getPersonaMasInvitado(id) {
   return llamadaAPI('get', null, `${host}/personas/${id}/personaMasInvitada`)
 }
 
-
 ///// para cambiar http por https
 function httpToHttps(link) {
-
-  if(HTTP_TO_HTTPS_ENABLE && link.startsWith('http:')) {
+  if (HTTP_TO_HTTPS_ENABLE && link.startsWith('http:')) {
     link = link.replace('http:', 'https:')
   }
-
   return link
 }
 

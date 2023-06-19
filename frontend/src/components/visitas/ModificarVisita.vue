@@ -52,7 +52,7 @@ export default {
       this.putVisita(this.visitaParaModificar)
 
       ///// para Dialog primevue
-      this.mensajeDialog = ' Datos visita modificados con éxito.'
+      this.mensajeDialog = 'Datos visita modificados con éxito.'
       this.visible = true
     },
 

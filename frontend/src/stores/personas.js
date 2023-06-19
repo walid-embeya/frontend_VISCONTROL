@@ -7,7 +7,7 @@ export const personasStore = defineStore('personas', {
     invitadosApi: null,
     anfitrionesApi: null,
     personaApi: null,
-    visitasPersona: [],
+    visitasPersona: null,
     huespedMasInvitado: null,
     modeConeccion: 'Administrador'
   }),
@@ -49,12 +49,10 @@ export const personasStore = defineStore('personas', {
     },
 
     async getVisitasPersona(id) {
+      this.visitasPersona = null
       await getVisitasPersona(id).then((r) => {
         if (r.data._embedded) {
           this.visitasPersona = r.data._embedded.visitas
-        }
-        else {
-          this.visitasPersona = []
         }
       })
     },
@@ -85,11 +83,12 @@ export const personasStore = defineStore('personas', {
     },
 
     async getPersonaMasInvitado(id) {
+      this.huespedMasInvitado = null
       await getPersonaMasInvitado(id).then(r => {
-        this.huespedMasInvitado = r.data
+        if (r) {
+          this.huespedMasInvitado = r.data
+        }
       })
-
     },
-
   }
 })

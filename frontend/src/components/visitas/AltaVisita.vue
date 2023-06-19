@@ -284,15 +284,6 @@ export default {
 .datosvisita[disabled] {
   color: gray;
 }
-
-.p-button-lg {
-  font-size: 1rem;
-  padding: 0.75rem 2.75rem;
-}
-
-.icono {
-  margin-right: 0.5rem;
-}
 </style>
 
 

@@ -202,7 +202,8 @@ public class PersonaController {
 	// Endpoint del metodo personalizada : Recuperar el huésped (Invitado) más invitado por un Anfitrion
     @GetMapping("{id}/personaMasInvitada")
     public PersonaModel GuestMasInvitadoPorAnfitrion(@PathVariable Long id) {    	
-    	Long idInvitado = repositorio.findFrecuentGuestByHost(id);    	
+    	Long idInvitado = repositorio.findFrecuentGuestByHost(id);   
+    	//System.out.println("id invitado " + idInvitado);
 		return this.one(idInvitado);    	
     }
 			

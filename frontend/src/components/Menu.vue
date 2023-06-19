@@ -30,11 +30,9 @@ export default {
           aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- <router-link class="navbar-brand" :to="{ name: 'home' }"
-          :class="$route.name == 'home' ? 'text-warning fw-bold' : ''">Home</router-link> -->
+
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'home' }"
                 :class="$route.name == 'home' ? 'text-warning fw-bold' : ''">Home</router-link>
@@ -47,7 +45,6 @@ export default {
               <router-link class="nav-link" :to="{ name: 'personas' }"
                 :class="$route.name == 'personas' ? 'text-warning fw-bold' : ''">Personas</router-link>
             </li>
-
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                 :class="$route.name == 'personamasinvitada' ? 'text-warning fw-bold' : ''">
@@ -88,16 +85,3 @@ export default {
     </nav>
   </div>
 </template>
-
-
-<!-- <style>
-.navbar-nav.ml-auto {
-  flex-direction: row;
-  /* Cambia la dirección del flexbox para que los elementos estén en fila */
-}
-
-.navbar-nav.ml-auto .nav-item {
-  margin-left: 10px;
-  /* Ajusta el espaciado entre los elementos */
-}
-</style> -->

@@ -4,14 +4,22 @@ import { mapActions, mapState } from 'pinia'
 import { personasStore } from '@/stores/personas'
 import { llamadaAPI } from '@/stores/api-service'
 import { timestampToFecha, timestampToHora } from '@/utils/utils'
+import Dialog from 'primevue/dialog'
 
 
 export default {
-  components: { Modelo },   ///// registro local de los componentes
+  components: { Modelo, Dialog },   ///// registro local de los componentes
   data() {
     return {
       anfitrion: '',
       visitasInvitadoMostrado: [],
+
+      ////// para dialog primevue
+      visible: false,
+      mensajeDialog: '',
+
+      ////// para mostrar y ocultar componente de resultado de consulta
+      mostrarSegundoForm: false,
     }
   },
 
@@ -28,12 +36,13 @@ export default {
 
     async mostrarResultadoConsulta() {
       if (this.anfitrion) {
-        await this.getPersonaMasInvitado(this.anfitrion.id)
-
-        //// recuperar las visitas planificadas por este anfitrion y asistidas por de este invitado       
-        if (this.huespedMasInvitado) {
-          this.getVisitasPersona(this.huespedMasInvitado.id).then(r => {
-            this.visitasInvitadoMostrado = [],
+        await this.getVisitasPersona(this.anfitrion.id)
+        if (this.visitasPersona) {
+          this.getPersonaMasInvitado(this.anfitrion.id).then(r => {
+            this.mostrarSegundoForm = true
+            //// recuperar las visitas planificadas por este anfitrion y asistidas por de este invitado                      
+            this.getVisitasPersona(this.huespedMasInvitado.id).then(r => {
+              this.visitasInvitadoMostrado = []
               this.visitasPersona.forEach(v => {
 
                 ////// recuperar el ID del anfitrion de cada visita
@@ -41,17 +50,23 @@ export default {
                   let linkAnfitrion = response.data._links.anfitrion.href
                   let array = linkAnfitrion.split('/')
                   let idAnfitrion = array[array.length - 1]
-
                   if (idAnfitrion == this.anfitrion.id) {
                     this.visitasInvitadoMostrado.push(v)
                   }
                 })
-
               })
+            })
           })
+        }
+        else {
+          this.mostrarSegundoForm = false
+          ///// para Dialog primevue
+          this.visible = true
+          this.mensajeDialog = 'No hay resultado para este anfitrión'
         }
       }
       else {
+        ///////  no hay eleccion de un anfitrion
         this.visitasInvitadoMostrado = []
       }
     },
@@ -80,13 +95,25 @@ export default {
 <template>
   <Modelo titulo="EL HUÉSPED MÁS INVITADO POR UN ANFITRIÓN">
 
+    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '35vw' }">
+      <p>
+        <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
+        {{ mensajeDialog }}
+      </p>
+      <template #footer>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-secondary" @click="visible = false">OK</button>
+        </div>
+      </template>
+    </Dialog>
+
     <!-- para elegir un anfitrion -->
     <div class="d-flex flex-row alert alert-dark border rounded mb-0">
       <div class="me-3">
         <label for="anfitrionvisita" class="form-label fs-5 fw-bold">Anfitrión</label>
       </div>
       <div>
-        <select id="anfitrionVisita" class="form-select me-5" v-model="anfitrion" @click="mostrarResultadoConsulta"
+        <select id="anfitrionVisita" class="form-select me-5" v-model="anfitrion" @change="mostrarResultadoConsulta"
           required>
           <option value="" disabled>--seleccionar un anfitrión--</option>
           <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
@@ -94,7 +121,8 @@ export default {
       </div>
     </div>
 
-    <form v-if="huespedMasInvitado" class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
+    <form v-if="huespedMasInvitado && mostrarSegundoForm" class="p-2 border rounded"
+      style="background-color: rgb(143, 170, 211);">
       <!-- informaciones communes de persona -->
       <div class="container alert alert-dark border rounded mb-1">
         <div class="row mb-3">
