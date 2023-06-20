@@ -7,9 +7,10 @@ import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 import { Modal } from '~bootstrap'
+import Dialog from 'primevue/dialog'
 
 export default {
-  components: { Persona, Modelo, ConfirmDialog, Toast },                   ///// registro local de los componentes
+  components: { Persona, Modelo, ConfirmDialog, Toast, Dialog },                   ///// registro local de los componentes
   data() {
     return {
       opcionElegida: 'anfitrion',
@@ -17,6 +18,10 @@ export default {
       tipoFiltro: '',        // almacena el tipo de persona seleccionado para el filtro  
       resultadosBusqueda: [],
       filtroPendiente: false,
+
+      ////// para dialog primevue
+      visible: false,
+      mensajeDialog: '',
     }
   },
   computed: {
@@ -57,21 +62,23 @@ export default {
         acceptClass: 'p-button-danger',
         acceptLabel: 'Sí',
         accept: () => {
-          this.deletePersona(persona).then((r) => {
-            let indexToRemove = this.personasApi.indexOf(persona)
-            this.personasApi.splice(indexToRemove, 1)
-          })
-            .catch((error) => {
-              console.error("A la hora de borrar la persona, Se ha producido un error : ", error);
+          if (persona.tipo == 'Invitado') {
+            this.visible = false
+            this.deletePersona(persona).then((r) => {
+              let indexToRemove = this.personasApi.indexOf(persona)
+              this.personasApi.splice(indexToRemove, 1)
             })
+              .catch((error) => {
+                console.error("A la hora de borrar la persona, Se ha producido un error : ", error);
+              })
 
-          this.getVisitasPersona(persona.id).then((response) => {
-            if (this.visitasPersona) {
-              this.borrarVisitasPersona(persona.id)
-            }
-          })
-
-          this.$toast.add({ severity: 'success', summary: 'Borrado', detail: persona.dni, life: 3000 })
+            this.$toast.add({ severity: 'success', summary: 'Borrado', detail: persona.dni, life: 3000 })
+          }
+          else {
+            ///// para Dialog primevue
+            this.visible = true
+            this.mensajeDialog = 'Ne se puede borrar una persona de tipo anfitrión'
+          }
         },
         reject: () => {
           this.$toast.add({ severity: 'error', summary: 'Borrado', detail: 'Cancelado', life: 3000 })
@@ -127,6 +134,18 @@ export default {
 
 <template>
   <Modelo titulo="LISTADO PERSONAS">
+
+    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '35vw' }">
+      <p>
+        <font-awesome-icon icon="fa-solid fa-exclamation" size="xl" style="color: #f5c211;" class="me-3" />
+        {{ mensajeDialog }}
+      </p>
+      <template #footer>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-secondary" @click="visible = false">OK</button>
+        </div>
+      </template>
+    </Dialog>
 
     <Toast />
     <ConfirmDialog></ConfirmDialog>

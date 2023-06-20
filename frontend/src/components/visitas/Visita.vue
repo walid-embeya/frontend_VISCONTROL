@@ -115,7 +115,7 @@ export default {
             :data-bs-target="`#flush-collapse${visita.id}`" aria-expanded="false"
             :aria-controls="`flush-collapse${visita.id}`" style="color: darkred;">
             <font-awesome-icon :icon="['fas', 'list']" style="color: #a51d2d;" class="me-2" />Mostrar lista de invitados
-            {{ visita.id }}
+            <!-- {{ visita.id }} -->
           </button>
         </h2>
         <div :id="`flush-collapse${visita.id}`" class="accordion-collapse collapse" data-bs-parent="#detallesVisita">

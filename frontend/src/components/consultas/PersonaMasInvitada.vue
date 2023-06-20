@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       anfitrion: '',
-      visitasInvitadoMostrado: [],
+      visitasInvitadoMostrado: null,
 
       ////// para dialog primevue
       visible: false,
@@ -41,22 +41,28 @@ export default {
         await this.getVisitasPersona(this.anfitrion.id)
         if (this.visitasPersona) {
           this.getPersonaMasInvitado(this.anfitrion.id).then(r => {
-            this.mostrarSegundoForm = true
-            //// recuperar las visitas planificadas por este anfitrion y asistidas por de este invitado                      
-            this.getVisitasPersona(this.huespedMasInvitado.id).then(r => {
-              this.visitasInvitadoMostrado = []
-              this.visitasPersona.forEach(v => {
-                ////// recuperar el ID del anfitrion de cada visita
-                llamadaAPI('get', null, v._links.self.href).then((response) => {
-                  let linkAnfitrion = response.data._links.anfitrion.href
-                  let array = linkAnfitrion.split('/')
-                  let idAnfitrion = array[array.length - 1]
-                  if (idAnfitrion == this.anfitrion.id) {
-                    this.visitasInvitadoMostrado.push(v)
-                  }
+            //this.mostrarSegundoForm = true
+
+            this.visitasInvitadoMostrado = null
+
+            if (this.huespedMasInvitado) {
+              this.mostrarSegundoForm = true
+              //// recuperar las visitas planificadas por este anfitrion y asistidas por de este invitado                      
+              this.getVisitasPersona(this.huespedMasInvitado.id).then(r => {
+                this.visitasInvitadoMostrado = []
+                this.visitasPersona.forEach(v => {
+                  ////// recuperar el ID del anfitrion de cada visita
+                  llamadaAPI('get', null, v._links.self.href).then((response) => {
+                    let linkAnfitrion = response.data._links.anfitrion.href
+                    let array = linkAnfitrion.split('/')
+                    let idAnfitrion = array[array.length - 1]
+                    if (idAnfitrion == this.anfitrion.id) {
+                      this.visitasInvitadoMostrado.push(v)
+                    }
+                  })
                 })
               })
-            })
+            }
           })
         }
         else {
@@ -123,16 +129,6 @@ export default {
         </select>
       </div>
     </div>
-
-    <!-- <div v-if="!seleccted">
-
-    </div>
-
-    <div v-else-if="!mostrarSegundoForm" class="text-center">
-      <p>
-        <ProgressSpinner></ProgressSpinner>
-      </p>
-    </div> -->
 
     <form v-if="mostrarSegundoForm" class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
       <!-- informaciones communes de persona -->

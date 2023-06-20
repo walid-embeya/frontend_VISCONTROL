@@ -89,6 +89,9 @@ export const personasStore = defineStore('personas', {
           this.huespedMasInvitado = r.data
         }
       })
+        .catch((error) => {
+          console.error("Se ha producido un error recuperando la persona más invitada");
+        })
     },
   }
 })
