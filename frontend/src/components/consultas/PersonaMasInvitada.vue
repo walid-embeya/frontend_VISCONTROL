@@ -130,7 +130,7 @@ export default {
       </div>
     </div>
 
-    <form v-if="mostrarSegundoForm" class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
+    <form v-if="mostrarSegundoForm" class="p-2 border rounded datos-invitado">
       <!-- informaciones communes de persona -->
       <div v-if="huespedMasInvitado" class="container alert alert-dark border rounded mb-1">
         <div class="row mb-3">
@@ -185,9 +185,9 @@ export default {
       <div v-if="visitasInvitadoMostrado" class="container border rounded alert alert-light mb-0">
         <p class="fs-3 fw-bold text-center text-danger">Lista de Visitas</p>
 
-        <div style="height: 200px; overflow-y: scroll;">
+        <div class="lista-visitas">
           <table class="table table-striped table-hover">
-            <thead class="table-dark" style="background-color: rgb(134, 139, 139);">
+            <thead class="table-dark">
               <tr class="cabezera">
                 <th scope="col">Fecha/Hora Inicio</th>
                 <th scope="col">Fecha/Hora Fin</th>
@@ -209,10 +209,25 @@ export default {
       </div>
 
       <!-- boton de cerrar -->
-      <div class="d-flex justify-content-center border rounded mb-0 p-2" style="background-color: rgb(236, 231, 224);">
+      <div class="d-flex justify-content-center border rounded mb-0 p-2 barra-footer">
         <button type="submit" class="btn btn-secondary" @click="this.$router.push({ name: 'home' })"><font-awesome-icon
             icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar</button>
       </div>
     </form>
   </Modelo>
 </template>
+
+<style>
+.datos-invitado {
+  background-color: rgb(143, 170, 211);
+}
+
+.lista-visitas {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.barra-footer {
+  background-color: rgb(236, 231, 224);
+}
+</style>

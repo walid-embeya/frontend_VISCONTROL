@@ -26,7 +26,7 @@ export default {
     <hr>
     <div class="container">
       <div class="row">
-        <div class="col-md-4 text-center" style="text-align: center;">
+        <div class="col-md-4 text-center contactenos">
           <p class="mt-3">Contáctenos</p>
         </div>
 
@@ -66,6 +66,10 @@ export default {
   font-size: 4em;
   color: rgb(50, 109, 219);
   padding-bottom: 0.9em;
+}
+
+.contactenos {
+  text-align: center;
 }
 
 .footer {

@@ -23,9 +23,6 @@ export default {
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <!-- <a class="navbar-brand" href="#">
-          <img id="picture" src="../images/viscontrol.jpg" alt="LOGO" height="60" width="60" style="margin: 0; padding: -4px;" />
-        </a> -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
           aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -45,18 +42,13 @@ export default {
               <router-link class="nav-link" :to="{ name: 'personas' }"
                 :class="$route.name == 'personas' ? 'text-warning fw-bold' : ''">Personas</router-link>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                :class="$route.name == 'personamasinvitada' ? 'text-warning fw-bold' : ''">
-                Consultas
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <router-link class="dropdown-item" :to="{ name: 'personamasinvitada' }">Consultar persona más
-                    invitada</router-link>
-                </li>
-              </ul>
+
+            <li v-if="modeConeccion == 'Administrador'" class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'personamasinvitada' }"
+                :class="$route.name == 'personamasinvitada' ? 'text-warning fw-bold' : ''">Consultar persona más
+                invitada</router-link>
             </li>
+
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'ayuda' }"
                 :class="$route.name == 'ayuda' ? 'text-warning fw-bold' : ''">Ayuda</router-link>

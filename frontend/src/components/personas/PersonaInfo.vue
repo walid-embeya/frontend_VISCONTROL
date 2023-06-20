@@ -137,13 +137,11 @@ export default {
       </div>
 
       <div v-if="visitasPersona" class="container border rounded mb-0 alert alert-light">
-
         <p v-if="esInvitado" class="fs-3 fw-bold text-center text-warning">Lista de visitas del invitado</p>
         <p v-else class="fs-3 fw-bold text-center text-danger">Lista de visitas planificadas por el anfitrión</p>
-
-        <div style="height: 300px; overflow-y: scroll;">
+        <div class="lista-visitas">
           <table class="table table-striped table-hover">
-            <thead class="alert alert-dark" style="background-color: rgb(134, 139, 139);">
+            <thead>
               <tr>
                 <th scope="col" class="color-thead">Fecha/Hora Inicio</th>
                 <th scope="col" class="color-thead">Fecha/Hora Fin</th>
@@ -165,9 +163,9 @@ export default {
       </div>
 
       <div v-else class="container border rounded mb-0 alert alert-light text-center">
-        <!-- <p class="text-center fw-bold fs-5">Esta persona no tiene visitas</p> -->
-        <ProgressSpinner />
+        <p class="text-center fw-bold fs-5">Esta persona no tiene visitas</p>
       </div>
+
     </div>
 
     <div v-else class="text-center">
@@ -187,6 +185,11 @@ export default {
 </template>
 
 <style scoped>
+.lista-visitas {
+  height: 300px;
+  overflow-y: scroll;
+}
+
 tr {
   text-align: center;
 }

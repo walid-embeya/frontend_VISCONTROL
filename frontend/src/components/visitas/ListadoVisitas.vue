@@ -162,7 +162,7 @@ export default {
     </div>
 
     <div v-else>
-      <div style="height: 600px; overflow-y: scroll;" class="alert alert-light border rounded mb-4 p-2">
+      <div class="alert alert-light border rounded mb-4 p-2 lista-visitas">
         <Visita v-for="visita of visitasParaMostrar" :visita="visita" @borrarVisita="borrarVisita"
           @editarVisita="editarVisita" @mostrarAnfitrion="mostrarAnfitrion" class="py-3 px-3 mb-1"></Visita>
       </div>
@@ -173,6 +173,11 @@ export default {
 </template>
 
 <style>
+.lista-visitas {
+  height: 600px;
+  overflow-y: scroll;
+}
+
 @media (max-width: 768px) {
   .tipo_visita {
     font-size: 1vh;

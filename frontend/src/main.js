@@ -64,7 +64,7 @@ const routes = [
   { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },
   { path: '/nuevoanfitrion', component: AltaAnfitrion, name: 'nuevoanfitrion' },
 
-  { path: '/consultas/personamasinvitada', component: PersonaMasInvitada, name: 'personamasinvitada' },
+  { path: '/personamasinvitada', component: PersonaMasInvitada, name: 'personamasinvitada' },
 
   { path: '/ayuda', component: About, name: 'ayuda' },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
@@ -73,6 +73,14 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes, // routes: routes
+})
+
+import { personasStore } from '@/stores/personas'
+router.beforeEach(async (to, from) => {
+  const auth = personasStore()
+  if ((auth.modeConeccion != 'Administrador') && (to.name == 'personamasinvitada')) {
+    return { name: 'home' }
+  }
 })
 
 const app = createApp(App)

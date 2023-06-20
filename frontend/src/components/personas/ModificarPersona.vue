@@ -24,12 +24,11 @@ export default {
         finAut: null,
         tipo: ''
       },
-
     }
   },
 
   computed: {
-    ...mapState(personasStore, ['personaApi']),
+    ...mapState(personasStore, ['personaApi', 'personasApi']),
 
     esInvitado() {
       if (this.personaApi) {
@@ -54,7 +53,6 @@ export default {
 
   async created() {
     await this.getPersonaPorId(this.$route.params.identificador)
-
     if (this.personaApi) {
       this.personaParaModificar = { ...this.personaApi }   ///// clone superficial
 
@@ -63,6 +61,9 @@ export default {
         this.personaParaModificar.finAut = new Date(this.personaParaModificar.finAut)
       }
     }
+    
+    // console.log(this.personasApi)
+    // this.personaParaModificar = this.personasApi.find(p => p.id == this.$route.params.identificador)
   },
 
 }
@@ -91,7 +92,7 @@ export default {
       </div>
     </div>
 
-    <form v-if="personaApi" class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
+    <form v-if="personaApi" class="p-2 border rounded datos-persona">
       <!-- informaciones communes de persona -->
       <div class="container alert alert-dark border rounded mb-1">
         <div class="row mb-3">
@@ -212,7 +213,7 @@ export default {
 
     </form>
 
-    <div v-else class="text-center border rounded p-4 mb-0 " style="background-color: rgb(143, 170, 211);">
+    <div v-else class="text-center border rounded p-4 mb-0 datos-persona">
       <h4>cargando datos de persona...</h4>
     </div>
 
@@ -220,6 +221,10 @@ export default {
 </template>
 
 <style>
+.datos-persona {
+  background-color: rgb(143, 170, 211)
+}
+
 .columna {
   text-align: center;
 }

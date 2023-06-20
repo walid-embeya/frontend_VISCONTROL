@@ -111,9 +111,9 @@ export default {
       id="detallesVisita">
       <div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          <button class="accordion-button collapsed boton-detalles-visita" type="button" data-bs-toggle="collapse"
             :data-bs-target="`#flush-collapse${visita.id}`" aria-expanded="false"
-            :aria-controls="`flush-collapse${visita.id}`" style="color: darkred;">
+            :aria-controls="`flush-collapse${visita.id}`">
             <font-awesome-icon :icon="['fas', 'list']" style="color: #a51d2d;" class="me-2" />Mostrar lista de invitados
             <!-- {{ visita.id }} -->
           </button>
@@ -185,6 +185,10 @@ tr {
 
 [type="checkbox"]:checked+label:after {
   background: rgb(69, 180, 36);
+}
+
+.boton-detalles-visita {
+  color: darkred;
 }
 
 @media(max-width:768px) {}

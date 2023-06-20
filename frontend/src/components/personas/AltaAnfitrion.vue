@@ -79,8 +79,7 @@ export default {
       </div>
     </div>
 
-    <form class="p-2 border rounded" style="background-color: rgb(143, 170, 211);">
-
+    <form class="p-2 border rounded datos-anfitrion">
       <!-- informaciones communes de persona -->
       <div class="container alert alert-dark border rounded mb-2">
         <div class="row mb-3">
@@ -148,7 +147,7 @@ export default {
 
       <!-- table para listar todos los anfitriones -->
       <div v-if="anfitrionesApi" class="container alert alert-light border rounded p-2 mb-0">
-        <div style="height: 250px; overflow-y: scroll;">
+        <div class="lista-anfitriones">
           <table class="table table-striped table-hover me-2">
             <thead class="alert alert-dark">
               <tr class="columna">
@@ -190,6 +189,15 @@ export default {
 </template>
 
 <style>
+.datos-anfitrion {
+  background-color: rgb(143, 170, 211);
+}
+
+.lista-anfitriones {
+  height: 250px;
+  overflow-y: scroll;
+}
+
 .columna {
   text-align: center;
 }

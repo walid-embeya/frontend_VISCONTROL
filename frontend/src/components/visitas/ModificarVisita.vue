@@ -112,7 +112,7 @@ export default {
       </template>
     </Dialog>
 
-    <form class="p-1 border rounded" style="background-color: rgb(16, 70, 151);">
+    <form class="p-1 border rounded datos-visita">
 
       <!-- datos visita -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
@@ -146,8 +146,8 @@ export default {
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <textarea class="form-control" id="actuacion" rows="3" v-model="visitaParaModificar.actuaciones"
-              placeholder="descripción de la visita" style="resize: none;"></textarea>
+            <textarea class="form-control zona-area" id="actuacion" rows="3" v-model="visitaParaModificar.actuaciones"
+              placeholder="descripción de la visita"></textarea>
           </div>
 
           <div class="col-md-5">
@@ -164,12 +164,10 @@ export default {
             </button>
           </div>
         </div>
-
       </div>
 
       <!-- buton de guardar visita (Primer Endpoint) -->
-      <div class="d-flex justify-content-center border rounded alert alert-primary p-2 m-0"
-        style="background-color: rgb(214, 214, 226);">
+      <div class="d-flex justify-content-center border rounded p-2 m-0 botones-visita">
         <button type="button" class="btn btn-success me-2" @click.prevent="modificarVisita">
           <font-awesome-icon icon="fa-solid fa-file-pen" size="lg" class="me-2" />Modificar Visita</button>
         <button type="button" class="btn btn-secondary" @click="this.$router.go(-1)">
@@ -178,7 +176,7 @@ export default {
 
     </form>
 
-    <form class="border rounded mb-1 p-1" style="background-color: rgb(16, 70, 151);">
+    <form class="border rounded mb-1 p-1 datos-visita">
       <!-- datos visitantes -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
         <div class="row">
@@ -224,7 +222,7 @@ export default {
       </div>
 
       <!-- botones de guardar invitados y finalizar visita (Segundo Endpoint)-->
-      <div class="d-flex justify-content-center border rounded mb-0 p-3" style="background-color: rgb(62, 62, 125);">
+      <div class="d-flex justify-content-center border rounded mb-0 p-3 botones-invitados">
         <button type="button" class="btn btn-light d-inline me-1" @click.prevent="anadirInvitados">
           <font-awesome-icon icon="fa-solid fa-user-plus" class="me-2" />Actualizar Lista Invitados</button>
       </div>
@@ -233,6 +231,22 @@ export default {
 </template>
 
 <style>
+.datos-visita {
+  background-color: rgb(16, 70, 151);
+}
+
+.zona-area {
+  resize: none;
+}
+
+.botones-visita {
+  background-color: rgb(173, 173, 180);
+}
+
+.botones-invitados {
+  background-color: rgb(62, 62, 125);
+}
+
 tr {
   text-align: center
 }

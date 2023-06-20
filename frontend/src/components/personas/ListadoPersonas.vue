@@ -199,7 +199,7 @@ export default {
     </div>
 
     <div v-if="personasApi">
-      <div style="height: 600px; overflow-y: scroll;" class="border rounded mb-4 p-2">
+      <div class="border rounded mb-4 p-2 lista-personas">
         <table class="table table-striped table-hover">
           <thead>
             <tr>
@@ -236,6 +236,11 @@ export default {
 </template>
 
 <style scoped>
+.lista-personas {
+  height: 600px;
+  overflow-y: scroll;
+}
+
 tr {
   text-align: center;
 }

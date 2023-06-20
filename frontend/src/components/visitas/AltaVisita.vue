@@ -155,7 +155,7 @@ export default {
   </div>
 
   <Modelo titulo="CREACIÓN NUEVA VISITA">
-    <form class="p-1 border rounded" style="background-color: rgb(16, 70, 151);">
+    <form class="p-1 border rounded componente-visita">
       <!-- datos visita -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
         <div class="row pb-3">
@@ -182,7 +182,7 @@ export default {
         <div class="row my-2">
           <div class="col-md-6">
             <label for="actuacion" class="form-label fs-5 fw-bold">Descripción</label>
-            <textarea class="form-control" id="actuacion" rows="3" v-model="visita.actuaciones"
+            <textarea class="form-control datosvisita" id="actuacion" rows="3" v-model="visita.actuaciones"
               :disabled="mostrarSegundoForm" placeholder="descripción de la visita" style="resize: none;"
               :style="{ color: mostrarSegundoForm ? 'gray' : 'black' }"></textarea>
           </div>
@@ -194,7 +194,7 @@ export default {
             </div>
             <div class="row">
               <div class="col-md-7">
-                <select id="anfitrionVisita" class="form-select datosvisita me-2" v-model="anfitrionParaAnadir"
+                <select id="anfitrionVisita" class="form-select lista-anfitriones me-2" v-model="anfitrionParaAnadir"
                   :disabled="mostrarSegundoForm" required>
                   <option value="" disabled>--seleccionar un anfitrión--</option>
                   <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
@@ -212,8 +212,7 @@ export default {
       </div>
 
       <!-- buton de guardar visita (Primer Endpoint) -->
-      <div class="d-flex justify-content-center border rounded alert alert-primary p-2 m-0"
-        style="background-color: rgb(169, 169, 189);">
+      <div class="d-flex justify-content-center border rounded p-2 m-0 botones-visita">
         <button :disabled="mostrarSegundoForm" type="button" class="btn btn-primary me-2" @click.prevent="agregarVisita">
           <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2" />Guardar Visita</button>
         <button :disabled="mostrarSegundoForm" type="button" class="btn btn-primary" @click="this.$router.go(-1)">
@@ -221,7 +220,7 @@ export default {
       </div>
     </form>
 
-    <form v-if="mostrarSegundoForm" class="border rounded mb-1 p-1" style="background-color: rgb(16, 70, 151);">
+    <form v-if="mostrarSegundoForm" class="border rounded mb-1 p-1 componente-visita">
 
       <!-- datos visitantes -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
@@ -268,7 +267,7 @@ export default {
       </div>
 
       <!-- botones de guardar invitados y finalizar visita (Segundo Endpoint)-->
-      <div class="d-flex justify-content-center border rounded mb-0 p-3" style="background-color: rgb(169, 169, 189);">
+      <div class="d-flex justify-content-center border rounded mb-0 p-3 botones-visita">
         <button type="button" class="btn btn-warning d-inline me-1" @click.prevent="anadirInvitados"
           data-bs-toggle="modal" data-bs-target="#confirmacionInvitadosAnadidosVisita"><font-awesome-icon
             icon="fa-solid fa-user-plus" class="me-2" />Añadir Lista Invitados</button>
@@ -280,8 +279,16 @@ export default {
 </template>
 
 <style>
+.componente-visita {
+  background-color: rgb(16, 70, 151);
+}
+
 .datosvisita[disabled] {
   color: gray;
+}
+
+.botones-visita {
+  background-color: rgb(169, 169, 189);
 }
 </style>
 
