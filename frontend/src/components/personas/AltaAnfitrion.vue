@@ -20,20 +20,14 @@ export default {
       },
     }
   },
-
   computed: {
     ...mapState(personasStore, ['anfitrionesApi']),
   },
-
   methods: {
-
     ...mapActions(personasStore, ['getAnfitrionesApi', 'postPersona']),
-
     crearAnfitrion() {
       this.personaParaAnadir.tipo = "Anfitrion";
-
       this.postPersona(this.personaParaAnadir)
-
       // Limpiar los campos del formulario
       this.personaParaAnadir = {
         dni: '',
@@ -47,15 +41,12 @@ export default {
         tipo: ''
       }
     },
-
   },
-
   created() {
     this.getAnfitrionesApi()
   }
 }
 </script>
-
 
 <template>
   <Modelo titulo="CREACIÓN NUEVO ANFITRIÓN">
@@ -78,7 +69,6 @@ export default {
         </div>
       </div>
     </div>
-
     <form class="p-2 border rounded datos-anfitrion">
       <!-- informaciones communes de persona -->
       <div class="container alert alert-dark border rounded mb-2">
@@ -98,7 +88,6 @@ export default {
               placeholder="apellidos" required>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-4">
             <label for="telefono" class="form-label">Telefono</label>
@@ -112,7 +101,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- informaciones propias del anfitrion -->
       <div class="container alert alert-dark border rounded mb-2">
         <div class="row">
@@ -121,13 +109,11 @@ export default {
             <input type="text" class="form-control" id="nip" v-model="personaParaAnadir.nip"
               placeholder="NIP del anfitrión" required>
           </div>
-
           <div class="col-md-4">
             <label for="area" class="form-label">Area</label>
             <input type="text" class="form-control" id="area" v-model="personaParaAnadir.area"
               placeholder="area de encarga del anfitrión" required>
           </div>
-
           <div class="col-md-4">
             <label for="role" class="form-label">Role</label>
             <input type="text" class="form-control" id="role" v-model="personaParaAnadir.role"
@@ -135,7 +121,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- botones de guardar y cancelar -->
       <div class="d-flex justify-content-center p-2 mb-2">
         <button type="submit" class="btn btn-success d-inline me-1" @click.prevent="crearAnfitrion" data-bs-toggle="modal"
@@ -144,7 +129,6 @@ export default {
         <!-- $router.go(-1) -->
         <button type="submit" class="btn btn-secondary" @click="this.$router.go(-1)">Cancelar</button>
       </div>
-
       <!-- table para listar todos los anfitriones -->
       <div v-if="anfitrionesApi" class="container alert alert-light border rounded p-2 mb-0">
         <div class="lista-anfitriones">
@@ -171,17 +155,14 @@ export default {
             </tbody>
           </table>
         </div>
-
         <div class="d-flex justify-content mt-3">
           <h4 class="fw-blod text-dark me-2">Total :</h4>
           <p class="fs-5 fw-blod text-danger">{{ anfitrionesApi.length }} anfitriones</p>
         </div>
       </div>
-
       <div v-else class="text-center alert alert-light border rounded p-4 mb-0">
         <h4>cargando lista de anfitriones...</h4>
       </div>
-
     </form>
   </Modelo>
 

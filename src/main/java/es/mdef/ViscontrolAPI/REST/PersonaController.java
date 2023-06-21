@@ -24,6 +24,7 @@ import es.mdef.ViscontrolAPI.ViscontrolApiApplication;
 import es.mdef.ViscontrolAPI.entidades.AnfitrionApiImp;
 import es.mdef.ViscontrolAPI.entidades.InvitadoApiImp;
 import es.mdef.ViscontrolAPI.entidades.PersonaApiImp;
+import es.mdef.ViscontrolAPI.entidades.VisitaApiImp;
 import es.mdef.ViscontrolAPI.repositorios.PersonaRepositorio;
 import es.mdef.ViscontrolLib.Visita;
 
@@ -203,8 +204,7 @@ public class PersonaController {
     @GetMapping("{id}/personaMasInvitada")
     public PersonaModel GuestMasInvitadoPorAnfitrion(@PathVariable Long id) {    	
     	Long idInvitado = repositorio.findFrecuentGuestByHost(id);   
-    	//System.out.println("id invitado " + idInvitado);
-		return this.one(idInvitado);    	
+		return this.one(idInvitado);
     }
 			
 }

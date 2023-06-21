@@ -8,11 +8,9 @@ export default {
   data() {
     return {}
   },
-
   computed: {
     ...mapState(personasStore, ['modeConeccion']),
   },
-
 }
 </script>
 

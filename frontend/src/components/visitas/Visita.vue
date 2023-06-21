@@ -11,7 +11,6 @@ export default {
       invitadosVisita: []
     }
   },
-
   watch: {
     visita(value) {
       this.getInvitadosVisita(this.visita.id).then(invitados => {
@@ -19,36 +18,28 @@ export default {
       })
     },
   },
-
   computed: {
     ...mapState(personasStore, ['modeConeccion']),
-
     fechaInicio() {
       return timestampToFecha(new Date(this.visita.fechaInicio))
     },
-
     horaInicio() {
       return timestampToHora(new Date(this.visita.fechaInicio))
     },
-
     fechaFin() {
       return timestampToFecha(new Date(this.visita.fechaFin))
     },
-
     horaFin() {
       return timestampToHora(new Date(this.visita.fechaFin))
     },
   },
-
   methods: {
     ...mapActions(visitasStore, ['getInvitadosVisita']),
-
     esPendiente(visita) {
       const hoy = new Date()
       return new Date(visita.fechaFin) > hoy ? true : false
     },
   },
-
   created() {
     this.getInvitadosVisita(this.visita.id).then(invitados => {
       this.invitadosVisita = invitados
@@ -56,7 +47,6 @@ export default {
   },
 }
 </script>
-
 
 <template>
   <div class="container alert alert-dark">
@@ -68,7 +58,6 @@ export default {
         <label class="fs-5"><b>Hora Inicio</b><span class="ms-4">{{ horaInicio }}</span></label>
       </div>
     </div>
-
     <div class="row mb-3">
       <div class="col-md-5">
         <label class="fs-5"><b>Fecha Fin</b><span class="ms-5">{{ fechaFin }}</span></label>
@@ -106,7 +95,6 @@ export default {
           <font-awesome-icon icon="fa-solid fa-id-card" size="lg" class="me-2" />Ver Anfitrión</span>
       </div>
     </div>
-
     <div v-if="invitadosVisita" class="accordion accordion-flush alert alert-secondary mt-2 mb-0 border rounded"
       id="detallesVisita">
       <div class="accordion-item">
@@ -191,5 +179,4 @@ tr {
   color: darkred;
 }
 
-@media(max-width:768px) {}
-</style>
+@media(max-width:768px) {}</style>

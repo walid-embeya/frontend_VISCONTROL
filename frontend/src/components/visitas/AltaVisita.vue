@@ -6,7 +6,6 @@ import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
 import Dialog from 'primevue/dialog'
 
-
 export default {
   components: { Modelo, Calendar, Dialog },    ///// registro local de los componentes
   data() {
@@ -14,13 +13,10 @@ export default {
       ////// para dialog primevue
       visible: false,
       mensajeDialog: '',
-
       //// para recuperar el anfitrion seleccionado
       anfitrionParaAnadir: '',
-
       //// para elemento select multiple (seleccionar uno o muchos invitados)
       invitadosElegidos: [],
-
       // la visita que queremos añadir
       visita: {
         fechaInicio: new Date(),
@@ -29,22 +25,18 @@ export default {
         actividad: '',
         anfitrion: ''
       },
-
       // los invitados que vamos a añadir a la visita
       invitados: {
         listaInvitados: []
       },
-
       ////// para mostrar y ocultar componente de agregación de invitados
       mostrarSegundoForm: false,
     }
   },
-
   computed: {
     ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi']),
     ...mapState(visitasStore, ['idVisita']),
   },
-
   methods: {
     ...mapActions(personasStore, ['getInvitadosApi', 'getAnfitrionesApi']),
     ...mapActions(visitasStore, ['postVisita', 'addInvitadosToVisita']),
@@ -52,15 +44,12 @@ export default {
     agregarVisita() {
       this.visita.anfitrion = this.anfitrionParaAnadir._links.self.href
       this.postVisita(this.visita)
-
       ///// para Dialog primevue
       this.mensajeDialog = 'Nueva visita añadida con exito ! Debería agregar uno o más invitados a esta visita'
       this.visible = true
-
       ////// para mostrar y ocultar componente de agregación de invitados
       this.mostrarSegundoForm = true
     },
-
     anadirInvitados() {
       if (this.idVisita != null) {
         this.invitados.listaInvitados = []
@@ -68,39 +57,31 @@ export default {
         this.addInvitadosToVisita(this.invitados, this.idVisita)
       }
     },
-
     finalizarVisita() {
       ////// para mostrar y ocultar componente de agregación de invitados
       this.mostrarSegundoForm = false
-
       ///// limpiar campos de visita
       this.visita.fechaInicio = new Date()
       this.visita.fechaFin = new Date()
       this.visita.actuaciones = ''
       this.visita.actividad = ''
       this.anfitrionParaAnadir = ''
-
       ///// vaciar la lista de invitados elegidos
       this.invitadosElegidos = []
     },
-
     darAltaAnfitrion() {
       this.$router.push({ name: 'nuevoanfitrion' })
     },
-
   },
-
   created() {
     this.getInvitadosApi()
     this.getAnfitrionesApi()
   },
-
 }
 </script>
 
-
 <template>
-  <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '30vw' }">
+  <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '80%' }">
     <p>
       <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
       {{ mensajeDialog }}
@@ -153,7 +134,6 @@ export default {
       </div>
     </div>
   </div>
-
   <Modelo titulo="CREACIÓN NUEVA VISITA">
     <form class="p-1 border rounded componente-visita">
       <!-- datos visita -->
@@ -178,7 +158,6 @@ export default {
               :disabled="mostrarSegundoForm" placeholder="actividad" required>
           </div>
         </div>
-
         <div class="row my-2">
           <div class="col-md-6">
             <label for="actuacion" class="form-label fs-5 fw-bold">Descripción</label>
@@ -210,7 +189,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- buton de guardar visita (Primer Endpoint) -->
       <div class="d-flex justify-content-center border rounded p-2 m-0 botones-visita">
         <button :disabled="mostrarSegundoForm" type="button" class="btn btn-primary me-2" @click.prevent="agregarVisita">
@@ -219,9 +197,7 @@ export default {
           <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cancelar</button>
       </div>
     </form>
-
     <form v-if="mostrarSegundoForm" class="border rounded mb-1 p-1 componente-visita">
-
       <!-- datos visitantes -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
         <div class="row">
@@ -233,7 +209,6 @@ export default {
             <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Invitados Seleccionados</label>
           </div>
         </div>
-
         <div class="row mb-3">
           <!-- select multiple -->
           <div class="col-md-4">
@@ -265,7 +240,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- botones de guardar invitados y finalizar visita (Segundo Endpoint)-->
       <div class="d-flex justify-content-center border rounded mb-0 p-3 botones-visita">
         <button type="button" class="btn btn-warning d-inline me-1" @click.prevent="anadirInvitados"

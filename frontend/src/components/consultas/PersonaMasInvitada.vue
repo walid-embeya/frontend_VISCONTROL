@@ -104,7 +104,8 @@ export default {
 <template>
   <Modelo titulo="EL HUÉSPED MÁS INVITADO POR UN ANFITRIÓN">
 
-    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '35vw' }">
+    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '80%' }">
+      <!-- <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '35vw' }"> -->
       <p>
         <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
         {{ mensajeDialog }}

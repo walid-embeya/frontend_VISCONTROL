@@ -37,7 +37,6 @@ export default {
     mostrarModal() {
       Modal.getOrCreateInstance('#addPersona').show()
     },
-
     mostrarComponente() {
       if (this.opcionElegida === 'anfitrion') {
         this.$router.push({ name: 'nuevoanfitrion' })
@@ -45,15 +44,12 @@ export default {
         this.$router.push({ name: 'nuevoinvitado' })
       }
     },
-
     mostrarPersona(persona) {
       this.$router.push({ name: 'personainfo', params: { identificador: persona.id } })
     },
-
     editarPersona(persona) {
       this.$router.push({ name: 'modificarpersona', params: { identificador: persona.id } })
     },
-
     async borrarPersona(persona) {
       this.$confirm.require({
         message: '¿ Está seguro de borrar la persona con DNI ' + persona.dni + ' y sus visitas ?',
@@ -85,17 +81,13 @@ export default {
         }
       })
     },
-
     buscarPersonaPorDni() {
       if (this.dniParaBuscar) {
         this.filtroPendiente = true
         this.resultadosBusqueda = []         // Vaciar el array resultadosBusqueda
         const caracterBuscado = this.dniParaBuscar.toLowerCase()
-
         // Filtrar las personas cuyo DNI contenga el carácter buscado
         const personasEncontradas = this.personasApi.filter(persona => persona.dni.toLowerCase().includes(caracterBuscado))
-
-        // const personaEncontrada = this.personasApi.find(persona => persona.dni === this.dniParaBuscar)
         if (personasEncontradas.length > 0) {
           this.resultadosBusqueda = personasEncontradas; // Almacena los resultados de la búsqueda
         }
@@ -105,7 +97,6 @@ export default {
         this.resultadosBusqueda = this.personasApi;
       }
     },
-
     buscarPersonasPorTipo() {
       if (this.tipoFiltro) {
         this.filtroPendiente = true
@@ -121,21 +112,18 @@ export default {
         this.resultadosBusqueda = this.personasApi
       }
     },
-
   },
-
   created() {
     this.toast = useToast()
     this.getPersonasApi()
   },
-
 }
 </script>
 
 <template>
   <Modelo titulo="LISTADO PERSONAS">
-
-    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '35vw' }">
+    <!-- <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '35vw' }"> -->
+    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '80%' }">
       <p>
         <font-awesome-icon icon="fa-solid fa-exclamation" size="xl" style="color: #f5c211;" class="me-3" />
         {{ mensajeDialog }}

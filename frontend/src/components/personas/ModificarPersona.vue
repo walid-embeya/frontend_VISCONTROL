@@ -9,28 +9,26 @@ export default {
   data() {
     return {
       personaParaModificar: null,
-    //   personaParaModificar: {
-    //     dni: '',
-    //     nombre: '',
-    //     apellidos: '',
-    //     telefono: '',
-    //     email: '',
-    //     nip: null,
-    //     area: null,
-    //     role: null,
-    //     matricula: '',
-    //     empresa: '',
-    //     autorizacion: null,
-    //     inicioAut: null,
-    //     finAut: null,
-    //     tipo: ''
-    //   },
+      //   personaParaModificar: {
+      //     dni: '',
+      //     nombre: '',
+      //     apellidos: '',
+      //     telefono: '',
+      //     email: '',
+      //     nip: null,
+      //     area: null,
+      //     role: null,
+      //     matricula: '',
+      //     empresa: '',
+      //     autorizacion: null,
+      //     inicioAut: null,
+      //     finAut: null,
+      //     tipo: ''
+      //   },
     }
   },
-
   computed: {
     ...mapState(personasStore, ['personaApi', 'personasApi']),
-
     esInvitado() {
       if (this.personaApi) {
         return this.personaApi.tipo == 'Invitado' ? true : false
@@ -38,24 +36,18 @@ export default {
       else
         return false
     },
-
     tituloComponente() {
       return this.esInvitado ? 'MODIFICACIÓN DEL INVITADO' : 'MODIFICACIÓN DEL ANFITRIÓN'
     },
   },
-
   methods: {
     ...mapActions(personasStore, ['putPersona', 'getPersonaPorId']),
-
     modificarPersona() {
       this.putPersona(this.personaParaModificar)
     },
   },
-
   async created() {
-    
     this.personaParaModificar = this.personasApi.find(p => p.id == this.$route.params.identificador)
-
     await this.getPersonaPorId(this.$route.params.identificador)
     if (this.personaApi) {
       this.personaParaModificar = { ...this.personaApi }   ///// clone superficial
@@ -65,18 +57,14 @@ export default {
         this.personaParaModificar.finAut = new Date(this.personaParaModificar.finAut)
       }
     }
-    
     //  console.log(this.personasApi)
     // this.personaParaModificar = this.personasApi.find(p => p.id == this.$route.params.identificador)
-    // console.log(this.personaParaModificar)
   },
-
 }
 </script>
 
 <template>
   <Modelo :titulo=tituloComponente>
-
     <!-- Modal -->
     <div class="modal fade" id="confirmacionOperacion" tabindex="-1" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -96,7 +84,6 @@ export default {
         </div>
       </div>
     </div>
-
     <form v-if="personaApi" class="p-2 border rounded datos-persona">
       <!-- informaciones communes de persona -->
       <div class="container alert alert-dark border rounded mb-1">
@@ -117,14 +104,12 @@ export default {
               placeholder="apellidos" required>
           </div>
         </div>
-
         <div class="row mb-3">
           <div class="col-md-4">
             <label for="telefono" class="form-label">Telefono</label>
             <input type="text" class="form-control" id="telefono" v-model="personaParaModificar.telefono"
               placeholder="0034 613 728 154">
           </div>
-
           <div class="col-md-4">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" v-model="personaParaModificar.email"
@@ -132,7 +117,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- informaciones propias del invitado -->
       <div v-if="personaApi.tipo == 'Invitado'" class="container alert alert-dark border rounded mb-2">
         <div class="row mb-4">
@@ -147,7 +131,6 @@ export default {
               placeholder="nombre de empresa" required>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-4">
             <div class="form-check form-check-inline">
@@ -178,50 +161,40 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- informaciones propias del anfitrion -->
       <div v-else class="container alert alert-dark border rounded mb-2">
         <div class="row mb-4">
           <div class="col-md-4">
             <label for="nip" class="form-label">NIP</label>
-            <input type="text" class="form-control" id="nip" v-model="personaParaModificar.nip" placeholder="NIP del anfitrión"
-              required>
+            <input type="text" class="form-control" id="nip" v-model="personaParaModificar.nip"
+              placeholder="NIP del anfitrión" required>
           </div>
-
           <div class="col-md-4">
             <label for="area" class="form-label">Area</label>
             <input type="text" class="form-control" id="area" v-model="personaParaModificar.area"
               placeholder="area de encarga del anfitrión" required>
           </div>
-
           <div class="col-md-4">
             <label for="role" class="form-label">Role</label>
-            <input type="text" class="form-control" id="role" v-model="personaParaModificar.role" placeholder="role del anfitrión"
-              required>
+            <input type="text" class="form-control" id="role" v-model="personaParaModificar.role"
+              placeholder="role del anfitrión" required>
           </div>
         </div>
       </div>
-
       <!-- botones de guardar y cancelar -->
       <div class="d-flex justify-content-center p-2 mb-0">
         <button type="submit" class="btn btn-success d-inline me-1" @click.prevent="modificarPersona"
           data-bs-toggle="modal" data-bs-target="#confirmacionOperacion">
           <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2" />Actualizar</button>
-
         <button type="submit" class="btn btn-secondary"
           @click="this.$router.push({ name: 'personas' })"><font-awesome-icon icon="fa-solid fa-xmark" size="lg"
             class="me-2" />Cancelar</button>
       </div>
-
-      <!-- <pre>persona API : {{ JSON.stringify(personaApi, null, " ") }}</pre>
-            <pre>persona para modificar : {{ JSON.stringify(personaParaModificar, null, " ") }}</pre> -->
-
+      <!-- <pre>persona API : {{ JSON.stringify(personaApi, null, " ") }}</pre> -->
     </form>
-
     <div v-else class="text-center border rounded p-4 mb-0 datos-persona">
       <h4>cargando datos de persona...</h4>
     </div>
-
   </Modelo>
 </template>
 

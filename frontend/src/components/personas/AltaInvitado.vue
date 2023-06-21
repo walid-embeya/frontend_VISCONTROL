@@ -4,7 +4,6 @@ import { mapState, mapActions } from 'pinia'
 import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
 
-
 export default {
   components: { Modelo, Calendar },   ///// registro local de los componentes
   data() {
@@ -24,28 +23,21 @@ export default {
       },
     }
   },
-
   computed: {
     ...mapState(personasStore, ['invitadosApi']),
-
     isAutorizado() {
       return this.personaParaAnadir.autorizacion == true ? 'true' : 'false'
     }
   },
-
   methods: {
     ...mapActions(personasStore, ['getInvitadosApi', 'postPersona']),
-
     crearInvitado() {
       this.personaParaAnadir.tipo = 'Invitado'
-
       if (!this.isAutorizado) {
         this.personaParaAnadir.inicioAut = null
         this.personaParaAnadir.finAut = null
       }
-
       this.postPersona(this.personaParaAnadir)
-
       // Limpiar los campos del formulario
       this.personaParaAnadir = {
         dni: '',
@@ -61,16 +53,12 @@ export default {
         tipo: ''
       }
     },
-
   },
-
   created() {
     this.getInvitadosApi()
   },
-
 }
 </script>
-
 
 <template>
   <Modelo titulo="CREACIÓN NUEVO INVITADO">
@@ -93,7 +81,6 @@ export default {
         </div>
       </div>
     </div>
-
     <form class="p-2 border rounded datos-invitado">
       <!-- informaciones communes de persona -->
       <div class="container alert alert-dark border rounded mb-2">
@@ -113,14 +100,12 @@ export default {
               placeholder="apellidos" required>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-4">
             <label for="telefono" class="form-label">Telefono</label>
             <input type="text" class="form-control" id="telefono" v-model="personaParaAnadir.telefono"
               placeholder="0034 613 728 154">
           </div>
-
           <div class="col-md-4">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" v-model="personaParaAnadir.email"
@@ -128,7 +113,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- informaciones propias del invitado -->
       <div class="container alert alert-dark border rounded mb-2">
         <div class="row mb-4">
@@ -143,7 +127,6 @@ export default {
               placeholder="nombre de empresa" required>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-4">
             <div class="form-check form-check-inline">
@@ -152,7 +135,6 @@ export default {
               <label class="form-check-label" for="autorizacion">Autorizado</label>
             </div>
           </div>
-
           <div v-if="personaParaAnadir.autorizacion" class="col-md-8">
             <div class="row">
               <div class="col-md-5">
@@ -162,7 +144,6 @@ export default {
                 <label for="fechafin" class="form-label me-2">Fecha Fin</label>
               </div>
             </div>
-
             <div class="row">
               <div class="col-md-5">
                 <Calendar v-model="personaParaAnadir.fechaInicio" :show-time="false" dateFormat="dd/mm/yy"
@@ -176,7 +157,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- botones de guardar y cancelar -->
       <div class="d-flex justify-content-center p-2 mb-2">
         <button type="submit" class="btn btn-success d-inline me-1" @click.prevent="crearInvitado" data-bs-toggle="modal"
@@ -185,7 +165,6 @@ export default {
 
         <button type="submit" class="btn btn-secondary" @click="$router.push({ name: 'personas' })">Cancelar</button>
       </div>
-
       <!-- table para listar todos los invitados -->
       <div v-if="invitadosApi" class="container alert alert-light border rounded p-2 mb-0">
         <div class="lista-invitados">
@@ -210,19 +189,16 @@ export default {
             </tbody>
           </table>
         </div>
-
         <div class="d-flex justify-content mt-3">
           <h4 class="fw-blod text-dark me-2">Total :</h4>
           <p class="fs-5 fw-blod text-danger">{{ invitadosApi.length }} invitados</p>
         </div>
       </div>
-
       <div v-else class="text-center alert alert-light border rounded p-4 mb-0">
         <h4>cargando lista de invitados...</h4>
       </div>
     </form>
   </Modelo>
-
   <!-- <pre v-if="invitadosApi">{{ JSON.stringify(invitadosApi, null, " ") }}</pre> -->
 </template>
 

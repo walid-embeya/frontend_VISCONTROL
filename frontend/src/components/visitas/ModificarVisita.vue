@@ -14,13 +14,10 @@ export default {
       ////// para dialog primevue
       visible: false,
       mensajeDialog: '',
-
       //// para recuperar el anfitrion seleccionado
       anfitrionParaModificar: null,
-
       //// invitados de visita recuperados del store (para el elemento select multiple)
       invitadosElegidos: [],
-
       // la visita que queremos modificar
       visitaParaModificar: {
         fechaInicio: null,
@@ -29,78 +26,62 @@ export default {
         actividad: '',
         anfitrion: ''
       },
-
       // los invitados que vamos a añadir a la visita
       invitadosParaAnadir: {
         listaInvitados: []
       },
     }
   },
-
   computed: {
     ...mapState(personasStore, ['anfitrionesApi', 'invitadosApi', 'personaApi']),
     ...mapState(visitasStore, ['visitaApi']),
   },
-
   methods: {
     ...mapActions(personasStore, ['getInvitadosApi', 'getAnfitrionesApi', 'getPersonaPorId']),
     ...mapActions(visitasStore, ['getVisitaPorId', 'putVisita', 'addInvitadosToVisita', 'getInvitadosVisita']),
-
     modificarVisita() {
       this.visitaParaModificar.anfitrion = this.anfitrionParaModificar._links.self.href
-
       this.putVisita(this.visitaParaModificar)
 
       ///// para Dialog primevue
       this.mensajeDialog = 'Datos visita modificados con éxito.'
       this.visible = true
     },
-
     anadirInvitados() {
       this.invitadosElegidos.forEach(inv => this.invitadosParaAnadir.listaInvitados.push(inv._links.self.href))
-
       this.addInvitadosToVisita(this.invitadosParaAnadir, this.$route.params.identificador)
-
       ///// para Dialog primevue
       this.mensajeDialog = 'Lista de invitados actualizada con éxito.'
       this.visible = true
     },
-
     darAltaAnfitrion() {
       this.$router.push({ name: 'nuevoanfitrion' })
     },
   },
-
   mounted() {
     this.getInvitadosApi()
     this.getAnfitrionesApi()
   },
-
   async created() {
     ////// recuperar la visita
     await this.getVisitaPorId(this.$route.params.identificador)
     this.visitaParaModificar = { ...this.visitaApi }   ///// clonar
     this.visitaParaModificar.fechaInicio = new Date(this.visitaParaModificar.fechaInicio)
     this.visitaParaModificar.fechaFin = new Date(this.visitaParaModificar.fechaFin)
-
     ////// recuperar el anfitrion de la visita
     await llamadaAPI("get", null, this.visitaApi._links.anfitrion.href).then((response) => {
       this.anfitrionParaModificar = response.data
     })
-
     this.getInvitadosVisita(this.$route.params.identificador).then(invitados => {
       this.invitadosElegidos = invitados
     })
   },
-
 }
 </script>
 
-
 <template>
   <Modelo titulo="MODIFICAR VISITA">
-
-    <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '30vw' }">
+    <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '80%' }">
       <p>
         <font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />
         {{ mensajeDialog }}
@@ -111,9 +92,7 @@ export default {
         </div>
       </template>
     </Dialog>
-
     <form class="p-1 border rounded datos-visita">
-
       <!-- datos visita -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
         <div class="row">
@@ -133,30 +112,25 @@ export default {
               placeholder="actividad" required>
           </div>
         </div>
-
         <div class="row my-2">
           <div class="col-md-6">
             <label for="actuacion" class="form-label fs-5 fw-bold">Descripción</label>
           </div>
-
           <div class="col-md-6">
             <label for="anfitrion" class="form-label fs-5 fw-bold">Anfitrión</label>
           </div>
         </div>
-
         <div class="row mb-2">
           <div class="col-md-6">
             <textarea class="form-control zona-area" id="actuacion" rows="3" v-model="visitaParaModificar.actuaciones"
               placeholder="descripción de la visita"></textarea>
           </div>
-
           <div class="col-md-5">
             <select class="form-select me-2" v-model="anfitrionParaModificar">
               <option value="" disabled>--seleccionar un anfitrión--</option>
               <option v-for="anf of anfitrionesApi" :value="anf">{{ anf.nombre }} {{ anf.apellidos }}</option>
             </select>
           </div>
-
           <div class="col-md-1">
             <button type="button" @click="darAltaAnfitrion" class="btn btn-primary" data-bs-toggle="tooltip"
               data-bs-placement="right" title="hacer clic para dar de alta un nuevo anfitrión">
@@ -165,7 +139,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- buton de guardar visita (Primer Endpoint) -->
       <div class="d-flex justify-content-center border rounded p-2 m-0 botones-visita">
         <button type="button" class="btn btn-success me-2" @click.prevent="modificarVisita">
@@ -173,9 +146,7 @@ export default {
         <button type="button" class="btn btn-secondary" @click="this.$router.go(-1)">
           <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar</button>
       </div>
-
     </form>
-
     <form class="border rounded mb-1 p-1 datos-visita">
       <!-- datos visitantes -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
@@ -188,7 +159,6 @@ export default {
             <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Invitados Seleccionados</label>
           </div>
         </div>
-
         <div class="row mb-3">
           <!-- select multiple -->
           <div class="col-md-5">
@@ -198,7 +168,6 @@ export default {
               </option>
             </select>
           </div>
-
           <!-- tabla para lista de invitados (se puede solo eliminar invitado) -->
           <div class="col-md-7 alert alert-light">
             <table class="table table-hover table-striped">
@@ -220,7 +189,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- botones de guardar invitados y finalizar visita (Segundo Endpoint)-->
       <div class="d-flex justify-content-center border rounded mb-0 p-3 botones-invitados">
         <button type="button" class="btn btn-light d-inline me-1" @click.prevent="anadirInvitados">
