@@ -8,22 +8,23 @@ export default {
   components: { Modelo, Calendar },   ///// registro local de los componentes
   data() {
     return {
-      personaParaModificar: {
-        dni: '',
-        nombre: '',
-        apellidos: '',
-        telefono: '',
-        email: '',
-        nip: null,
-        area: null,
-        role: null,
-        matricula: '',
-        empresa: '',
-        autorizacion: null,
-        inicioAut: null,
-        finAut: null,
-        tipo: ''
-      },
+      personaParaModificar: null,
+    //   personaParaModificar: {
+    //     dni: '',
+    //     nombre: '',
+    //     apellidos: '',
+    //     telefono: '',
+    //     email: '',
+    //     nip: null,
+    //     area: null,
+    //     role: null,
+    //     matricula: '',
+    //     empresa: '',
+    //     autorizacion: null,
+    //     inicioAut: null,
+    //     finAut: null,
+    //     tipo: ''
+    //   },
     }
   },
 
@@ -52,6 +53,9 @@ export default {
   },
 
   async created() {
+    
+    this.personaParaModificar = this.personasApi.find(p => p.id == this.$route.params.identificador)
+
     await this.getPersonaPorId(this.$route.params.identificador)
     if (this.personaApi) {
       this.personaParaModificar = { ...this.personaApi }   ///// clone superficial
@@ -62,8 +66,9 @@ export default {
       }
     }
     
-    // console.log(this.personasApi)
+    //  console.log(this.personasApi)
     // this.personaParaModificar = this.personasApi.find(p => p.id == this.$route.params.identificador)
+    // console.log(this.personaParaModificar)
   },
 
 }
