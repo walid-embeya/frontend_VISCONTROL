@@ -106,10 +106,10 @@ export default {
       <!-- datos anfitrion -->
       <div v-else class="container border rounded mb-1 alert alert-secondary">
         <div class="row mt-1">
-          <div class="col-md-3">
+          <div class="col-md-4">
             <label class="fs-5">NIP<span class="ms-3"><b>{{ personaApi.nip }}</b></span></label>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <label class="fs-5">Area<span class="ms-3"><b>{{ personaApi.area }}</b></span></label>
           </div>
           <div class="col-md-4">

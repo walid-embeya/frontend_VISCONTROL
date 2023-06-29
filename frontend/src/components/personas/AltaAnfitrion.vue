@@ -126,14 +126,13 @@ export default {
         <button type="submit" class="btn btn-success d-inline me-1" @click.prevent="crearAnfitrion" data-bs-toggle="modal"
           data-bs-target="#confirmacionOperacion">
           <font-awesome-icon icon="fa-solid fa-floppy-disk" size="lg" class="me-2" />Guardar</button>
-        <!-- $router.go(-1) -->
         <button type="submit" class="btn btn-secondary" @click="this.$router.go(-1)">Cancelar</button>
       </div>
       <!-- table para listar todos los anfitriones -->
-      <div v-if="anfitrionesApi" class="container alert alert-light border rounded p-2 mb-0">
+      <div v-if="anfitrionesApi" class="container alert alert-dark border rounded p-2 mb-0">
         <div class="lista-anfitriones">
           <table class="table table-striped table-hover me-2">
-            <thead class="alert alert-dark">
+            <thead>
               <tr class="columna">
                 <th scope="col">DNI</th>
                 <th scope="col">Nombre</th>
@@ -175,7 +174,7 @@ export default {
 }
 
 .lista-anfitriones {
-  height: 250px;
+  height: 230px;
   overflow-y: scroll;
 }
 

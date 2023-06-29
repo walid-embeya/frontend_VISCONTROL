@@ -81,7 +81,7 @@ export default {
 </script>
 
 <template>
-  <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '80%' }">
+  <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '30%' }">
     <p>
       <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
       {{ mensajeDialog }}
@@ -92,7 +92,6 @@ export default {
       </div>
     </template>
   </Dialog>
-
   <!-- Modal visita finalizada -->
   <div class="modal fade" id="confirmacionVisitafinalizada" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -112,7 +111,6 @@ export default {
       </div>
     </div>
   </div>
-
   <!-- Modal invitados añadidos a visita -->
   <div class="modal fade" id="confirmacionInvitadosAnadidosVisita" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -135,9 +133,9 @@ export default {
     </div>
   </div>
   <Modelo titulo="CREACIÓN NUEVA VISITA">
-    <form class="p-1 border rounded componente-visita">
+    <form class="p-1 border rounded">
       <!-- datos visita -->
-      <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
+      <div class="container alert alert-dark border rounded mb-1 pt-2 pb-0">
         <div class="row pb-3">
           <div class="col-md-3">
             <label for="fechainicio" class="form-label fs-5 fw-bold">Fecha/Hora Inicio</label>
@@ -197,9 +195,9 @@ export default {
           <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cancelar</button>
       </div>
     </form>
-    <form v-if="mostrarSegundoForm" class="border rounded mb-1 p-1 componente-visita">
+    <form v-if="mostrarSegundoForm" class="border rounded mb-1 p-1">
       <!-- datos visitantes -->
-      <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
+      <div class="container alert alert-dark border rounded mb-1 pt-2 pb-0">
         <div class="row">
           <div class="col-md-4 d-flex justify-content-center">
             <label for="nombreinvitado" class="col-form-label fs-5 fw-bold">Lista de invitados</label>
@@ -253,10 +251,6 @@ export default {
 </template>
 
 <style>
-.componente-visita {
-  background-color: rgb(16, 70, 151);
-}
-
 .datosvisita[disabled] {
   color: gray;
 }

@@ -5,14 +5,11 @@ import { mapState, mapActions } from 'pinia'
 export default {
   data() {
     return {
-
     }
   },
-
   computed: {
     ...mapState(personasStore, ['modeConeccion']),
   },
-
   methods: {
     ...mapActions(personasStore, ['changeUserMode']),
   },
@@ -27,7 +24,6 @@ export default {
           aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -42,19 +38,16 @@ export default {
               <router-link class="nav-link" :to="{ name: 'personas' }"
                 :class="$route.name == 'personas' ? 'text-warning fw-bold' : ''">Personas</router-link>
             </li>
-
             <li v-if="modeConeccion == 'Administrador'" class="nav-item">
               <router-link class="nav-link" :to="{ name: 'personamasinvitada' }"
                 :class="$route.name == 'personamasinvitada' ? 'text-warning fw-bold' : ''">Consultar persona más
                 invitada</router-link>
             </li>
-
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'ayuda' }"
                 :class="$route.name == 'ayuda' ? 'text-warning fw-bold' : ''">Ayuda</router-link>
             </li>
           </ul>
-
           <!-- Menú "modo coneccion" -->
           <ul class="navbar-nav">
             <li class="nav-item dropdown">

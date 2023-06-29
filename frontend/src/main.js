@@ -41,31 +41,24 @@ const PersonaInfo = () => import('@/components/personas/PersonaInfo.vue')
 const AltaInvitado = () => import('@/components/personas/AltaInvitado.vue')
 const AltaAnfitrion = () => import('@/components/personas/AltaAnfitrion.vue')
 const ModificarPersona = () => import('@/components/personas/ModificarPersona.vue')
-
 const Visitas = () => import('@/components/visitas/ListadoVisitas.vue')
 const AltaVisita = () => import('@/components/visitas/AltaVisita.vue')
 const ModificarVisita = () => import('@/components/visitas/ModificarVisita.vue')
-
 const PersonaMasInvitada = () => import('@/components/consultas/PersonaMasInvitada.vue')
-
 const About = () => import('@/components/About.vue')
 const NotFound = () => import('@/components/NotFound.vue')
 
 const routes = [
   { path: '/', component: Home, name: 'home' },
-
   { path: '/visitas', component: Visitas, name: 'visitas' },
   { path: '/nuevavisita', component: AltaVisita, name: 'nuevavisita' },
   { path: '/visitas/:identificador/modificarvisita', component: ModificarVisita, name: 'modificarvisita' },
-
   { path: '/personas', component: Personas, name: 'personas' },
   { path: '/personas/:identificador/personainfo', component: PersonaInfo, name: 'personainfo' },
   { path: '/personas/:identificador/modificarpersona', component: ModificarPersona, name: 'modificarpersona' },
   { path: '/nuevoinvitado', component: AltaInvitado, name: 'nuevoinvitado' },
   { path: '/nuevoanfitrion', component: AltaAnfitrion, name: 'nuevoanfitrion' },
-
   { path: '/personamasinvitada', component: PersonaMasInvitada, name: 'personamasinvitada' },
-
   { path: '/ayuda', component: About, name: 'ayuda' },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]
@@ -84,20 +77,13 @@ router.beforeEach(async (to, from) => {
 })
 
 const app = createApp(App)
-
 app.use(pinia)
-
 app.use(router)
-
 /* add font awesome icon component */
 app.component('font-awesome-icon', FontAwesomeIcon)             //Registro global del componente "FontAwesomeIcon"
 app.component('font-awesome-layers', FontAwesomeLayers)
-
 app.use(PrimeVue);
-
 app.use(ConfirmationService);
-
 app.use(ToastService)
-
 app.mount('#app')
 

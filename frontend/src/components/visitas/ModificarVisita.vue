@@ -42,7 +42,6 @@ export default {
     modificarVisita() {
       this.visitaParaModificar.anfitrion = this.anfitrionParaModificar._links.self.href
       this.putVisita(this.visitaParaModificar)
-
       ///// para Dialog primevue
       this.mensajeDialog = 'Datos visita modificados con éxito.'
       this.visible = true
@@ -81,7 +80,7 @@ export default {
 
 <template>
   <Modelo titulo="MODIFICAR VISITA">
-    <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '80%' }">
+    <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '40%' }">
       <p>
         <font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />
         {{ mensajeDialog }}
@@ -92,7 +91,7 @@ export default {
         </div>
       </template>
     </Dialog>
-    <form class="p-1 border rounded datos-visita">
+    <form class="p-1 border rounded">
       <!-- datos visita -->
       <div class="container alert alert-secondary border rounded mb-1 pt-2 pb-0">
         <div class="row">
@@ -190,7 +189,7 @@ export default {
         </div>
       </div>
       <!-- botones de guardar invitados y finalizar visita (Segundo Endpoint)-->
-      <div class="d-flex justify-content-center border rounded mb-0 p-3 botones-invitados">
+      <div class="d-flex justify-content-center border rounded mb-0 p-3 botones-visita">
         <button type="button" class="btn btn-light d-inline me-1" @click.prevent="anadirInvitados">
           <font-awesome-icon icon="fa-solid fa-user-plus" class="me-2" />Actualizar Lista Invitados</button>
       </div>
@@ -199,20 +198,12 @@ export default {
 </template>
 
 <style>
-.datos-visita {
-  background-color: rgb(16, 70, 151);
-}
-
 .zona-area {
   resize: none;
 }
 
 .botones-visita {
   background-color: rgb(173, 173, 180);
-}
-
-.botones-invitados {
-  background-color: rgb(62, 62, 125);
 }
 
 tr {

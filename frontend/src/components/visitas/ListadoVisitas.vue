@@ -17,18 +17,14 @@ export default {
       filtroPendiente: true,
     }
   },
-
   computed: {
     ...mapState(visitasStore, ['visitasApi', 'visitasPendientesApi']),
-
     visitasParaMostrar() {
       return this.filtroPendiente ? this.visitasPendientes : this.visitasGlobales
     },
-
     visitasPendientes() {
       if (this.visitasApi) {
         let fechaSistema = new Date()
-
         let listaPendiante = this.visitasApi.filter(v => new Date(v.fechaFin) >= fechaSistema)
         if (this.ordenAscendente) {
           return listaPendiante.sort((a, b) => { return new Date(a[this.ordenarPor]) - new Date(b[this.ordenarPor]) })
@@ -40,7 +36,6 @@ export default {
       else
         return []
     },
-
     visitasGlobales() {
       if (this.visitasApi) {
         if (this.ordenAscendente) {
@@ -54,19 +49,15 @@ export default {
         return []
     },
   },
-
   methods: {
     ...mapActions(visitasStore, ['getVisitasApi', 'deleteVisita']),
-
     sortByStartDate() {
       this.ordenarPor = 'fechaInicio'
       this.ordenAscendente = !this.ordenAscendente
     },
-
     sortByActivity() {
       this.ordenarPor = 'actividad'
       this.ordenAscendente = !this.ordenAscendente // Cambiar el orden ascendente/descendente
-
       const orden = this.ordenAscendente ? 1 : -1 // Determinar el orden ascendente o descendente
       return this.visitasParaMostrar.sort((a, b) => {
         if (a[this.ordenarPor] < b[this.ordenarPor]) return -1 * orden
@@ -74,7 +65,6 @@ export default {
         return 0
       })
     },
-
     borrarVisita(visita) {
       this.$confirm.require({
         message: '¿Está seguro de borrar la visita número ' + visita.id + ' con sus invitados?',
@@ -97,11 +87,9 @@ export default {
         }
       })
     },
-
     editarVisita(visita) {
       this.$router.push({ name: 'modificarvisita', params: { identificador: visita.id } })
     },
-
     mostrarAnfitrion(visita) {
       //// recuperar el ID del anfitrion para pasarlo como parametro a la ruta
       let array = visita._links.anfitrion.href.split('/')
@@ -109,7 +97,6 @@ export default {
       this.$router.push({ name: 'personainfo', params: { identificador: idAnfitrion } })
     }
   },
-
   created() {
     this.toast = useToast()
     this.getVisitasApi()
@@ -118,13 +105,10 @@ export default {
 }
 </script>
 
-
 <template>
   <Modelo titulo="LISTADO VISITAS">
-
     <Toast />
     <ConfirmDialog></ConfirmDialog>
-
     <div class="container">
       <div class="row">
         <div class="col-md-3">
@@ -135,38 +119,32 @@ export default {
             <input class="me-2" type="radio" name="optradio" @click="filtroPendiente = false">GLOBAL
           </label>
         </div>
-
         <div class="col-md-6 d-flex justify-content-center p-3 mb-3">
           <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
               @click="sortByStartDate" checked>
             <label class="btn btn-outline-info mt-1 fw-bold" for="btnradio1"><font-awesome-icon icon="fa-solid fa-sort"
                 class="me-2" />Ordenar por fecha de inicio</label>
-
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
               @click="sortByActivity">
             <label class="btn btn-outline-info mt-1 fw-bold" for="btnradio2"><font-awesome-icon icon="fa-solid fa-sort"
                 class="me-2" />Ordenar por actividad</label>
           </div>
         </div>
-
         <div class="col-md-3 d-flex justify-content-end p-3 mb-3">
           <router-link :to="{ name: 'nuevavisita' }" class="btn btn-success my-1">
             <font-awesome-icon :icon="['fas', 'circle-plus']" class="me-2" />Nueva Visita</router-link>
         </div>
       </div>
     </div>
-
     <div v-if="visitasParaMostrar.length == 0" class="container border rounded mb-0 alert alert-warning text-center">
       <ProgressSpinner />
     </div>
-
     <div v-else>
       <div class="alert alert-light border rounded mb-4 p-2 lista-visitas">
         <Visita v-for="visita of visitasParaMostrar" :visita="visita" @borrarVisita="borrarVisita"
           @editarVisita="editarVisita" @mostrarAnfitrion="mostrarAnfitrion" class="py-3 px-3 mb-1"></Visita>
       </div>
-
       <p><strong>Total : </strong> {{ visitasParaMostrar.length }} visitas</p>
     </div>
   </Modelo>

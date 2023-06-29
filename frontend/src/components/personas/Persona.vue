@@ -23,12 +23,10 @@ export default {
     <td>{{ persona.tipo }}</td>
     <td><font-awesome-icon :icon="['fas', 'pen-to-square']" size="lg" style="color: #e5a50a;" class="option"
         @click="$emit('editarPersona', persona)" /></td>
-
     <td v-if="modeConeccion == 'Administrador'"><font-awesome-icon :icon="['fas', 'trash-can']" size="lg"
         style="color: #e01b24;" class="option" @click="$emit('borrarPersona', persona)" /></td>
     <td v-else><font-awesome-icon :icon="['fas', 'trash-can']" size="lg" style="color: #a4a2af;" class="option"
         :style="{ 'pointer-events': modeConeccion !== 'Administrador' ? 'none' : 'auto' }" /></td>
-
     <td><font-awesome-icon :icon="['fas', 'circle-info']" size="lg" style="color: #77767b;" class="option"
         @click="$emit('mostrarPersona', persona)" /></td>
   </tr>

@@ -95,7 +95,7 @@ export default {
           <font-awesome-icon icon="fa-solid fa-id-card" size="lg" class="me-2" />Ver Anfitrión</span>
       </div>
     </div>
-    <div v-if="invitadosVisita" class="accordion accordion-flush alert alert-secondary mt-2 mb-0 border rounded"
+    <div v-if="invitadosVisita" class="accordion accordion-flush mt-2 mb-0 border rounded"
       id="detallesVisita">
       <div class="accordion-item">
         <h2 class="accordion-header">
@@ -179,4 +179,5 @@ tr {
   color: darkred;
 }
 
-@media(max-width:768px) {}</style>
+@media(max-width:768px) {}
+</style>

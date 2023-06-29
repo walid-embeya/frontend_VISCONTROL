@@ -11,17 +11,13 @@ export const personasStore = defineStore('personas', {
     huespedMasInvitado: null,
     modeConeccion: 'Administrador'
   }),
-
   actions: {              ////// actions: equiv a Methods
-
     changeUserMode(role) {
       this.modeConeccion = role
     },
-
     async getPersonasApi() {
       await getPersonas('todos').then(r => this.personasApi = r.data._embedded.personas)
     },
-
     async getInvitadosApi() {
       await getPersonas('Invitado').then((response) => {
         let invitadosAux = response.data._embedded.personas
@@ -31,7 +27,6 @@ export const personasStore = defineStore('personas', {
         })
       })
     },
-
     async getAnfitrionesApi() {
       await getPersonas('Anfitrion').then((response) => {
         let anfitrionesAux = response.data._embedded.personas
@@ -41,13 +36,11 @@ export const personasStore = defineStore('personas', {
         })
       })
     },
-
     async getPersonaPorId(id) {
       await getPersonaPorId(id).then((response) => {
         this.personaApi = response.data
       })
     },
-
     async getVisitasPersona(id) {
       this.visitasPersona = null
       await getVisitasPersona(id).then((r) => {
@@ -56,11 +49,9 @@ export const personasStore = defineStore('personas', {
         }
       })
     },
-
     async borrarVisitasPersona(id) {
       await borrarVisitasPersona(id)
     },
-
     async postPersona(persona) {
       await postPersona(persona).then((response) => {
         if (persona.tipo == 'Invitado') {
@@ -73,15 +64,12 @@ export const personasStore = defineStore('personas', {
       })
         .catch((error) => console.log(error))
     },
-
     async deletePersona(persona) {
       await deletePersona(persona)
     },
-
     async putPersona(persona) {
       await putPersona(persona)
     },
-
     async getPersonaMasInvitado(id) {
       this.huespedMasInvitado = null
       await getPersonaMasInvitado(id).then(r => {

@@ -166,10 +166,10 @@ export default {
         <button type="submit" class="btn btn-secondary" @click="$router.push({ name: 'personas' })">Cancelar</button>
       </div>
       <!-- table para listar todos los invitados -->
-      <div v-if="invitadosApi" class="container alert alert-light border rounded p-2 mb-0">
+      <div v-if="invitadosApi" class="container alert alert-dark border rounded p-2 mb-0">
         <div class="lista-invitados">
           <table class="table table-striped table-hover">
-            <thead class="alert alert-dark">
+            <thead>
               <tr class="columna">
                 <th scope="col">DNI</th>
                 <th scope="col">Nombre</th>
@@ -208,7 +208,7 @@ export default {
 }
 
 .lista-invitados {
-  height: 250px;
+  height: 230px;
   overflow-y: scroll;
 }
 

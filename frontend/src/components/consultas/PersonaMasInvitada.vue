@@ -7,44 +7,33 @@ import { timestampToFecha, timestampToHora } from '@/utils/utils'
 import Dialog from 'primevue/dialog'
 import ProgressSpinner from 'primevue/progressspinner'
 
-
 export default {
   components: { Modelo, Dialog, ProgressSpinner },   ///// registro local de los componentes
   data() {
     return {
       anfitrion: '',
       visitasInvitadoMostrado: null,
-
       ////// para dialog primevue
       visible: false,
       mensajeDialog: '',
-
       ////// para mostrar y ocultar componente de resultado de consulta
       mostrarSegundoForm: false,
     }
   },
-
   computed: {
     ...mapState(personasStore, ['anfitrionesApi', 'huespedMasInvitado', 'visitasPersona']),
-
     fechaHoy() {
       return new Date()
     },
   },
-
   methods: {
     ...mapActions(personasStore, ['getAnfitrionesApi', 'getPersonaMasInvitado', 'getVisitasPersona']),
-
     async mostrarResultadoConsulta() {
-
       if (this.anfitrion) {
         await this.getVisitasPersona(this.anfitrion.id)
         if (this.visitasPersona) {
           this.getPersonaMasInvitado(this.anfitrion.id).then(r => {
-            //this.mostrarSegundoForm = true
-
             this.visitasInvitadoMostrado = null
-
             if (this.huespedMasInvitado) {
               this.mostrarSegundoForm = true
               //// recuperar las visitas planificadas por este anfitrion y asistidas por de este invitado                      
@@ -66,11 +55,9 @@ export default {
           })
         }
         else {
-
           ///// para Dialog primevue
           this.visible = true
           this.mensajeDialog = 'No hay resultado para este anfitrión'
-
           this.mostrarSegundoForm = false
         }
       }
@@ -79,33 +66,25 @@ export default {
         this.mostrarSegundoForm = false
       }
     },
-
     estadoVisita(visita) {
       return new Date(visita.fechaFin) > this.fechaHoy ? 'Pendiente' : 'Hecha'
     },
-
     fecha(d) {
       return timestampToFecha(new Date(d))
     },
-
     hora(d) {
       return timestampToHora(new Date(d))
     },
   },
-
   created() {
     this.getAnfitrionesApi()
   },
-
 };
 </script>
 
-
 <template>
   <Modelo titulo="EL HUÉSPED MÁS INVITADO POR UN ANFITRIÓN">
-
     <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '80%' }">
-      <!-- <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '35vw' }"> -->
       <p>
         <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
         {{ mensajeDialog }}
@@ -116,7 +95,6 @@ export default {
         </div>
       </template>
     </Dialog>
-
     <!-- para elegir un anfitrion -->
     <div class="d-flex flex-row alert alert-dark border rounded mb-0">
       <div class="me-3">
@@ -130,7 +108,6 @@ export default {
         </select>
       </div>
     </div>
-
     <form v-if="mostrarSegundoForm" class="p-2 border rounded datos-invitado">
       <!-- informaciones communes de persona -->
       <div v-if="huespedMasInvitado" class="container alert alert-dark border rounded mb-1">
@@ -148,7 +125,6 @@ export default {
             <input type="text" class="form-control" id="apellidos" v-model="huespedMasInvitado.apellidos" readonly>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-4">
             <label for="telefono" class="form-label">Telefono</label>
@@ -161,7 +137,6 @@ export default {
           </div>
         </div>
       </div>
-
       <!-- informaciones propias del invitado -->
       <div v-if="huespedMasInvitado" class="container alert alert-dark border rounded mb-1">
         <div class="row mb-0">
@@ -182,10 +157,8 @@ export default {
           </div>
         </div>
       </div>
-
       <div v-if="visitasInvitadoMostrado" class="container border rounded alert alert-light mb-0">
         <p class="fs-3 fw-bold text-center text-danger">Lista de Visitas</p>
-
         <div class="lista-visitas">
           <table class="table table-striped table-hover">
             <thead class="table-dark">
@@ -208,7 +181,6 @@ export default {
           </table>
         </div>
       </div>
-
       <!-- boton de cerrar -->
       <div class="d-flex justify-content-center border rounded mb-0 p-2 barra-footer">
         <button type="submit" class="btn btn-secondary" @click="this.$router.push({ name: 'home' })"><font-awesome-icon

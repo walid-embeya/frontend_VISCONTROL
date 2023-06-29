@@ -9,22 +9,6 @@ export default {
   data() {
     return {
       personaParaModificar: null,
-      //   personaParaModificar: {
-      //     dni: '',
-      //     nombre: '',
-      //     apellidos: '',
-      //     telefono: '',
-      //     email: '',
-      //     nip: null,
-      //     area: null,
-      //     role: null,
-      //     matricula: '',
-      //     empresa: '',
-      //     autorizacion: null,
-      //     inicioAut: null,
-      //     finAut: null,
-      //     tipo: ''
-      //   },
     }
   },
   computed: {
@@ -51,14 +35,11 @@ export default {
     await this.getPersonaPorId(this.$route.params.identificador)
     if (this.personaApi) {
       this.personaParaModificar = { ...this.personaApi }   ///// clone superficial
-
       if (this.personaApi.inicioAut != null) {
         this.personaParaModificar.inicioAut = new Date(this.personaParaModificar.inicioAut)
         this.personaParaModificar.finAut = new Date(this.personaParaModificar.finAut)
       }
     }
-    //  console.log(this.personasApi)
-    // this.personaParaModificar = this.personasApi.find(p => p.id == this.$route.params.identificador)
   },
 }
 </script>
@@ -212,6 +193,3 @@ export default {
 }
 </style>
 
-
-      
-      
