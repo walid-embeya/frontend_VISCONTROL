@@ -1,12 +1,12 @@
 <script>
-import Modelo from '@/components/Model.vue'
+// import Modelo from '@/components/Model.vue'
 import { mapActions, mapState } from 'pinia'
 import { personasStore } from '@/stores/personas'
 import ProgressSpinner from 'primevue/progressspinner'
 import { timestampToFecha, timestampToHora } from '@/utils/utils'
 
 export default {
-  components: { Modelo, ProgressSpinner },   ///// registro local de los componentes
+  components: { ProgressSpinner },   ///// registro local de los componentes
   data() {
     return {
     }
@@ -49,7 +49,9 @@ export default {
 </script>
 
 <template>
-  <Modelo :titulo=tituloComponente>
+  <div>
+    <h1 class="titulo">{{ tituloComponente }}</h1>
+    <!-- <Modelo :titulo=tituloComponente> -->
     <div v-if="personaApi" class="alert alert-dark p-2 mb-0">
       <!-- informaciones comunes -->
       <div class="container border rounded mb-1 alert alert-secondary">
@@ -157,7 +159,8 @@ export default {
         <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar
       </button>
     </div>
-  </Modelo>
+    <!-- </Modelo> -->
+  </div>
 </template>
 
 <style scoped>

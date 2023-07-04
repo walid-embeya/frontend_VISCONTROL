@@ -1,5 +1,5 @@
 <script>
-import Modelo from '@/components/Model.vue'
+// import Modelo from '@/components/Model.vue'
 import { mapActions, mapState } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
 import { personasStore } from '@/stores/personas'
@@ -8,7 +8,7 @@ import { llamadaAPI } from '@/stores/api-service'
 import Dialog from 'primevue/dialog'
 
 export default {
-  components: { Modelo, Calendar, Dialog },   ///// registro local de los componentes
+  components: { Calendar, Dialog },   ///// registro local de los componentes
   data() {
     return {
       ////// para dialog primevue
@@ -79,7 +79,9 @@ export default {
 </script>
 
 <template>
-  <Modelo titulo="MODIFICAR VISITA">
+  <div>
+    <h1 class="titulo">MODIFICAR VISITA</h1>
+    <!-- <Modelo titulo="MODIFICAR VISITA"> -->
     <Dialog v-model:visible="visible" modal header="Confirmación" :style="{ width: '40%' }">
       <p>
         <font-awesome-icon icon="fa-solid fa-check" size="lg" style="color: #26a269;" class="me-2" />
@@ -98,12 +100,14 @@ export default {
           <div class="col-md-3">
             <label for="fechainicio" class="form-label fs-5 fw-bold">Fecha/Hora Inicio</label>
             <Calendar v-model="visitaParaModificar.fechaInicio" :show-time="true" dateFormat="dd/mm/yy"
-              :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px' }"></Calendar>
+              class="calendar-style" />
+            <!-- :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px' }"></Calendar> -->
           </div>
           <div class="col-md-3">
             <label for="fechafin" class="form-label fs-5 fw-bold">Fecha/Hora Fin</label>
             <Calendar v-model="visitaParaModificar.fechaFin" :show-time="true" dateFormat="dd/mm/yy"
-              :style="{ 'font-size': '14px', 'width': '200px', 'height': '40px' }"></Calendar>
+              class="calendar-style" />
+            <!-- :style="{ 'font-size': '14px', 'width': '200px', 'height': '40px' }"></Calendar> -->
           </div>
           <div class="col-md-6">
             <label for="actividad" class="form-label fs-5 fw-bold">Actividad</label>
@@ -194,7 +198,8 @@ export default {
           <font-awesome-icon icon="fa-solid fa-user-plus" class="me-2" />Actualizar Lista Invitados</button>
       </div>
     </form>
-  </Modelo>
+    <!-- </Modelo> -->
+  </div>
 </template>
 
 <style>
@@ -208,6 +213,12 @@ export default {
 
 tr {
   text-align: center
+}
+
+.calendar-style {
+  font-size: 14px;
+  width: 200px;
+  height: 40px;
 }
 </style>
 

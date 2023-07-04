@@ -1,5 +1,5 @@
 <script>
-import Modelo from '@/components/Model.vue'
+// import Modelo from '@/components/Model.vue'
 import Persona from './Persona.vue'
 import { mapState, mapActions } from 'pinia'
 import { personasStore } from '@/stores/personas'
@@ -10,7 +10,7 @@ import { Modal } from '~bootstrap'
 import Dialog from 'primevue/dialog'
 
 export default {
-  components: { Persona, Modelo, ConfirmDialog, Toast, Dialog },                   ///// registro local de los componentes
+  components: { Persona, ConfirmDialog, Toast, Dialog },                   ///// registro local de los componentes
   data() {
     return {
       opcionElegida: 'anfitrion',
@@ -117,8 +117,10 @@ export default {
 </script>
 
 <template>
-  <Modelo titulo="LISTADO PERSONAS">
-    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '80%' }">
+  <div>
+    <h1 class="titulo">LISTADO PERSONAS</h1>
+    <!-- <Modelo titulo="LISTADO PERSONAS"> -->
+    <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '40%' }">
       <p>
         <font-awesome-icon icon="fa-solid fa-exclamation" size="xl" style="color: #f5c211;" class="me-3" />
         {{ mensajeDialog }}
@@ -208,7 +210,8 @@ export default {
     <div v-else class="text-center alert alert-light border rounded p-4 mb-0">
       <h4>cargando lista de personas...</h4>
     </div>
-  </Modelo>
+    <!-- </Modelo> -->
+  </div>
 </template>
 
 <style scoped>

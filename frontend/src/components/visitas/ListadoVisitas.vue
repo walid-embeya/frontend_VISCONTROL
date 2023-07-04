@@ -1,5 +1,5 @@
 <script>
-import Modelo from '@/components/Model.vue'
+// import Modelo from '@/components/Model.vue'
 import Visita from './Visita.vue'
 import { mapActions, mapState } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
@@ -9,7 +9,7 @@ import { useToast } from 'primevue/usetoast'
 import ProgressSpinner from 'primevue/progressspinner'
 
 export default {
-  components: { Modelo, Visita, ConfirmDialog, Toast, ProgressSpinner },   ///// registro local de los componentes
+  components: { Visita, ConfirmDialog, Toast, ProgressSpinner },   ///// registro local de los componentes
   data() {
     return {
       ordenAscendente: true,
@@ -106,7 +106,9 @@ export default {
 </script>
 
 <template>
-  <Modelo titulo="LISTADO VISITAS">
+  <div>
+    <h1 class="titulo">LISTADO VISITAS</h1>
+    <!-- <Modelo titulo="LISTADO VISITAS"> -->
     <Toast />
     <ConfirmDialog></ConfirmDialog>
     <div class="container">
@@ -147,7 +149,8 @@ export default {
       </div>
       <p><strong>Total : </strong> {{ visitasParaMostrar.length }} visitas</p>
     </div>
-  </Modelo>
+    <!-- </Modelo> -->
+  </div>
 </template>
 
 <style>

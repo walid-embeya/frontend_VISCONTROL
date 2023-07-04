@@ -1,5 +1,5 @@
 <script>
-import Modelo from '@/components/Model.vue'
+// import Modelo from '@/components/Model.vue'
 import { mapActions, mapState } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
 import { personasStore } from '@/stores/personas'
@@ -7,7 +7,7 @@ import Calendar from 'primevue/calendar'
 import Dialog from 'primevue/dialog'
 
 export default {
-  components: { Modelo, Calendar, Dialog },    ///// registro local de los componentes
+  components: { Calendar, Dialog },    ///// registro local de los componentes
   data() {
     return {
       ////// para dialog primevue
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <template>
-  <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '30%' }">
+  <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '40%' }">
     <p>
       <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
       {{ mensajeDialog }}
@@ -132,23 +132,24 @@ export default {
       </div>
     </div>
   </div>
-  <Modelo titulo="CREACIÓN NUEVA VISITA">
+  <div>
+    <h1 class="titulo">CREACIÓN NUEVA VISITA</h1>
+    <!-- <Modelo titulo="CREACIÓN NUEVA VISITA"> -->
     <form class="p-1 border rounded">
       <!-- datos visita -->
       <div class="container alert alert-dark border rounded mb-1 pt-2 pb-0">
         <div class="row pb-3">
           <div class="col-md-3">
             <label for="fechainicio" class="form-label fs-5 fw-bold">Fecha/Hora Inicio</label>
-            <Calendar class="datosvisita" v-model="visita.fechaInicio" :disabled="mostrarSegundoForm" :show-time="true"
-              dateFormat="dd/mm/yy" required :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px' }">
-            </Calendar>
+            <Calendar class="datosvisita calendar-style" v-model="visita.fechaInicio" :disabled="mostrarSegundoForm"
+              :show-time="true" dateFormat="dd/mm/yy" required />
+            <!-- :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px' }"></Calendar> -->
           </div>
           <div class="col-md-3 flex-wrap">
             <label for="fechafin" class="form-label fs-5 fw-bold">Fecha/Hora Fin</label>
-            <Calendar class="datosvisita" v-model="visita.fechaFin" :disabled="mostrarSegundoForm" :show-time="true"
-              dateFormat="dd/mm/yy" required
-              :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px', 'color': mostrarSegundoForm ? 'black' : 'initial' }">
-            </Calendar>
+            <Calendar class="datosvisita calendar-style" v-model="visita.fechaFin" :disabled="mostrarSegundoForm"
+              :show-time="true" dateFormat="dd/mm/yy" required />
+            <!-- :style="{ 'font-size': '16px', 'width': '200px', 'height': '40px', 'color': mostrarSegundoForm ? 'black' : 'initial' }"></Calendar> -->
           </div>
           <div class="col-md-6">
             <label for="actividad" class="form-label fs-5 fw-bold">Actividad</label>
@@ -247,7 +248,8 @@ export default {
           @click="finalizarVisita">Finalizar Visita</button>
       </div>
     </form>
-  </Modelo>
+    <!-- </Modelo> -->
+  </div>
 </template>
 
 <style>
@@ -257,6 +259,12 @@ export default {
 
 .botones-visita {
   background-color: rgb(169, 169, 189);
+}
+
+.calendar-style {
+  font-size: 16px;
+  width: 200px;
+  height: 40px;
 }
 </style>
 
