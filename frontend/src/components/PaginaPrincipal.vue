@@ -1,10 +1,3 @@
-<script>
-
-export default {
-
-}
-</script>
-
 <template>
   <main>
     <div class="logo-container">
@@ -12,12 +5,9 @@ export default {
         <img src="../images/viscontrol.jpg" class="img-fluid" width="600" height="600" alt="Logo VISCONTROL">
       </figure>
     </div>
-
-
     <div class="titulo">
       <p>VISCONTROL</p>
     </div>
-
   </main>
 
   <footer class="footer">
@@ -27,12 +17,10 @@ export default {
         <div class="col-md-4 text-center contactenos">
           <p class="mt-3">Contáctenos</p>
         </div>
-
         <div class="col-md-4 text-center">
           <p><b>VISCONTROL V2.0 Junio 2023</b></p>
           <p>© Copyright. Todos los derechos reservados.</p>
         </div>
-
         <div class="col-md-4 text-center">
           <p>Síguenos en:</p>
           <div class="socialMedia">
@@ -42,12 +30,10 @@ export default {
             <font-awesome-icon :icon="['fab', 'linkedin']" class="me-2" />
           </div>
         </div>
-
       </div>
     </div>
   </footer>
 </template>
-
 
 <style scoped>
 .logo-container {

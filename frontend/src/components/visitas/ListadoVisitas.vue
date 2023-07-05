@@ -1,5 +1,4 @@
 <script>
-// import Modelo from '@/components/Model.vue'
 import Visita from './Visita.vue'
 import { mapActions, mapState } from 'pinia'
 import { visitasStore } from '@/stores/visitas'
@@ -9,7 +8,7 @@ import { useToast } from 'primevue/usetoast'
 import ProgressSpinner from 'primevue/progressspinner'
 
 export default {
-  components: { Visita, ConfirmDialog, Toast, ProgressSpinner },   ///// registro local de los componentes
+  components: { Visita, ConfirmDialog, Toast, ProgressSpinner },
   data() {
     return {
       ordenAscendente: true,
@@ -57,7 +56,7 @@ export default {
     },
     sortByActivity() {
       this.ordenarPor = 'actividad'
-      this.ordenAscendente = !this.ordenAscendente // Cambiar el orden ascendente/descendente
+      this.ordenAscendente = !this.ordenAscendente
       const orden = this.ordenAscendente ? 1 : -1 // Determinar el orden ascendente o descendente
       return this.visitasParaMostrar.sort((a, b) => {
         if (a[this.ordenarPor] < b[this.ordenarPor]) return -1 * orden
@@ -100,7 +99,6 @@ export default {
   created() {
     this.toast = useToast()
     this.getVisitasApi()
-    // console.log('visitasApi JSON', JSON.stringify(this.visitasApi, null, 2))
   }
 }
 </script>
@@ -108,7 +106,6 @@ export default {
 <template>
   <div>
     <h1 class="titulo">LISTADO VISITAS</h1>
-    <!-- <Modelo titulo="LISTADO VISITAS"> -->
     <Toast />
     <ConfirmDialog></ConfirmDialog>
     <div class="container">
@@ -149,7 +146,6 @@ export default {
       </div>
       <p><strong>Total : </strong> {{ visitasParaMostrar.length }} visitas</p>
     </div>
-    <!-- </Modelo> -->
   </div>
 </template>
 

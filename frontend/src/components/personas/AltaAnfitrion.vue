@@ -1,10 +1,8 @@
 <script>
-// import Modelo from '@/components/Model.vue'
 import { mapState, mapActions } from 'pinia'
 import { personasStore } from '@/stores/personas'
 
 export default {
-  // components: { Modelo },   ///// registro local de los componentes
   data() {
     return {
       personaParaAnadir: {
@@ -51,7 +49,6 @@ export default {
 <template>
   <div>
     <h1 class="titulo">CREACIÓN NUEVO ANFITRIÓN</h1>
-    <!-- <Modelo titulo="CREACIÓN NUEVO ANFITRIÓN"> -->
     <!-- Modal -->
     <div class="modal fade" id="confirmacionOperacion" tabindex="-1" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -165,10 +162,7 @@ export default {
         <h4>cargando lista de anfitriones...</h4>
       </div>
     </form>
-    <!-- </Modelo> -->
   </div>
-
-  <!-- <pre v-if="invitadosApi">{{ JSON.stringify(anfitrionesApi, null, " ") }}</pre> -->
 </template>
 
 <style>

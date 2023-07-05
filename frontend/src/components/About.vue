@@ -1,15 +1,6 @@
-<script>
-// import Modelo from '@/components/Model.vue'
-
-export default {
-  // components: { Modelo },   ///// registro local de los componentes
-}
-</script>
-
 <template>
   <div>
     <h1 class="titulo">Sobre la aplicación VISCONTROL</h1>
-    <!-- <Modelo titulo="Sobre la aplicación VISCONTROL"> -->
     <div class="alert alert-light">
       <p class="text-center">VISCONTROL es una aplicación web que le permite por un lado programar y planificar las
         visitas de una empresa y,</p>
@@ -18,6 +9,5 @@ export default {
       <p class="text-center">Puede pinchar sobre una opción del menu principal para ver más informaciones sobre de esta
         funcionalidad</p>
     </div>
-    <!-- </Modelo> -->
   </div>
 </template>

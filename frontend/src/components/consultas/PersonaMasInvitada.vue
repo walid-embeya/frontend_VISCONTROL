@@ -1,5 +1,4 @@
 <script>
-// import Modelo from '@/components/Model.vue'
 import { mapActions, mapState } from 'pinia'
 import { personasStore } from '@/stores/personas'
 import { llamadaAPI } from '@/stores/api-service'
@@ -8,7 +7,7 @@ import Dialog from 'primevue/dialog'
 import ProgressSpinner from 'primevue/progressspinner'
 
 export default {
-  components: { Dialog, ProgressSpinner },   ///// registro local de los componentes
+  components: { Dialog, ProgressSpinner },
   data() {
     return {
       anfitrion: '',
@@ -85,7 +84,6 @@ export default {
 <template>
   <div>
     <h1 class="titulo">EL HUÉSPED MÁS INVITADO POR UN ANFITRIÓN</h1>
-    <!-- <Modelo titulo="EL HUÉSPED MÁS INVITADO POR UN ANFITRIÓN"> -->
     <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '40%' }">
       <p>
         <font-awesome-icon icon="fa-solid fa-message" size="lg" class="me-2" />
@@ -189,7 +187,6 @@ export default {
             icon="fa-solid fa-xmark" size="lg" class="me-2" />Cerrar</button>
       </div>
     </form>
-    <!-- </Modelo> -->
   </div>
 </template>
 

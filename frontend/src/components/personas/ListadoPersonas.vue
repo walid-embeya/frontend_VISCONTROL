@@ -1,5 +1,4 @@
 <script>
-// import Modelo from '@/components/Model.vue'
 import Persona from './Persona.vue'
 import { mapState, mapActions } from 'pinia'
 import { personasStore } from '@/stores/personas'
@@ -14,8 +13,8 @@ export default {
   data() {
     return {
       opcionElegida: 'anfitrion',
-      dniParaBuscar: '',     // almacena el dni de la peronsa que queremos buscar
-      tipoFiltro: '',        // almacena el tipo de persona seleccionado para el filtro  
+      dniParaBuscar: '',
+      tipoFiltro: '',
       resultadosBusqueda: [],
       filtroPendiente: false,
       ////// para dialog primevue
@@ -80,12 +79,12 @@ export default {
     buscarPersonaPorDni() {
       if (this.dniParaBuscar) {
         this.filtroPendiente = true
-        this.resultadosBusqueda = []         // Vaciar el array resultadosBusqueda
+        this.resultadosBusqueda = []
         const caracterBuscado = this.dniParaBuscar.toLowerCase()
         // Filtrar las personas cuyo DNI contenga el carácter buscado
         const personasEncontradas = this.personasApi.filter(persona => persona.dni.toLowerCase().includes(caracterBuscado))
         if (personasEncontradas.length > 0) {
-          this.resultadosBusqueda = personasEncontradas; // Almacena los resultados de la búsqueda
+          this.resultadosBusqueda = personasEncontradas;
         }
       } else {
         // DNI vacío, los resultados de búsqueda son todas las personas
@@ -96,7 +95,7 @@ export default {
     buscarPersonasPorTipo() {
       if (this.tipoFiltro) {
         this.filtroPendiente = true
-        this.resultadosBusqueda = []          ///// vaciar el array resultadosBusqueda
+        this.resultadosBusqueda = []
         if (this.tipoFiltro == 'Todos') {
           this.resultadosBusqueda = this.personasApi
         }
@@ -119,7 +118,6 @@ export default {
 <template>
   <div>
     <h1 class="titulo">LISTADO PERSONAS</h1>
-    <!-- <Modelo titulo="LISTADO PERSONAS"> -->
     <Dialog v-model:visible="visible" modal header="Mensaje" :style="{ width: '40%' }">
       <p>
         <font-awesome-icon icon="fa-solid fa-exclamation" size="xl" style="color: #f5c211;" class="me-3" />
@@ -210,7 +208,6 @@ export default {
     <div v-else class="text-center alert alert-light border rounded p-4 mb-0">
       <h4>cargando lista de personas...</h4>
     </div>
-    <!-- </Modelo> -->
   </div>
 </template>
 

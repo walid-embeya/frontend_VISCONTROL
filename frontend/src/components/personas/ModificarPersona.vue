@@ -1,5 +1,4 @@
 <script>
-// import Modelo from '@/components/Model.vue'
 import { mapState, mapActions } from 'pinia'
 import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
@@ -47,7 +46,6 @@ export default {
 <template>
   <div>
     <h1 class="titulo">{{ tituloComponente }}</h1>
-    <!-- <Modelo :titulo=tituloComponente> -->
     <!-- Modal -->
     <div class="modal fade" id="confirmacionOperacion" tabindex="-1" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -135,12 +133,10 @@ export default {
               <div class="col-md-5">
                 <Calendar v-model="personaParaModificar.inicioAut" :show-time="false" dateFormat="dd/mm/yy"
                   class="calendar-style" />
-                <!-- :style="{ 'font-size': '14px', 'width': '200px', 'height': '35px' }"></Calendar> -->
               </div>
               <div class="col-md-5">
                 <Calendar v-model="personaParaModificar.finAut" :show-time="false" dateFormat="dd/mm/yy"
                   class="calendar-style" />
-                <!-- :style="{ 'font-size': '14px', 'width': '200px', 'height': '35px' }"></Calendar> -->
               </div>
             </div>
           </div>
@@ -175,12 +171,10 @@ export default {
           @click="this.$router.push({ name: 'personas' })"><font-awesome-icon icon="fa-solid fa-xmark" size="lg"
             class="me-2" />Cancelar</button>
       </div>
-      <!-- <pre>persona API : {{ JSON.stringify(personaApi, null, " ") }}</pre> -->
     </form>
     <div v-else class="text-center border rounded p-4 mb-0 datos-persona">
       <h4>cargando datos de persona...</h4>
     </div>
-    <!-- </Modelo> -->
   </div>
 </template>
 

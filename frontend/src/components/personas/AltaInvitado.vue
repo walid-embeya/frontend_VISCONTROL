@@ -1,5 +1,4 @@
 <script>
-// import Modelo from '@/components/Model.vue'
 import { mapState, mapActions } from 'pinia'
 import { personasStore } from '@/stores/personas'
 import Calendar from 'primevue/calendar'
@@ -63,7 +62,6 @@ export default {
 <template>
   <div>
     <h1 class="titulo">CREACIÓN NUEVO INVITADO</h1>
-    <!-- <Modelo titulo="CREACIÓN NUEVO INVITADO"> -->
     <!-- Modal -->
     <div class="modal fade" id="confirmacionOperacion" tabindex="-1" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -150,12 +148,10 @@ export default {
               <div class="col-md-5">
                 <Calendar v-model="personaParaAnadir.fechaInicio" :show-time="false" dateFormat="dd/mm/yy"
                   class="calendar-style" />
-                <!-- :style="{ 'font-size': '14px', 'width': '200px', 'height': '35px' }"></Calendar> -->
               </div>
               <div class="col-md-5">
                 <Calendar v-model="personaParaAnadir.fechaFin" :show-time="false" dateFormat="dd/mm/yy"
                   class="calendar-style" />
-                <!-- :style="{ 'font-size': '14px', 'width': '200px', 'height': '35px' }"></Calendar> -->
               </div>
             </div>
           </div>
@@ -202,9 +198,7 @@ export default {
         <h4>cargando lista de invitados...</h4>
       </div>
     </form>
-    <!-- </Modelo> -->
   </div>
-  <!-- <pre v-if="invitadosApi">{{ JSON.stringify(invitadosApi, null, " ") }}</pre> -->
 </template>
 
 <style>
